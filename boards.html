@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boards & Inspiration — BoviBerry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --brand-green:#2C7449; --brand-lime:#9BD16B; --brand-amber:#FFAA1B;
+  --brand-cocoa:#412A13; --brand-clay:#815121;
+  --black:#13100B; --black-mid:#1A1510; --black-soft:#2A1E12; --black-card:#1D1811;
+  --gold:#9BD16B; --gold-light:#B8E08F; --gold-dim:#7BB04F;
+  --gold-faint:rgba(155,209,107,0.12); --shimmer:#F5EFE3; --white-soft:#E2D9C6;
+  --muted:#B0A18A; --stroke:rgba(155,209,107,0.18); --stroke-soft:rgba(155,209,107,0.08);
+  --transition-theme:background 0.4s ease,color 0.4s ease,border-color 0.4s ease;
+}
+[data-theme="light"] {
+  --black:#F5EFE3; --black-mid:#EFE8DA; --black-soft:#E5DBC8; --black-card:#EFE8DA;
+  --gold:#2C7449; --gold-light:#815121; --gold-dim:#815121;
+  --gold-faint:rgba(44,116,73,0.1); --shimmer:#291B0C; --white-soft:#412A13;
+  --muted:#574733; --stroke:rgba(44,116,73,0.2); --stroke-soft:rgba(44,116,73,0.1);
+}
+body { background:var(--black); color:var(--shimmer); font-family:'Jost',sans-serif; font-weight:300; overflow-x:hidden; transition:var(--transition-theme); }
+body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:0.035; will-change:transform; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:500; display:flex; justify-content:space-between; align-items:center; padding:1.4rem 5rem; background:rgba(19,16,11,0.88); backdrop-filter:blur(18px); border-bottom:1px solid var(--stroke); }
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:400; letter-spacing:0.06em; color:var(--gold-light); text-decoration:none; }
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a { font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--gold-light); }
+.theme-toggle { width:36px; height:36px; border:1px solid var(--stroke); background:transparent; cursor:pointer; color:var(--muted); display:flex; align-items:center; justify-content:center; transition:all 0.25s; }
+.theme-toggle:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+.theme-toggle svg { width:16px; height:16px; }
+.icon-moon { display:block; } .icon-sun { display:none; }
+[data-theme="light"] .icon-moon { display:none; } [data-theme="light"] .icon-sun { display:block; }
+.nav-cta { font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; padding:0.6rem 1.5rem; border:1px solid var(--gold-dim); color:var(--gold-light); text-decoration:none; transition:all 0.25s; }
+.nav-cta:hover { background:var(--gold-faint); }
+
+/* CURSOR */
+*, *::before, *::after { cursor:none !important; }
+.cursor-dot { position:fixed; width:8px; height:8px; border-radius:50%; background:var(--gold); pointer-events:none; z-index:99999; transform:translate(-50%,-50%); transition:width 0.2s ease,height 0.2s ease; will-change:transform; }
+.cursor-ring { position:fixed; width:32px; height:32px; border-radius:50%; border:1px solid rgba(155,209,107,0.5); pointer-events:none; z-index:99998; transform:translate(-50%,-50%); transition:width 0.25s ease,height 0.25s ease; will-change:transform; }
+.cursor-dot.hovering { width:4px; height:4px; }
+.cursor-ring.hovering { width:48px; height:48px; border-color:rgba(155,209,107,0.8); }
+@media(pointer:coarse){ .cursor-dot,.cursor-ring{display:none} *,*::before,*::after{cursor:auto !important} }
+
+/* PAGE HEADER */
+.page-header { padding:10rem 5rem 5rem; position:relative; overflow:hidden; border-bottom:1px solid var(--stroke-soft); }
+.orb { position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; will-change:transform; }
+.orb-1 { width:450px; height:450px; background:radial-gradient(circle,rgba(155,209,107,0.14),transparent 70%); top:-120px; right:5%; }
+.orb-2 { width:280px; height:280px; background:radial-gradient(circle,rgba(155,209,107,0.08),transparent 70%); bottom:-60px; left:8%; }
+.page-eyebrow { font-size:0.68rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1.2rem; display:flex; align-items:center; gap:0.8rem; }
+.page-eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--gold-dim); }
+.page-title { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,6vw,5rem); font-weight:300; line-height:1.05; color:var(--shimmer); margin-bottom:1rem; }
+.page-title em { font-style:italic; color:var(--gold-light); }
+.page-sub { font-size:0.9rem; line-height:1.8; color:var(--muted); max-width:520px; }
+
+/* GOLD DIVIDER */
+.gold-divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); }
+
+/* SECTION */
+.section-inner { padding:6rem 5rem; }
+.section-label { font-size:0.65rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1rem; display:flex; align-items:center; gap:0.8rem; }
+.section-label::before { content:''; display:block; width:24px; height:1px; background:var(--gold-dim); }
+.section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,4vw,3.5rem); font-weight:300; line-height:1.1; color:var(--shimmer); margin-bottom:1rem; }
+.section-title em { font-style:italic; color:var(--gold-light); }
+.section-sub { font-size:0.9rem; line-height:1.8; color:var(--muted); max-width:520px; margin-bottom:3.5rem; }
+
+/* PINTEREST / COSMOS BOARDS */
+.boards-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+
+.board-card {
+  background:var(--black-card); border:1px solid var(--stroke-soft);
+  position:relative; overflow:hidden;
+  transition:border-color 0.3s, transform 0.3s;
+  text-decoration:none; display:block;
+  group:true;
+}
+.board-card:hover { border-color:var(--gold-dim); transform:translateY(-4px); }
+.board-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); opacity:0; transition:opacity 0.3s; }
+.board-card:hover::before { opacity:1; }
+
+.board-preview {
+  width:100%; aspect-ratio:4/3;
+  background:var(--black-soft);
+  display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+}
+/* Replace these background colors with actual board preview images later */
+.board-card:nth-child(1) .board-preview { background:linear-gradient(135deg,#1a1410,#2a1f10); }
+.board-card:nth-child(2) .board-preview { background:linear-gradient(135deg,#10141a,#10201a); }
+.board-card:nth-child(3) .board-preview { background:linear-gradient(135deg,#1a1018,#20101a); }
+.board-card:nth-child(4) .board-preview { background:linear-gradient(135deg,#141a10,#1a2010); }
+.board-card:nth-child(5) .board-preview { background:linear-gradient(135deg,#1a1a10,#201a10); }
+.board-card:nth-child(6) .board-preview { background:linear-gradient(135deg,#10181a,#101418); }
+
+.board-preview-icon { opacity:0.15; color:var(--gold); }
+.board-preview-overlay {
+  position:absolute; inset:0;
+  background:rgba(19,16,11,0.7);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; transition:opacity 0.3s;
+}
+.board-card:hover .board-preview-overlay { opacity:1; }
+.board-preview-cta { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-light); border:1px solid var(--gold-dim); padding:0.5rem 1.2rem; }
+
+.board-info { padding:1.4rem 1.6rem; }
+.board-platform { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem; }
+.board-platform-icon { width:14px; height:14px; border-radius:2px; flex-shrink:0; }
+.board-platform-name { font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); }
+.board-name { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:400; color:var(--shimmer); margin-bottom:0.4rem; }
+.board-desc { font-size:0.78rem; color:var(--muted); line-height:1.6; margin-bottom:1rem; }
+.board-count { font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-dim); }
+
+.board-corner { position:absolute; width:14px; height:14px; border-color:var(--gold-dim); border-style:solid; opacity:0; transition:opacity 0.3s; }
+.board-corner.tr { top:10px; right:10px; border-width:1px 1px 0 0; }
+.board-card:hover .board-corner { opacity:1; }
+
+/* COMING SOON — MOOD BOARDS */
+.coming-soon-bg { background:var(--black-mid); }
+.coming-soon-wrap {
+  border:1px solid var(--stroke-soft); padding:5rem 4rem;
+  text-align:center; position:relative; overflow:hidden;
+  background:var(--black-card);
+}
+.coming-soon-wrap::before { content:''; position:absolute; top:0; left:3rem; right:3rem; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); }
+.coming-soon-wrap::after { content:''; position:absolute; bottom:0; left:3rem; right:3rem; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); }
+
+.coming-soon-orb { position:absolute; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(155,209,107,0.06),transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+
+.coming-soon-badge { display:inline-block; font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; padding:0.35rem 0.9rem; border:1px solid var(--gold-dim); color:var(--gold-dim); background:var(--gold-faint); margin-bottom:2rem; }
+.coming-soon-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.5rem); font-weight:300; color:var(--shimmer); line-height:1.1; margin-bottom:1rem; }
+.coming-soon-title em { font-style:italic; color:var(--gold-light); }
+.coming-soon-sub { font-size:0.9rem; line-height:1.8; color:var(--muted); max-width:480px; margin:0 auto 3rem; }
+
+.coming-soon-features { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; max-width:700px; margin:0 auto 3rem; text-align:left; }
+.coming-soon-feature { padding:1.2rem 1.4rem; border:1px solid var(--stroke-soft); background:var(--black-soft); }
+.coming-soon-feature-icon { color:var(--gold-dim); margin-bottom:0.6rem; }
+.coming-soon-feature h4 { font-size:0.82rem; font-weight:400; color:var(--shimmer); margin-bottom:0.3rem; }
+.coming-soon-feature p { font-size:0.75rem; color:var(--muted); line-height:1.6; }
+
+.coming-soon-notify { display:flex; gap:0; max-width:420px; margin:0 auto; }
+.coming-soon-input { flex:1; background:var(--black-soft); border:1px solid var(--stroke-soft); border-right:none; color:var(--shimmer); padding:0.8rem 1rem; font-family:'Jost',sans-serif; font-size:0.875rem; outline:none; }
+.coming-soon-input:focus { border-color:var(--gold-dim); }
+.coming-soon-input::placeholder { color:var(--muted); }
+.coming-soon-notify-btn { padding:0.8rem 1.4rem; background:var(--gold); color:var(--black); border:none; cursor:pointer; font-family:'Jost',sans-serif; font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; transition:background 0.25s; white-space:nowrap; }
+.coming-soon-notify-btn:hover { background:var(--gold-light); }
+.coming-soon-note { font-size:0.7rem; color:var(--muted); margin-top:0.8rem; }
+.notify-success { display:none; font-size:0.82rem; color:var(--gold-light); margin-top:1rem; }
+.notify-success.show { display:block; }
+
+/* HOW IT WORKS */
+.how-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--stroke-soft); border:1px solid var(--stroke-soft); margin-top:4rem; }
+.how-step { background:var(--black-card); padding:2rem 1.5rem; }
+.how-num { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-style:italic; color:var(--gold-dim); display:block; margin-bottom:0.8rem; }
+.how-step h4 { font-size:0.82rem; font-weight:400; color:var(--shimmer); margin-bottom:0.4rem; }
+.how-step p { font-size:0.78rem; color:var(--muted); line-height:1.65; }
+
+/* FOOTER */
+footer { padding:4rem 5rem 3rem; border-top:1px solid var(--stroke-soft); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:2rem; }
+.footer-brand p { font-size:0.78rem; color:var(--muted); max-width:260px; line-height:1.7; margin-top:0.5rem; }
+.footer-links { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+.footer-links a { font-size:0.78rem; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.footer-links a:hover { color:var(--gold-light); }
+.footer-social { display:flex; gap:1rem; }
+.social-link { width:36px; height:36px; border:1px solid var(--stroke-soft); display:flex; align-items:center; justify-content:center; color:var(--muted); text-decoration:none; transition:all 0.2s; font-size:0.75rem; }
+.footer-email {
+  font-size:0.78rem; color:var(--muted); text-decoration:none;
+  border-bottom:1px solid var(--stroke-soft); padding-bottom:2px;
+  transition:color 0.2s, border-color 0.2s;
+}
+.footer-email:hover { color:var(--gold-light); border-color:var(--gold-dim); }
+.social-link:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+.footer-copy { width:100%; border-top:1px solid var(--stroke-soft); padding-top:1.5rem; margin-top:1rem; font-size:0.68rem; letter-spacing:0.1em; color:var(--muted); display:flex; justify-content:space-between; }
+
+@media(max-width:900px) {
+  nav { padding:1.2rem 2rem; } .nav-links { display:none; }
+  .page-header { padding:8rem 2rem 3rem; }
+  .section-inner { padding:4rem 2rem; }
+  .boards-grid { grid-template-columns:1fr; }
+  .coming-soon-features { grid-template-columns:1fr; }
+  .how-grid { grid-template-columns:1fr 1fr; }
+  footer { flex-direction:column; align-items:flex-start; padding:3rem 2rem 2rem; }
+  .coming-soon-notify { flex-direction:column; }
+  .coming-soon-input { border-right:1px solid var(--stroke-soft); border-bottom:none; }
+}
+
+/* ══════════ MOBILE NAV ══════════ */
+.menu-btn {
+  display:none; width:36px; height:36px;
+  border:1px solid var(--stroke); background:transparent;
+  cursor:pointer; position:relative; padding:0;
+}
+.menu-btn span {
+  display:block; position:absolute; left:9px; width:18px; height:1px;
+  background:var(--gold-light); transition:transform 0.28s ease, opacity 0.2s ease;
+}
+.menu-btn span:nth-child(1){ top:12px; }
+.menu-btn span:nth-child(2){ top:17px; }
+.menu-btn span:nth-child(3){ top:22px; }
+.menu-btn.open span:nth-child(1){ transform:translateY(5px) rotate(45deg); }
+.menu-btn.open span:nth-child(2){ opacity:0; }
+.menu-btn.open span:nth-child(3){ transform:translateY(-5px) rotate(-45deg); }
+
+.mobile-menu {
+  display:none; position:fixed; left:0; right:0; z-index:490;
+  background:var(--black-mid); border-bottom:1px solid var(--stroke);
+  list-style:none; padding:0.5rem 0 1.2rem;
+  max-height:0; overflow:hidden;
+  transition:max-height 0.32s ease, opacity 0.25s ease;
+  opacity:0;
+}
+.mobile-menu.open { max-height:70vh; opacity:1; overflow-y:auto; }
+.mobile-menu li { list-style:none; }
+.mobile-menu a {
+  display:block; padding:0.95rem 2rem;
+  font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--white-soft); text-decoration:none;
+  border-bottom:1px solid var(--stroke-soft);
+  transition:color 0.2s, background 0.2s;
+}
+.mobile-menu a:hover, .mobile-menu a.active { color:var(--gold-light); background:var(--gold-faint); }
+
+/* ══════════ MOBILE REFINEMENTS ══════════ */
+@media(max-width:900px){
+  .menu-btn { display:block; }
+  .mobile-menu { display:block; }
+
+  /* small text was too dim and too small on phones */
+  .section-label, .page-eyebrow, .sidebar-label { font-size:0.7rem; letter-spacing:0.2em; }
+  .section-sub, .page-sub { font-size:0.95rem; line-height:1.85; }
+  .service-card p, .kit-card p, .sub-list li, .tier-list li,
+  .kit-includes li, .step-text p, .commission-info p,
+  .block p, .block ul li, .policy-block p, .policy-block ul li,
+  .faq-answer-inner, .callout p, .highlight p,
+  .included-list li, .price-note, .form-note, .box-sub { font-size:0.92rem; line-height:1.8; }
+  label, .login-label { font-size:0.72rem; }
+  .footer-links a, .footer-brand p, .footer-email { font-size:0.88rem; }
+  .footer-copy { font-size:0.75rem; flex-direction:column; gap:0.5rem; }
+  .review-text, .row-text { font-size:1.05rem; }
+  .kit-tier-note, .sub-kit-label, .sub-cta-alt, .tier-cta-alt { font-size:0.78rem; }
+  .buy-btn { font-size:0.7rem; padding:0.55rem 1rem; }
+  .tag, .row-service-tag, .review-service-tag { font-size:0.72rem; }
+
+  /* tap targets */
+  .btn-gold, .btn-outline, .nav-cta, .sub-cta, .tier-cta,
+  .form-submit, .btn-submit, .filter-btn, .jump-link { min-height:44px; }
+  .filter-btn, .jump-link { font-size:0.75rem; padding:0.7rem 1.1rem; }
+}
+
+/* stack wide tables into readable blocks instead of squeezing them */
+@media(max-width:640px){
+  .price-table thead, .data-table thead { display:none; }
+  .price-table, .price-table tbody, .price-table tr, .price-table td,
+  .data-table, .data-table tbody, .data-table tr, .data-table td { display:block; width:100%; }
+  .price-table tr, .data-table tr { border-bottom:1px solid var(--stroke-soft); padding:0.6rem 0; }
+  .price-table tr:last-child, .data-table tr:last-child { border-bottom:none; }
+  .price-table td, .data-table td { border:none; padding:0.35rem 1rem; text-align:left !important; }
+  .price-table td:last-child, .data-table td:last-child { text-align:left !important; }
+}
+
+/* very small phones */
+@media(max-width:420px){
+  nav { padding:1rem 1.2rem; }
+  .page-header, .section-inner, .content { padding-left:1.2rem !important; padding-right:1.2rem !important; }
+  footer { padding-left:1.2rem; padding-right:1.2rem; }
+  .mobile-menu a { padding-left:1.2rem; }
+  .hero { padding:0 1.2rem; }
+  .hero-scroll { left:1.2rem; }
+}
+
+/* ══════════ NAV LAYOUT + SCROLL BEHAVIOUR ══════════ */
+.nav-right { display:flex; align-items:center; gap:0.7rem; flex-shrink:0; }
+.nav-right > * { flex-shrink:0; }
+
+nav {
+  transition:transform 0.35s cubic-bezier(.4,0,.2,1),
+             padding 0.3s ease,
+             box-shadow 0.3s ease,
+             background 0.3s ease;
+  will-change:transform;
+}
+/* slides away when scrolling down, returns the moment you scroll up */
+nav.nav-hidden { transform:translateY(-100%); }
+/* condenses slightly once you've left the top of the page */
+nav.nav-scrolled {
+  padding-top:0.95rem; padding-bottom:0.95rem;
+  box-shadow:0 10px 30px rgba(0,0,0,0.28);
+}
+nav.nav-scrolled .nav-logo { font-size:1.4rem; }
+.nav-logo { transition:font-size 0.3s ease; }
+
+/* the bar was hardcoded dark — give light mode its own surface */
+[data-theme="light"] nav { background:rgba(245,239,227,0.88); }
+[data-theme="light"] nav.nav-scrolled { background:rgba(245,239,227,0.96); box-shadow:0 10px 30px rgba(65,42,19,0.10); }
+[data-theme="light"] .mobile-menu { background:var(--black-mid); }
+
+@media(max-width:900px){
+  .nav-right { gap:0.5rem; }
+  .nav-cta { padding:0.6rem 1rem; font-size:0.68rem; }
+}
+@media(max-width:420px){
+  .nav-right { gap:0.4rem; }
+  .nav-cta { display:none; }   /* the mobile menu already has Commission */
+}
+
+/* ══════════ SHARED MOBILE SAFEGUARDS ══════════ */
+@media(max-width:900px){
+  /* nothing should be able to force sideways scrolling */
+  html, body { overflow-x:hidden; max-width:100%; }
+  img, svg, table, pre { max-width:100%; }
+  h1, h2, h3, p, li, td { overflow-wrap:break-word; }
+
+  /* wrapping rows that were laid out for desktop widths */
+  .jump-links { gap:0.6rem; }
+  .footer-links { gap:0.8rem; }
+  footer { gap:1.5rem; }
+  .section-inner { padding-left:2rem; padding-right:2rem; }
+}
+
+/* ══════════ CARD CONSISTENCY (MOBILE) ══════════
+   Desktop padding ranges from 1rem to 3rem depending on the component.
+   On a phone that reads as sloppy, so every boxed element lands on the
+   same rhythm. */
+@media(max-width:700px){
+  .service-card, .kit-card, .sub-card, .tier-card, .review-card,
+  .included-box, .commission-form, .leave-review-box, .kit-card,
+  .board-section, .mb-card, .success-box, .login-box, .board-col {
+    padding:1.5rem 1.35rem;
+  }
+  .callout, .highlight, .policy-highlight, .kit-tier-note,
+  .sub-kit-banner, .kit-banner, .next-steps {
+    padding:1.1rem 1.2rem;
+  }
+  .cta-box, .coming-soon-wrap, .waitlist-banner {
+    padding:2rem 1.35rem;
+  }
+  .board-info { padding:1.2rem 1.3rem; }
+
+  /* consistent vertical rhythm between stacked cards */
+  .kits-grid, .subs-grid, .tiers-grid, .services-grid,
+  .reviews-grid, .boards-grid, .coming-soon-features { gap:0.9rem; }
+
+  /* callouts stacked back to back were touching */
+  .callout + .callout, .highlight + .highlight { margin-top:0.8rem; }
+
+  /* headings inside cards were sized for wide columns */
+  .cta-box h3, .coming-soon-title, .waitlist-banner h2 { font-size:1.7rem; line-height:1.2; }
+  .tier-price, .sub-price { font-size:2.4rem; }
+  .tier-name, .sub-name { font-size:1.7rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TABLETS
+   The layout previously jumped from mobile (≤900px) straight to a
+   desktop built for 1400px+. That left iPad landscape cramped and
+   iPad portrait stacked into one column with width to spare.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Landscape iPad & small laptops (901–1200px) ── */
+@media(min-width:901px) and (max-width:1200px){
+  nav { padding:1.25rem 2rem; }
+  .nav-links { gap:1.35rem; }
+  .nav-links a { font-size:0.65rem; letter-spacing:0.13em; }
+  .nav-cta { padding:0.55rem 1.05rem; font-size:0.65rem; }
+  .nav-right { gap:0.6rem; }
+
+  .section-inner { padding:4.5rem 3rem; }
+  .page-header   { padding:9rem 3rem 3.5rem; }
+  .jump-links    { padding:1.5rem 3rem; }
+  .content       { padding:3.5rem 3rem; }
+  footer         { padding:3.5rem 3rem 2.5rem; }
+  .hero          { padding:0 3rem; }
+  .hero-scroll   { left:3rem; }
+
+  .about-grid      { gap:3rem; }
+  .commission-wrap { gap:3rem; }
+  .two-col         { gap:2rem; }
+  .sidebar         { padding:3rem 1.4rem; }
+  .portfolio-grid  { padding:0 3rem 1rem; }
+
+  .section-title { font-size:clamp(2rem,3.6vw,2.9rem); }
+  .page-title    { font-size:clamp(2.4rem,4.6vw,3.6rem); }
+}
+
+/* ── Portrait iPad (701–900px) ── */
+@media(min-width:701px) and (max-width:900px){
+  .section-inner { padding:4.5rem 2.5rem; }
+  .page-header   { padding:8.5rem 2.5rem 3rem; }
+  .jump-links    { padding:1.5rem 2.5rem; }
+  .content       { padding:3.5rem 2.5rem; }
+  footer         { padding:3.5rem 2.5rem 2.5rem; }
+  .hero          { padding:0 2.5rem; }
+  .hero-scroll   { left:2.5rem; }
+
+  /* natural pairs sit side by side instead of stacking */
+  .subs-grid, .tiers-grid { grid-template-columns:1fr 1fr; gap:1.2rem; }
+  .boards-grid            { grid-template-columns:1fr 1fr; }
+  .coming-soon-features   { grid-template-columns:repeat(3,1fr); }
+  .how-grid               { grid-template-columns:repeat(4,1fr); }
+  .reviews-grid           { grid-template-columns:1fr 1fr; }
+  .services-grid          { grid-template-columns:1fr 1fr; }
+  .kits-grid              { grid-template-columns:1fr 1fr; }
+
+  /* there's room for these to sit horizontally again */
+  .hero-actions { flex-direction:row; max-width:none; width:auto; }
+  .about-grid { grid-template-columns:minmax(0,0.8fr) 1fr; gap:2.5rem; }
+  .about-image-wrap { max-width:300px; }
+  .commission-wrap { grid-template-columns:1fr; gap:2.5rem; }
+  .form-row { grid-template-columns:1fr 1fr; }
+  .form-group.full { grid-column:span 2; }
+
+  /* portfolio goes two-up with a full-width hero */
+  .portfolio-grid { padding:0 2.5rem 1rem; gap:1rem; grid-auto-rows:118px; }
+  .portfolio-item          { grid-column:span 6 !important; grid-row:span 2 !important; }
+  .portfolio-item.feature  { grid-column:span 12 !important; grid-row:span 3 !important; }
+  .portfolio-item.tall     { grid-row:span 3 !important; }
+  .portfolio-item.strip    { grid-column:span 12 !important; grid-row:span 1 !important; }
+
+  /* type sized for mobile is slightly large at this width */
+  .section-label, .page-eyebrow { font-size:0.66rem; }
+  .section-sub, .page-sub { font-size:0.92rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">BoviBerry</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#kits">Brand Kits</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+    <li><a href="boards.html" class="active">Boards</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a href="index.html#commission" class="nav-cta">Work with me</a>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <p class="page-eyebrow">Inspiration & vision</p>
+  <h1 class="page-title">Boards & <em>Inspiration.</em></h1>
+  <p class="page-sub">A window into the visual world that informs BoviBerry's work — curated boards for mood, style, and creative direction. Use these as a starting point when building your brief.</p>
+</div>
+
+<div class="gold-divider"></div>
+
+<!-- PINTEREST / COSMOS BOARDS -->
+<section id="boards">
+  <div class="section-inner">
+    <p class="section-label">Curated collections</p>
+    <h2 class="section-title">Pinterest & Cosmos <em>boards.</em></h2>
+    <p class="section-sub">Browse these boards for visual inspiration — share one with your commission brief to help communicate the mood and direction you're going for.</p>
+
+    <div class="boards-grid">
+
+      <!-- BOARD 1 — Replace href="#" with real Pinterest/Cosmos URL -->
+      <a class="board-card" href="#" target="_blank" rel="noopener">
+        <div class="board-corner tr"></div>
+        <div class="board-preview">
+          <!-- Replace with: style="background:url('your-preview.jpg') center/cover" -->
+          <svg class="board-preview-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <div class="board-preview-overlay">
+            <span class="board-preview-cta">View board →</span>
+          </div>
+        </div>
+        <div class="board-info">
+          <div class="board-platform">
+            <!-- Pinterest icon color -->
+            <div class="board-platform-icon" style="background:#e60023;"></div>
+            <span class="board-platform-name">Pinterest</span>
+          </div>
+          <div class="board-name">Dark & Cinematic</div>
+          <div class="board-desc">Moody, atmospheric visuals — deep shadows, dramatic lighting, and editorial compositions.</div>
+          <div class="board-count">— pins · Add count when live</div>
+        </div>
+      </a>
+
+      <!-- BOARD 2 -->
+      <a class="board-card" href="#" target="_blank" rel="noopener">
+        <div class="board-corner tr"></div>
+        <div class="board-preview">
+          <svg class="board-preview-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="board-preview-overlay"><span class="board-preview-cta">View board →</span></div>
+        </div>
+        <div class="board-info">
+          <div class="board-platform">
+            <div class="board-platform-icon" style="background:#e60023;"></div>
+            <span class="board-platform-name">Pinterest</span>
+          </div>
+          <div class="board-name">Brand Identity Inspo</div>
+          <div class="board-desc">Logos, typography systems, color palettes, and brand language that feels intentional and refined.</div>
+          <div class="board-count">— pins · Add count when live</div>
+        </div>
+      </a>
+
+      <!-- BOARD 3 -->
+      <a class="board-card" href="#" target="_blank" rel="noopener">
+        <div class="board-corner tr"></div>
+        <div class="board-preview">
+          <svg class="board-preview-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="board-preview-overlay"><span class="board-preview-cta">View board →</span></div>
+        </div>
+        <div class="board-info">
+          <div class="board-platform">
+            <div class="board-platform-icon" style="background:#e60023;"></div>
+            <span class="board-platform-name">Pinterest</span>
+          </div>
+          <div class="board-name">YouTube Creator Aesthetics</div>
+          <div class="board-desc">Channel banners, thumbnails, and content branding for creators who want to stand out.</div>
+          <div class="board-count">— pins · Add count when live</div>
+        </div>
+      </a>
+
+      <!-- BOARD 4 — Cosmos -->
+      <a class="board-card" href="#" target="_blank" rel="noopener">
+        <div class="board-corner tr"></div>
+        <div class="board-preview">
+          <svg class="board-preview-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="board-preview-overlay"><span class="board-preview-cta">View board →</span></div>
+        </div>
+        <div class="board-info">
+          <div class="board-platform">
+            <!-- Cosmos icon color — update if needed -->
+            <div class="board-platform-icon" style="background:#6c63ff; border-radius:50%;"></div>
+            <span class="board-platform-name">Cosmos</span>
+          </div>
+          <div class="board-name">Expressive & Fluid</div>
+          <div class="board-desc">Art that moves — organic shapes, flowing lines, and compositions that feel alive and emotional.</div>
+          <div class="board-count">— items · Add count when live</div>
+        </div>
+      </a>
+
+      <!-- BOARD 5 — Cosmos -->
+      <a class="board-card" href="#" target="_blank" rel="noopener">
+        <div class="board-corner tr"></div>
+        <div class="board-preview">
+          <svg class="board-preview-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="board-preview-overlay"><span class="board-preview-cta">View board →</span></div>
+        </div>
+        <div class="board-info">
+          <div class="board-platform">
+            <div class="board-platform-icon" style="background:#6c63ff; border-radius:50%;"></div>
+            <span class="board-platform-name">Cosmos</span>
+          </div>
+          <div class="board-name">Photo Manipulation</div>
+          <div class="board-desc">Surreal composites, dreamlike edits, and photo art that transforms reality into something extraordinary.</div>
+          <div class="board-count">— items · Add count when live</div>
+        </div>
+      </a>
+
+      <!-- BOARD 6 — Cosmos -->
+      <a class="board-card" href="#" target="_blank" rel="noopener">
+        <div class="board-corner tr"></div>
+        <div class="board-preview">
+          <svg class="board-preview-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="board-preview-overlay"><span class="board-preview-cta">View board →</span></div>
+        </div>
+        <div class="board-info">
+          <div class="board-platform">
+            <div class="board-platform-icon" style="background:#6c63ff; border-radius:50%;"></div>
+            <span class="board-platform-name">Cosmos</span>
+          </div>
+          <div class="board-name">Color & Texture</div>
+          <div class="board-desc">Rich palettes, material studies, and textural references for projects that need depth and tactility.</div>
+          <div class="board-count">— items · Add count when live</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- MOOD BOARDS — COMING SOON -->
+<section id="mood-boards" class="coming-soon-bg">
+  <div class="section-inner">
+    <p class="section-label">Coming soon</p>
+    <h2 class="section-title">Client <em>mood boards.</em></h2>
+    <p class="section-sub">A private, shareable mood board system built directly into this site — no third-party tools needed.</p>
+
+    <div class="coming-soon-wrap">
+      <div class="coming-soon-orb"></div>
+      <span class="coming-soon-badge">✦ Now live</span>
+      <h3 class="coming-soon-title">Mood boards, <em>built by you.</em></h3>
+      <p class="coming-soon-sub">Build a visual brief for your project — upload reference images, drop inspiration links, describe your vision, and pick your color palette. It all goes straight to BoviBerry alongside your commission.</p>
+      <a href="moodboard.html" style="display:inline-block;padding:1rem 2.5rem;background:var(--gold);color:var(--black);text-decoration:none;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:400;transition:background 0.25s;margin-bottom:3rem;" onmouseover="this.style.background='var(--gold-light)'" onmouseout="this.style.background='var(--gold)'">Build your mood board →</a>
+
+      <div class="coming-soon-features">
+        <div class="coming-soon-feature">
+          <div class="coming-soon-feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <h4>Visual direction</h4>
+          <p>Images, references, and color palettes curated specifically for your project.</p>
+        </div>
+        <div class="coming-soon-feature">
+          <div class="coming-soon-feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </div>
+          <h4>Private shareable link</h4>
+          <p>Each board has a unique link — only you and BoviBerry can access it.</p>
+        </div>
+        <div class="coming-soon-feature">
+          <div class="coming-soon-feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h4>Leave feedback</h4>
+          <p>React to individual items and leave notes directly on the board before work begins.</p>
+        </div>
+      </div>
+
+      <!-- HOW IT WORKS -->
+      <div class="how-grid">
+        <div class="how-step">
+          <span class="how-num">01</span>
+          <h4>Build your board</h4>
+          <p>Upload references, add links, describe your vision, pick colors.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">02</span>
+          <h4>Send it in</h4>
+          <p>Your board goes straight to BoviBerry with your name attached.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">03</span>
+          <h4>Submit your commission</h4>
+          <p>Your board gets matched to your commission request automatically.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-num">04</span>
+          <h4>Work begins</h4>
+          <p>BoviBerry creates with your exact vision as the north star.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<footer>
+  <div class="footer-brand">
+    <a href="index.html" class="nav-logo">BoviBerry</a>
+    <p>Digital art & design — graphic design, photo manipulation, and brand identity for creators and businesses.</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="faq.html">FAQ & Policy</a></li>
+    <li><a href="boards.html">Boards</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+  </ul>
+  <div class="footer-social">
+    <!-- Social icons go back here once she has business accounts:
+         <a href="https://instagram.com/HANDLE" class="social-link" title="Instagram" target="_blank" rel="noopener">IG</a>
+         <a href="https://tiktok.com/@HANDLE" class="social-link" title="TikTok" target="_blank" rel="noopener">TK</a>
+    -->
+    <a href="mailto:Boviberrystudios@gmail.com" class="footer-email">Boviberrystudios@gmail.com</a>
+  </div>
+  <div class="footer-copy">
+    <span>© 2026 BoviBerry. All rights reserved.</span>
+    <span>Made with intention.</span>
+  </div>
+</footer>
+
+<script>
+// ── THEME ──
+const html = document.documentElement;
+const saved = localStorage.getItem('bb-theme') || 'dark';
+if(saved === 'light') html.setAttribute('data-theme','light');
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const isLight = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  localStorage.setItem('bb-theme', isLight ? 'dark' : 'light');
+});
+
+// ── CURSOR ──
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mouseX=0,mouseY=0,ringX=0,ringY=0;
+document.addEventListener('mousemove', e => {
+  mouseX=e.clientX; mouseY=e.clientY;
+  dot.style.left=mouseX+'px'; dot.style.top=mouseY+'px';
+}, {passive:true});
+(function animate(){
+  ringX+=(mouseX-ringX)*0.12; ringY+=(mouseY-ringY)*0.12;
+  ring.style.left=ringX+'px'; ring.style.top=ringY+'px';
+  requestAnimationFrame(animate);
+})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{dot.classList.add('hovering');ring.classList.add('hovering');});
+  el.addEventListener('mouseleave',()=>{dot.classList.remove('hovering');ring.classList.remove('hovering');});
+});
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; observer.unobserve(e.target); }
+  });
+}, { threshold:0.08 });
+document.querySelectorAll('.board-card, .coming-soon-feature, .how-step').forEach(el => {
+  el.style.opacity='0'; el.style.transform='translateY(20px)';
+  el.style.transition='opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+
+// ── NOTIFY SIGNUP ──
+function notifySignup() {
+  const email = document.getElementById('notifyEmail').value;
+  if(!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+  document.getElementById('notifySuccess').classList.add('show');
+  document.getElementById('notifyEmail').value = '';
+  document.querySelector('.coming-soon-notify').style.display = 'none';
+}
+
+// ── MOBILE NAV (clones the desktop links so there's one source of truth) ──
+(function(){
+  const src = document.querySelector('.nav-links');
+  const btn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobileMenu');
+  if(!src || !btn || !panel) return;
+  panel.innerHTML = src.innerHTML;
+  const nav = document.querySelector('nav');
+  const place = () => panel.style.top = nav.offsetHeight + 'px';
+  place(); window.addEventListener('resize', place, {passive:true});
+  const close = () => { panel.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); };
+  btn.addEventListener('click', () => {
+    const open = panel.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  window.addEventListener('resize', () => { if(window.innerWidth > 900) close(); }, {passive:true});
+})();
+
+// ── SCROLL-AWARE NAV ──
+(function(){
+  const nav = document.querySelector('nav');
+  if(!nav) return;
+  const panel = document.getElementById('mobileMenu');
+  let lastY = window.scrollY;
+  let ticking = false;
+
+  function update(){
+    const y = window.scrollY;
+    const menuOpen = panel && panel.classList.contains('open');
+
+    if (y < 60) {
+      nav.classList.remove('nav-hidden','nav-scrolled');
+    } else {
+      nav.classList.add('nav-scrolled');
+      if (!menuOpen) {
+        // small threshold so tiny jitters don't flip it
+        if (y > lastY + 8)      nav.classList.add('nav-hidden');
+        else if (y < lastY - 8) nav.classList.remove('nav-hidden');
+      }
+    }
+    if (panel) panel.style.top = nav.offsetHeight + 'px';
+    lastY = y;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive:true });
+
+  // never leave the bar hidden when the menu is open
+  if (panel) {
+    new MutationObserver(() => {
+      if (panel.classList.contains('open')) nav.classList.remove('nav-hidden');
+      panel.style.top = nav.offsetHeight + 'px';
+    }).observe(panel, { attributes:true, attributeFilter:['class'] });
+  }
+})();
+</script>
+</body>
+</html>

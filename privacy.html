@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — BoviBerry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<meta name="description" content="How BoviBerry collects, uses, stores and protects your information.">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --brand-green:#2C7449; --brand-lime:#9BD16B; --brand-amber:#FFAA1B;
+  --brand-cocoa:#412A13; --brand-clay:#815121;
+  --black:#13100B; --black-mid:#1A1510; --black-soft:#2A1E12; --black-card:#1D1811;
+  --gold:#9BD16B; --gold-light:#B8E08F; --gold-dim:#7BB04F;
+  --gold-faint:rgba(155,209,107,0.12); --shimmer:#F5EFE3; --white-soft:#E2D9C6;
+  --muted:#B0A18A; --stroke:rgba(155,209,107,0.18); --stroke-soft:rgba(155,209,107,0.08);
+  --transition-theme:background 0.4s ease,color 0.4s ease,border-color 0.4s ease;
+}
+[data-theme="light"] {
+  --black:#F5EFE3; --black-mid:#EFE8DA; --black-soft:#E5DBC8; --black-card:#EFE8DA;
+  --gold:#2C7449; --gold-light:#815121; --gold-dim:#815121;
+  --gold-faint:rgba(44,116,73,0.1); --shimmer:#291B0C; --white-soft:#412A13;
+  --muted:#574733; --stroke:rgba(44,116,73,0.2); --stroke-soft:rgba(44,116,73,0.1);
+}
+body { background:var(--black); color:var(--shimmer); font-family:'Jost',sans-serif; font-weight:300; overflow-x:hidden; transition:var(--transition-theme); }
+body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:0.035; will-change:transform; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+nav { position:fixed; top:0; left:0; right:0; z-index:500; display:flex; justify-content:space-between; align-items:center; padding:1.4rem 5rem; background:rgba(19,16,11,0.88); backdrop-filter:blur(18px); border-bottom:1px solid var(--stroke); }
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:400; letter-spacing:0.06em; color:var(--gold-light); text-decoration:none; }
+.nav-links { display:flex; gap:2.2rem; list-style:none; }
+.nav-links a { font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--gold-light); }
+.theme-toggle { width:36px; height:36px; border:1px solid var(--stroke); background:transparent; cursor:pointer; color:var(--muted); display:flex; align-items:center; justify-content:center; transition:all 0.25s; }
+.theme-toggle:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+.theme-toggle svg { width:16px; height:16px; }
+.icon-moon { display:block; } .icon-sun { display:none; }
+[data-theme="light"] .icon-moon { display:none; } [data-theme="light"] .icon-sun { display:block; }
+.nav-cta { font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; padding:0.6rem 1.5rem; border:1px solid var(--gold-dim); color:var(--gold-light); text-decoration:none; transition:all 0.25s; }
+.nav-cta:hover { background:var(--gold-faint); }
+
+*, *::before, *::after { cursor:none !important; }
+.cursor-dot { position:fixed; width:8px; height:8px; border-radius:50%; background:var(--gold); pointer-events:none; z-index:99999; transform:translate(-50%,-50%); transition:width 0.2s ease,height 0.2s ease; will-change:transform; }
+.cursor-ring { position:fixed; width:32px; height:32px; border-radius:50%; border:1px solid rgba(155,209,107,0.5); pointer-events:none; z-index:99998; transform:translate(-50%,-50%); transition:width 0.25s ease,height 0.25s ease; will-change:transform; }
+.cursor-dot.hovering { width:4px; height:4px; }
+.cursor-ring.hovering { width:48px; height:48px; }
+@media(pointer:coarse){ .cursor-dot,.cursor-ring{display:none} *,*::before,*::after{cursor:auto !important} }
+
+.page-header { padding:10rem 5rem 4rem; position:relative; overflow:hidden; border-bottom:1px solid var(--stroke-soft); }
+.orb { position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; width:400px; height:400px; background:radial-gradient(circle,rgba(155,209,107,0.13),transparent 70%); top:-110px; right:6%; }
+.page-eyebrow { font-size:0.68rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1.2rem; display:flex; align-items:center; gap:0.8rem; }
+.page-eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--gold-dim); }
+.page-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.6rem,5.5vw,4.5rem); font-weight:300; line-height:1.05; margin-bottom:1rem; }
+.page-title em { font-style:italic; color:var(--gold-light); }
+.page-sub { font-size:0.9rem; line-height:1.8; color:var(--muted); max-width:540px; }
+
+.gold-divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); }
+
+.page-main { display:grid; grid-template-columns:230px 1fr; }
+.sidebar { padding:3rem 2rem; border-right:1px solid var(--stroke-soft); position:sticky; top:5rem; height:fit-content; }
+.sidebar-label { font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:0.8rem; display:block; }
+.sidebar-link { display:block; font-size:0.75rem; color:var(--muted); text-decoration:none; padding:0.35rem 0 0.35rem 0.8rem; border-left:2px solid transparent; transition:all 0.2s; line-height:1.4; }
+.sidebar-link:hover { color:var(--gold-light); border-left-color:var(--gold-dim); }
+
+.content { padding:4rem 5rem; max-width:900px; }
+.last-updated { font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:2.5rem; display:flex; align-items:center; gap:0.5rem; }
+.last-updated::before { content:''; display:block; width:16px; height:1px; background:var(--muted); }
+
+.intro { font-size:0.95rem; line-height:1.9; color:var(--muted); margin-bottom:3rem; padding-bottom:2rem; border-bottom:1px solid var(--stroke-soft); }
+.intro strong { color:var(--shimmer); font-weight:400; }
+
+.block { margin-bottom:3rem; scroll-margin-top:7rem; }
+.block h2 { font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:400; color:var(--shimmer); margin-bottom:1rem; display:flex; align-items:center; gap:0.7rem; }
+.block h2::before { content:''; display:inline-block; width:5px; height:5px; background:var(--gold-dim); flex-shrink:0; }
+.block h3 { font-size:0.85rem; font-weight:400; color:var(--gold-light); margin:1.5rem 0 0.6rem; letter-spacing:0.02em; }
+.block p { font-size:0.875rem; line-height:1.9; color:var(--muted); margin-bottom:0.9rem; }
+.block strong { color:var(--shimmer); font-weight:400; }
+.block a { color:var(--gold-dim); text-decoration:none; border-bottom:1px solid var(--stroke); }
+.block a:hover { color:var(--gold-light); }
+.block ul { list-style:none; margin:0.6rem 0 1rem; }
+.block ul li { font-size:0.875rem; line-height:1.75; color:var(--muted); padding:0.35rem 0 0.35rem 1.3rem; position:relative; }
+.block ul li::before { content:''; position:absolute; left:0; top:0.85rem; width:4px; height:4px; background:var(--gold-dim); border-radius:50%; }
+
+.data-table { width:100%; border-collapse:collapse; border:1px solid var(--stroke-soft); margin:1rem 0 1.5rem; }
+.data-table th { font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-dim); padding:0.8rem 1rem; border-bottom:1px solid var(--stroke-soft); text-align:left; font-weight:400; background:var(--black-mid); }
+.data-table td { font-size:0.82rem; color:var(--muted); padding:0.9rem 1rem; border-bottom:1px solid var(--stroke-soft); line-height:1.6; vertical-align:top; }
+.data-table tr:last-child td { border-bottom:none; }
+.data-table td:first-child { color:var(--shimmer); white-space:nowrap; }
+
+.highlight { background:var(--gold-faint); border:1px solid var(--stroke); border-left:3px solid var(--gold-dim); padding:1.2rem 1.4rem; margin:1.2rem 0; }
+.highlight p { font-size:0.85rem; line-height:1.8; color:var(--muted); margin:0; }
+.highlight strong { color:var(--gold-light); font-weight:400; }
+
+footer { padding:4rem 5rem 3rem; border-top:1px solid var(--stroke-soft); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:2rem; }
+.footer-brand p { font-size:0.78rem; color:var(--muted); max-width:260px; line-height:1.7; margin-top:0.5rem; }
+.footer-links { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+.footer-links a { font-size:0.78rem; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.footer-links a:hover { color:var(--gold-light); }
+.footer-social { display:flex; gap:1rem; }
+.social-link { width:36px; height:36px; border:1px solid var(--stroke-soft); display:flex; align-items:center; justify-content:center; color:var(--muted); text-decoration:none; transition:all 0.2s; font-size:0.75rem; }
+.footer-email {
+  font-size:0.78rem; color:var(--muted); text-decoration:none;
+  border-bottom:1px solid var(--stroke-soft); padding-bottom:2px;
+  transition:color 0.2s, border-color 0.2s;
+}
+.footer-email:hover { color:var(--gold-light); border-color:var(--gold-dim); }
+.social-link:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+.footer-copy { width:100%; border-top:1px solid var(--stroke-soft); padding-top:1.5rem; margin-top:1rem; font-size:0.68rem; letter-spacing:0.1em; color:var(--muted); display:flex; justify-content:space-between; }
+
+@media(max-width:900px){
+  nav { padding:1.2rem 2rem; } .nav-links { display:none; }
+  .page-header { padding:8rem 2rem 3rem; }
+  .page-main { grid-template-columns:1fr; }
+  .sidebar { display:none; }
+  .content { padding:3rem 2rem; }
+  .data-table td:first-child { white-space:normal; }
+  footer { flex-direction:column; align-items:flex-start; padding:3rem 2rem 2rem; }
+}
+
+/* ══════════ MOBILE NAV ══════════ */
+.menu-btn {
+  display:none; width:36px; height:36px;
+  border:1px solid var(--stroke); background:transparent;
+  cursor:pointer; position:relative; padding:0;
+}
+.menu-btn span {
+  display:block; position:absolute; left:9px; width:18px; height:1px;
+  background:var(--gold-light); transition:transform 0.28s ease, opacity 0.2s ease;
+}
+.menu-btn span:nth-child(1){ top:12px; }
+.menu-btn span:nth-child(2){ top:17px; }
+.menu-btn span:nth-child(3){ top:22px; }
+.menu-btn.open span:nth-child(1){ transform:translateY(5px) rotate(45deg); }
+.menu-btn.open span:nth-child(2){ opacity:0; }
+.menu-btn.open span:nth-child(3){ transform:translateY(-5px) rotate(-45deg); }
+
+.mobile-menu {
+  display:none; position:fixed; left:0; right:0; z-index:490;
+  background:var(--black-mid); border-bottom:1px solid var(--stroke);
+  list-style:none; padding:0.5rem 0 1.2rem;
+  max-height:0; overflow:hidden;
+  transition:max-height 0.32s ease, opacity 0.25s ease;
+  opacity:0;
+}
+.mobile-menu.open { max-height:70vh; opacity:1; overflow-y:auto; }
+.mobile-menu li { list-style:none; }
+.mobile-menu a {
+  display:block; padding:0.95rem 2rem;
+  font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--white-soft); text-decoration:none;
+  border-bottom:1px solid var(--stroke-soft);
+  transition:color 0.2s, background 0.2s;
+}
+.mobile-menu a:hover, .mobile-menu a.active { color:var(--gold-light); background:var(--gold-faint); }
+
+/* ══════════ MOBILE REFINEMENTS ══════════ */
+@media(max-width:900px){
+  .menu-btn { display:block; }
+  .mobile-menu { display:block; }
+
+  /* small text was too dim and too small on phones */
+  .section-label, .page-eyebrow, .sidebar-label { font-size:0.7rem; letter-spacing:0.2em; }
+  .section-sub, .page-sub { font-size:0.95rem; line-height:1.85; }
+  .service-card p, .kit-card p, .sub-list li, .tier-list li,
+  .kit-includes li, .step-text p, .commission-info p,
+  .block p, .block ul li, .policy-block p, .policy-block ul li,
+  .faq-answer-inner, .callout p, .highlight p,
+  .included-list li, .price-note, .form-note, .box-sub { font-size:0.92rem; line-height:1.8; }
+  label, .login-label { font-size:0.72rem; }
+  .footer-links a, .footer-brand p, .footer-email { font-size:0.88rem; }
+  .footer-copy { font-size:0.75rem; flex-direction:column; gap:0.5rem; }
+  .review-text, .row-text { font-size:1.05rem; }
+  .kit-tier-note, .sub-kit-label, .sub-cta-alt, .tier-cta-alt { font-size:0.78rem; }
+  .buy-btn { font-size:0.7rem; padding:0.55rem 1rem; }
+  .tag, .row-service-tag, .review-service-tag { font-size:0.72rem; }
+
+  /* tap targets */
+  .btn-gold, .btn-outline, .nav-cta, .sub-cta, .tier-cta,
+  .form-submit, .btn-submit, .filter-btn, .jump-link { min-height:44px; }
+  .filter-btn, .jump-link { font-size:0.75rem; padding:0.7rem 1.1rem; }
+}
+
+/* stack wide tables into readable blocks instead of squeezing them */
+/* ── TABLES BECOME CARDS ON PHONES ──
+   A table squeezed into 375px is unreadable, so each row is rebuilt as a
+   self-contained card. The caption needs display:block explicitly — left as
+   table-caption inside a display:block table it collapses to a narrow
+   column and stacks one word per line. */
+@media(max-width:700px){
+  .price-table, .data-table {
+    display:block; width:100%;
+    border:none; background:transparent;
+  }
+  .price-table caption, .data-table caption {
+    display:block; width:100%;
+    padding:0 0 0.9rem; margin:0;
+    font-size:0.68rem; letter-spacing:0.2em;
+    color:var(--gold-dim); text-align:left;
+  }
+  .price-table thead, .data-table thead { display:none; }
+  .price-table tbody, .data-table tbody { display:block; width:100%; }
+
+  .price-table tr, .data-table tr {
+    display:block; width:100%;
+    background:var(--black-card);
+    border:1px solid var(--stroke-soft);
+    padding:1.3rem 1.4rem;
+    margin-bottom:0.8rem;
+  }
+  .price-table tr:last-child, .data-table tr:last-child { margin-bottom:0; }
+  .price-table tr:hover td, .data-table tr:hover td { background:transparent; }
+
+  .price-table td, .data-table td {
+    display:block; width:100%;
+    border:none; padding:0; background:transparent;
+    text-align:left !important;
+  }
+  /* name + description */
+  .price-table td:first-child, .data-table td:first-child {
+    font-size:1.05rem; color:var(--shimmer); line-height:1.4;
+  }
+  .price-note {
+    font-size:0.88rem; line-height:1.65;
+    margin-top:0.45rem; color:var(--muted);
+  }
+  /* price / availability, separated from the description */
+  .price-table td:last-child, .data-table td:last-child {
+    margin-top:1rem; padding-top:1rem;
+    border-top:1px solid var(--stroke-soft);
+    font-size:0.9rem; line-height:1.6;
+  }
+  .price-cell { font-size:1.7rem; }
+  .buy-btn {
+    display:block; width:100%;
+    margin-top:0.9rem; text-align:center;
+    padding:0.85rem; font-size:0.72rem;
+  }
+}
+
+/* very small phones */
+@media(max-width:420px){
+  nav { padding:1rem 1.2rem; }
+  .page-header, .section-inner, .content { padding-left:1.2rem !important; padding-right:1.2rem !important; }
+  footer { padding-left:1.2rem; padding-right:1.2rem; }
+  .mobile-menu a { padding-left:1.2rem; }
+  .hero { padding:0 1.2rem; }
+  .hero-scroll { left:1.2rem; }
+}
+
+/* ══════════ NAV LAYOUT + SCROLL BEHAVIOUR ══════════ */
+.nav-right { display:flex; align-items:center; gap:0.7rem; flex-shrink:0; }
+.nav-right > * { flex-shrink:0; }
+
+nav {
+  transition:transform 0.35s cubic-bezier(.4,0,.2,1),
+             padding 0.3s ease,
+             box-shadow 0.3s ease,
+             background 0.3s ease;
+  will-change:transform;
+}
+/* slides away when scrolling down, returns the moment you scroll up */
+nav.nav-hidden { transform:translateY(-100%); }
+/* condenses slightly once you've left the top of the page */
+nav.nav-scrolled {
+  padding-top:0.95rem; padding-bottom:0.95rem;
+  box-shadow:0 10px 30px rgba(0,0,0,0.28);
+}
+nav.nav-scrolled .nav-logo { font-size:1.4rem; }
+.nav-logo { transition:font-size 0.3s ease; }
+
+/* the bar was hardcoded dark — give light mode its own surface */
+[data-theme="light"] nav { background:rgba(245,239,227,0.88); }
+[data-theme="light"] nav.nav-scrolled { background:rgba(245,239,227,0.96); box-shadow:0 10px 30px rgba(65,42,19,0.10); }
+[data-theme="light"] .mobile-menu { background:var(--black-mid); }
+
+@media(max-width:900px){
+  .nav-right { gap:0.5rem; }
+  .nav-cta { padding:0.6rem 1rem; font-size:0.68rem; }
+}
+@media(max-width:420px){
+  .nav-right { gap:0.4rem; }
+  .nav-cta { display:none; }   /* the mobile menu already has Commission */
+}
+
+/* ══════════ SHARED MOBILE SAFEGUARDS ══════════ */
+@media(max-width:900px){
+  /* nothing should be able to force sideways scrolling */
+  html, body { overflow-x:hidden; max-width:100%; }
+  img, svg, table, pre { max-width:100%; }
+  h1, h2, h3, p, li, td { overflow-wrap:break-word; }
+
+  /* wrapping rows that were laid out for desktop widths */
+  .jump-links { gap:0.6rem; }
+  .footer-links { gap:0.8rem; }
+  footer { gap:1.5rem; }
+  .section-inner { padding-left:2rem; padding-right:2rem; }
+}
+
+/* ══════════ CARD CONSISTENCY (MOBILE) ══════════
+   Desktop padding ranges from 1rem to 3rem depending on the component.
+   On a phone that reads as sloppy, so every boxed element lands on the
+   same rhythm. */
+@media(max-width:700px){
+  .service-card, .kit-card, .sub-card, .tier-card, .review-card,
+  .included-box, .commission-form, .leave-review-box, .kit-card,
+  .board-section, .mb-card, .success-box, .login-box, .board-col {
+    padding:1.5rem 1.35rem;
+  }
+  .callout, .highlight, .policy-highlight, .kit-tier-note,
+  .sub-kit-banner, .kit-banner, .next-steps {
+    padding:1.1rem 1.2rem;
+  }
+  .cta-box, .coming-soon-wrap, .waitlist-banner {
+    padding:2rem 1.35rem;
+  }
+  .board-info { padding:1.2rem 1.3rem; }
+
+  /* consistent vertical rhythm between stacked cards */
+  .kits-grid, .subs-grid, .tiers-grid, .services-grid,
+  .reviews-grid, .boards-grid, .coming-soon-features { gap:0.9rem; }
+
+  /* callouts stacked back to back were touching */
+  .callout + .callout, .highlight + .highlight { margin-top:0.8rem; }
+
+  /* headings inside cards were sized for wide columns */
+  .cta-box h3, .coming-soon-title, .waitlist-banner h2 { font-size:1.7rem; line-height:1.2; }
+  .tier-price, .sub-price { font-size:2.4rem; }
+  .tier-name, .sub-name { font-size:1.7rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TABLETS
+   The layout previously jumped from mobile (≤900px) straight to a
+   desktop built for 1400px+. That left iPad landscape cramped and
+   iPad portrait stacked into one column with width to spare.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Landscape iPad & small laptops (901–1200px) ── */
+@media(min-width:901px) and (max-width:1200px){
+  nav { padding:1.25rem 2rem; }
+  .nav-links { gap:1.35rem; }
+  .nav-links a { font-size:0.65rem; letter-spacing:0.13em; }
+  .nav-cta { padding:0.55rem 1.05rem; font-size:0.65rem; }
+  .nav-right { gap:0.6rem; }
+
+  .section-inner { padding:4.5rem 3rem; }
+  .page-header   { padding:9rem 3rem 3.5rem; }
+  .jump-links    { padding:1.5rem 3rem; }
+  .content       { padding:3.5rem 3rem; }
+  footer         { padding:3.5rem 3rem 2.5rem; }
+  .hero          { padding:0 3rem; }
+  .hero-scroll   { left:3rem; }
+
+  .about-grid      { gap:3rem; }
+  .commission-wrap { gap:3rem; }
+  .two-col         { gap:2rem; }
+  .sidebar         { padding:3rem 1.4rem; }
+  .portfolio-grid  { padding:0 3rem 1rem; }
+
+  .section-title { font-size:clamp(2rem,3.6vw,2.9rem); }
+  .page-title    { font-size:clamp(2.4rem,4.6vw,3.6rem); }
+}
+
+/* ── Portrait iPad (701–900px) ── */
+@media(min-width:701px) and (max-width:900px){
+  .section-inner { padding:4.5rem 2.5rem; }
+  .page-header   { padding:8.5rem 2.5rem 3rem; }
+  .jump-links    { padding:1.5rem 2.5rem; }
+  .content       { padding:3.5rem 2.5rem; }
+  footer         { padding:3.5rem 2.5rem 2.5rem; }
+  .hero          { padding:0 2.5rem; }
+  .hero-scroll   { left:2.5rem; }
+
+  /* natural pairs sit side by side instead of stacking */
+  .subs-grid, .tiers-grid { grid-template-columns:1fr 1fr; gap:1.2rem; }
+  .boards-grid            { grid-template-columns:1fr 1fr; }
+  .coming-soon-features   { grid-template-columns:repeat(3,1fr); }
+  .how-grid               { grid-template-columns:repeat(4,1fr); }
+  .reviews-grid           { grid-template-columns:1fr 1fr; }
+  .services-grid          { grid-template-columns:1fr 1fr; }
+  .kits-grid              { grid-template-columns:1fr 1fr; }
+
+  /* there's room for these to sit horizontally again */
+  .hero-actions { flex-direction:row; max-width:none; width:auto; }
+  .about-grid { grid-template-columns:minmax(0,0.8fr) 1fr; gap:2.5rem; }
+  .about-image-wrap { max-width:300px; }
+  .commission-wrap { grid-template-columns:1fr; gap:2.5rem; }
+  .form-row { grid-template-columns:1fr 1fr; }
+  .form-group.full { grid-column:span 2; }
+
+  /* portfolio goes two-up with a full-width hero */
+  .portfolio-grid { padding:0 2.5rem 1rem; gap:1rem; grid-auto-rows:118px; }
+  .portfolio-item          { grid-column:span 6 !important; grid-row:span 2 !important; }
+  .portfolio-item.feature  { grid-column:span 12 !important; grid-row:span 3 !important; }
+  .portfolio-item.tall     { grid-row:span 3 !important; }
+  .portfolio-item.strip    { grid-column:span 12 !important; grid-row:span 1 !important; }
+
+  /* type sized for mobile is slightly large at this width */
+  .section-label, .page-eyebrow { font-size:0.66rem; }
+  .section-sub, .page-sub { font-size:0.92rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">BoviBerry</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="boards.html">Boards</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a href="index.html#commission" class="nav-cta">Work with me</a>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+
+<div class="page-header">
+  <div class="orb"></div>
+  <p class="page-eyebrow">Your data, plainly explained</p>
+  <h1 class="page-title">Privacy <em>Policy.</em></h1>
+  <p class="page-sub">What gets collected, why it's needed, where it lives, and how to have it removed. Written to be read, not skimmed past.</p>
+</div>
+
+<div class="gold-divider"></div>
+
+<div class="page-main">
+  <aside class="sidebar">
+    <span class="sidebar-label">Contents</span>
+    <a href="#collect" class="sidebar-link">What is collected</a>
+    <a href="#why" class="sidebar-link">Why it's collected</a>
+    <a href="#payments" class="sidebar-link">Payments</a>
+    <a href="#storage" class="sidebar-link">Where it's stored</a>
+    <a href="#sharing" class="sidebar-link">Who can see it</a>
+    <a href="#retention" class="sidebar-link">How long it's kept</a>
+    <a href="#cookies" class="sidebar-link">Cookies & tracking</a>
+    <a href="#rights" class="sidebar-link">Your rights</a>
+    <a href="#security" class="sidebar-link">Security</a>
+    <a href="#children" class="sidebar-link">Children</a>
+    <a href="#changes" class="sidebar-link">Changes</a>
+    <a href="#contact" class="sidebar-link">Contact</a>
+  </aside>
+
+  <div class="content">
+    <p class="last-updated">Last updated — July 2026</p>
+
+    <p class="intro">
+      BoviBerry is a one-person design studio, not a company with a data department. This policy covers the
+      <strong>boviberry.com</strong> website and the design services offered through it. The short version:
+      information is only collected when you choose to send it, it is used to do the work you asked for,
+      it is never sold, and you can ask for it to be deleted at any time.
+    </p>
+
+    <!-- WHAT IS COLLECTED -->
+    <div class="block" id="collect">
+      <h2>What is collected</h2>
+      <p>Nothing is collected simply by visiting the site. Information is only received when you actively submit one of the forms below.</p>
+
+      <table class="data-table">
+        <thead><tr><th>When you</th><th>What's collected</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Submit a commission request</td>
+            <td>Name, email address, phone number (optional), social media platform and handle (optional), the service you want, your budget range, preferred timeline, your project description, any reference links you share, and how you heard about BoviBerry</td>
+          </tr>
+          <tr>
+            <td>Build a mood board</td>
+            <td>Name, email address, any images you upload, links you add, the description you write, and the colours you select</td>
+          </tr>
+          <tr>
+            <td>Leave a review</td>
+            <td>Name (or whatever name you choose to give), the service received, your star rating, and your review text</td>
+          </tr>
+          <tr>
+            <td>Join the waitlist</td>
+            <td>Name, email address, and the service you're interested in</td>
+          </tr>
+          <tr>
+            <td>Make a purchase</td>
+            <td>Handled entirely by Stripe — see <a href="#payments">Payments</a> below</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        <p><strong>Optional means optional.</strong> Fields marked optional can be left blank and your request will still be accepted. Only your name, email, and a description of what you need are genuinely required.</p>
+      </div>
+    </div>
+
+    <!-- WHY -->
+    <div class="block" id="why">
+      <h2>Why it's collected</h2>
+      <p>Every piece of information above exists for one of three reasons:</p>
+      <ul>
+        <li><strong>To reply to you.</strong> Your email and phone number are how a quote reaches you.</li>
+        <li><strong>To do the work.</strong> Your brief, references, mood board, and colour choices are the raw material for your project.</li>
+        <li><strong>To run the studio.</strong> Knowing which services people ask for, and how they found the site, helps decide what to offer and where to spend time.</li>
+      </ul>
+      <p>Your information is <strong>never sold, rented, or traded</strong>, and it is never used to advertise to you.</p>
+    </div>
+
+    <!-- PAYMENTS -->
+    <div class="block" id="payments">
+      <h2>Payments</h2>
+      <p>All payments are processed by <strong>Stripe</strong>, an independent payment company. When you buy something, you leave this site and complete the payment on Stripe's own secure checkout page.</p>
+      <div class="highlight">
+        <p><strong>Card details never touch this website.</strong> BoviBerry does not see, receive, or store your card number, expiry date, or security code at any point. Stripe handles all of it and is certified to the highest level of the payment card security standard.</p>
+      </div>
+      <p>What BoviBerry does receive from Stripe is a notification of the payment — typically your name, email address, what you bought, and the amount — so the order can be fulfilled. Stripe's own handling of your data is covered by <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe's privacy policy</a>.</p>
+    </div>
+
+    <!-- STORAGE -->
+    <div class="block" id="storage">
+      <h2>Where it's stored</h2>
+      <p>Form submissions are stored in a private Google Sheet owned by BoviBerry, and a notification email is sent to the studio inbox. Both sit inside Google's infrastructure and are protected by Google's account security.</p>
+      <p>The website itself is hosted by <strong>Netlify</strong>, which serves the pages to your browser. Netlify keeps standard server logs, which may include IP addresses, as part of normal web hosting operation.</p>
+      <p>Data may be stored on servers in the United States.</p>
+    </div>
+
+    <!-- SHARING -->
+    <div class="block" id="sharing">
+      <h2>Who can see it</h2>
+      <p>BoviBerry is a solo studio. In practice, the only person who reads your submission is the artist.</p>
+      <p>Three service providers process data on the studio's behalf, purely to make the site function:</p>
+      <ul>
+        <li><strong>Google</strong> — stores form submissions and delivers notification emails</li>
+        <li><strong>Stripe</strong> — processes payments</li>
+        <li><strong>Netlify</strong> — hosts the website</li>
+      </ul>
+      <p>None of them are given your data to use for their own marketing. Information would only ever be disclosed beyond this if legally required to.</p>
+    </div>
+
+    <!-- RETENTION -->
+    <div class="block" id="retention">
+      <h2>How long it's kept</h2>
+      <ul>
+        <li><strong>Commission requests</strong> — kept while the project is active and for a period afterwards, so past work can be referenced and any dispute answered.</li>
+        <li><strong>Mood boards</strong> — kept for the duration of your project, then removed once the work is delivered.</li>
+        <li><strong>Waitlist entries</strong> — removed once you've been contacted, or on request.</li>
+        <li><strong>Reviews</strong> — published reviews stay on the site until you ask for removal. Reviews that are never approved are deleted.</li>
+        <li><strong>Payment records</strong> — retained by Stripe as long as required by financial and tax law.</li>
+      </ul>
+      <p>Anything no longer needed is deleted. You can ask for your information to be removed sooner at any time.</p>
+    </div>
+
+    <!-- COOKIES -->
+    <div class="block" id="cookies">
+      <h2>Cookies & tracking</h2>
+      <p><strong>This site does not use advertising cookies, analytics trackers, or third-party tracking pixels.</strong> There is no Google Analytics, no Meta pixel, and nothing following you to other websites.</p>
+      <p>Two small pieces of data are stored locally in your own browser, and never sent anywhere:</p>
+      <ul>
+        <li><strong>Theme preference</strong> — remembers whether you chose light or dark mode</li>
+        <li><strong>Studio session</strong> — only on the private admin page, and only for the artist</li>
+      </ul>
+      <p>You can clear both at any time through your browser settings, with no effect other than resetting your theme choice.</p>
+    </div>
+
+    <!-- RIGHTS -->
+    <div class="block" id="rights">
+      <h2>Your rights</h2>
+      <p>Wherever you live, you can ask BoviBerry to:</p>
+      <ul>
+        <li><strong>Show you</strong> what information is held about you</li>
+        <li><strong>Correct</strong> anything inaccurate</li>
+        <li><strong>Delete</strong> your information entirely</li>
+        <li><strong>Remove a review</strong> you previously left</li>
+        <li><strong>Stop contacting you</strong></li>
+      </ul>
+      <p>Email <a href="mailto:Boviberrystudios@gmail.com">Boviberrystudios@gmail.com</a> and it will be handled within 30 days, usually much sooner. No explanation is needed and no fee applies.</p>
+      <p>If you are in the European Economic Area or the United Kingdom, the legal basis for processing your information is either performing a contract you asked for, or a legitimate interest in running the studio. If you are in California, note that BoviBerry does not sell personal information, and never has.</p>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="block" id="security">
+      <h2>Security</h2>
+      <p>Practical measures in place:</p>
+      <ul>
+        <li>The entire site is served over an encrypted HTTPS connection</li>
+        <li>Payment details are handled exclusively by Stripe and never reach this site</li>
+        <li>The studio management area is password protected, with authentication verified on the server rather than in your browser</li>
+        <li>Accounts holding client information are protected by two-factor authentication</li>
+        <li>Only the information genuinely needed to do the work is requested</li>
+      </ul>
+      <p>No system is perfectly secure, and it would be dishonest to claim otherwise. If a breach ever occurred that affected your information, you would be told promptly and directly.</p>
+    </div>
+
+    <!-- CHILDREN -->
+    <div class="block" id="children">
+      <h2>Children</h2>
+      <p>This site is intended for adults and is not directed at children under 13. Information is not knowingly collected from children. If you believe a child has submitted information through this site, please get in touch and it will be deleted.</p>
+    </div>
+
+    <!-- CHANGES -->
+    <div class="block" id="changes">
+      <h2>Changes to this policy</h2>
+      <p>If this policy changes, the date at the top of this page will be updated. If a change meaningfully affects how your information is handled, anyone with an active project will be notified directly rather than expected to notice.</p>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="block" id="contact">
+      <h2>Contact</h2>
+      <p>Questions about anything on this page, or a request about your information:</p>
+      <p><strong>Email</strong> — <a href="mailto:Boviberrystudios@gmail.com">Boviberrystudios@gmail.com</a></p>
+      <p>You can also use the <a href="index.html#commission">contact form</a>, though email is faster for privacy requests.</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="gold-divider"></div>
+
+<footer>
+  <div class="footer-brand">
+    <a href="index.html" class="nav-logo">BoviBerry</a>
+    <p>Digital art &amp; design — graphic design, photo manipulation, and brand identity for creators and businesses.</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="faq.html">FAQ &amp; Policy</a></li>
+    <li><a href="boards.html">Boards</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+  </ul>
+  <div class="footer-social">
+    <!-- Social icons go back here once she has business accounts:
+         <a href="https://instagram.com/HANDLE" class="social-link" title="Instagram" target="_blank" rel="noopener">IG</a>
+         <a href="https://tiktok.com/@HANDLE" class="social-link" title="TikTok" target="_blank" rel="noopener">TK</a>
+    -->
+    <a href="mailto:Boviberrystudios@gmail.com" class="footer-email">Boviberrystudios@gmail.com</a>
+  </div>
+  <div class="footer-copy">
+    <span>© 2026 BoviBerry. All rights reserved.</span>
+    <span>Made with intention.</span>
+  </div>
+</footer>
+
+<script>
+const html = document.documentElement;
+if((localStorage.getItem('bb-theme')||'dark') === 'light') html.setAttribute('data-theme','light');
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const isLight = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  localStorage.setItem('bb-theme', isLight ? 'dark' : 'light');
+});
+
+const dot = document.getElementById('cursorDot'), ring = document.getElementById('cursorRing');
+let mX=0,mY=0,rX=0,rY=0;
+document.addEventListener('mousemove', e => { mX=e.clientX; mY=e.clientY; dot.style.left=mX+'px'; dot.style.top=mY+'px'; }, {passive:true});
+(function anim(){ rX+=(mX-rX)*0.12; rY+=(mY-rY)*0.12; ring.style.left=rX+'px'; ring.style.top=rY+'px'; requestAnimationFrame(anim); })();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{dot.classList.add('hovering');ring.classList.add('hovering');});
+  el.addEventListener('mouseleave',()=>{dot.classList.remove('hovering');ring.classList.remove('hovering');});
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    const t = document.querySelector(this.getAttribute('href'));
+    if(!t) return;
+    e.preventDefault();
+    const navH = document.querySelector('nav').offsetHeight;
+    window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - navH - 24, behavior:'smooth' });
+  });
+});
+
+// ── MOBILE NAV (clones the desktop links so there's one source of truth) ──
+(function(){
+  const src = document.querySelector('.nav-links');
+  const btn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobileMenu');
+  if(!src || !btn || !panel) return;
+  panel.innerHTML = src.innerHTML;
+  const nav = document.querySelector('nav');
+  const place = () => panel.style.top = nav.offsetHeight + 'px';
+  place(); window.addEventListener('resize', place, {passive:true});
+  const close = () => { panel.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); };
+  btn.addEventListener('click', () => {
+    const open = panel.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  window.addEventListener('resize', () => { if(window.innerWidth > 900) close(); }, {passive:true});
+})();
+
+// ── SCROLL-AWARE NAV ──
+(function(){
+  const nav = document.querySelector('nav');
+  if(!nav) return;
+  const panel = document.getElementById('mobileMenu');
+  let lastY = window.scrollY;
+  let ticking = false;
+
+  function update(){
+    const y = window.scrollY;
+    const menuOpen = panel && panel.classList.contains('open');
+
+    if (y < 60) {
+      nav.classList.remove('nav-hidden','nav-scrolled');
+    } else {
+      nav.classList.add('nav-scrolled');
+      if (!menuOpen) {
+        // small threshold so tiny jitters don't flip it
+        if (y > lastY + 8)      nav.classList.add('nav-hidden');
+        else if (y < lastY - 8) nav.classList.remove('nav-hidden');
+      }
+    }
+    if (panel) panel.style.top = nav.offsetHeight + 'px';
+    lastY = y;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive:true });
+
+  // never leave the bar hidden when the menu is open
+  if (panel) {
+    new MutationObserver(() => {
+      if (panel.classList.contains('open')) nav.classList.remove('nav-hidden');
+      panel.style.top = nav.offsetHeight + 'px';
+    }).observe(panel, { attributes:true, attributeFilter:['class'] });
+  }
+})();
+</script>
+</body>
+</html>

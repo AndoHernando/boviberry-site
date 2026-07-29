@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Thank you — BoviBerry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --brand-green:#2C7449; --brand-lime:#9BD16B; --brand-amber:#FFAA1B;
+  --brand-cocoa:#412A13; --brand-clay:#815121;
+  --black:#13100B; --black-mid:#1A1510; --black-soft:#2A1E12; --black-card:#1D1811;
+  --gold:#9BD16B; --gold-light:#B8E08F; --gold-dim:#7BB04F;
+  --gold-faint:rgba(155,209,107,0.12); --shimmer:#F5EFE3; --white-soft:#E2D9C6;
+  --muted:#B0A18A; --stroke:rgba(155,209,107,0.18); --stroke-soft:rgba(155,209,107,0.08);
+}
+[data-theme="light"] {
+  --black:#F5EFE3; --black-mid:#EFE8DA; --black-soft:#E5DBC8; --black-card:#EFE8DA;
+  --gold:#2C7449; --gold-light:#815121; --gold-dim:#815121;
+  --gold-faint:rgba(44,116,73,0.1); --shimmer:#291B0C; --white-soft:#412A13;
+  --muted:#574733; --stroke:rgba(44,116,73,0.2); --stroke-soft:rgba(44,116,73,0.1);
+}
+body {
+  background:var(--black); color:var(--shimmer);
+  font-family:'Jost',sans-serif; font-weight:300;
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; padding:2rem;
+  position:relative; overflow-x:hidden;
+}
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9; opacity:0.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.orb {
+  position:fixed; border-radius:50%; filter:blur(100px); pointer-events:none;
+  width:480px; height:480px;
+  background:radial-gradient(circle,rgba(155,209,107,0.13),transparent 70%);
+  top:-140px; right:5%;
+}
+.card {
+  position:relative; z-index:10;
+  max-width:560px; width:100%;
+  background:var(--black-card); border:1px solid var(--stroke);
+  padding:4rem 3.5rem; text-align:center;
+  animation:rise 0.7s cubic-bezier(.2,.7,.3,1) both;
+}
+@keyframes rise { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.card::before, .card::after {
+  content:''; position:absolute; left:2.5rem; right:2.5rem; height:1px;
+}
+.card::before { top:0; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.card::after  { bottom:0; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); }
+.corner { position:absolute; width:16px; height:16px; border-color:var(--gold-dim); border-style:solid; }
+.corner.tl { top:12px; left:12px; border-width:1px 0 0 1px; }
+.corner.tr { top:12px; right:12px; border-width:1px 1px 0 0; }
+.corner.bl { bottom:12px; left:12px; border-width:0 0 1px 1px; }
+.corner.br { bottom:12px; right:12px; border-width:0 1px 1px 0; }
+
+.check {
+  width:60px; height:60px; margin:0 auto 1.8rem;
+  border:1px solid var(--gold-dim); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; color:var(--gold);
+  animation:pop 0.5s 0.25s cubic-bezier(.2,1.4,.4,1) both;
+}
+@keyframes pop { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+
+.eyebrow { font-size:0.65rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1rem; }
+h1 { font-family:'Cormorant Garamond',serif; font-size:2.6rem; font-weight:300; line-height:1.1; margin-bottom:1.2rem; }
+h1 em { font-style:italic; color:var(--gold-light); }
+.divider { width:40px; height:1px; background:var(--gold-dim); margin:0 auto 1.8rem; }
+.msg { font-size:0.9rem; line-height:1.9; color:var(--muted); margin-bottom:2rem; }
+.msg strong { color:var(--shimmer); font-weight:400; }
+
+.next-steps { text-align:left; border:1px solid var(--stroke-soft); background:var(--black-soft); padding:1.5rem 1.6rem; margin-bottom:2rem; }
+.next-label { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:0.9rem; }
+.next-steps ol { list-style:none; counter-reset:step; }
+.next-steps li {
+  counter-increment:step; font-size:0.83rem; color:var(--muted);
+  line-height:1.65; padding:0.45rem 0 0.45rem 2rem; position:relative;
+}
+.next-steps li::before {
+  content:counter(step,decimal-leading-zero);
+  position:absolute; left:0; top:0.45rem;
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  color:var(--gold-dim); font-size:0.95rem;
+}
+.signature { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-style:italic; color:var(--gold-light); margin-bottom:2rem; }
+
+.actions { display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; }
+.btn {
+  padding:0.85rem 1.9rem; text-decoration:none;
+  font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase;
+  transition:all 0.25s; display:inline-block;
+}
+.btn-primary { background:var(--gold); color:var(--black); }
+.btn-primary:hover { background:var(--gold-light); }
+.btn-ghost { border:1px solid var(--stroke); color:var(--white-soft); }
+.btn-ghost:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+
+.receipt-note { font-size:0.72rem; color:var(--muted); margin-top:1.8rem; line-height:1.6; }
+
+@media(max-width:600px){
+  .card { padding:2.5rem 1.6rem; }
+  h1 { font-size:2rem; }
+  .actions { flex-direction:column; }
+}
+
+/* ══════════ SHARED MOBILE SAFEGUARDS ══════════ */
+@media(max-width:900px){
+  /* nothing should be able to force sideways scrolling */
+  html, body { overflow-x:hidden; max-width:100%; }
+  img, svg, table, pre { max-width:100%; }
+  h1, h2, h3, p, li, td { overflow-wrap:break-word; }
+
+  /* wrapping rows that were laid out for desktop widths */
+  .jump-links { gap:0.6rem; }
+  .footer-links { gap:0.8rem; }
+  footer { gap:1.5rem; }
+  .section-inner { padding-left:2rem; padding-right:2rem; }
+}
+
+/* ══════════ CARD CONSISTENCY (MOBILE) ══════════
+   Desktop padding ranges from 1rem to 3rem depending on the component.
+   On a phone that reads as sloppy, so every boxed element lands on the
+   same rhythm. */
+@media(max-width:700px){
+  .service-card, .kit-card, .sub-card, .tier-card, .review-card,
+  .included-box, .commission-form, .leave-review-box, .kit-card,
+  .board-section, .mb-card, .success-box, .login-box, .board-col {
+    padding:1.5rem 1.35rem;
+  }
+  .callout, .highlight, .policy-highlight, .kit-tier-note,
+  .sub-kit-banner, .kit-banner, .next-steps {
+    padding:1.1rem 1.2rem;
+  }
+  .cta-box, .coming-soon-wrap, .waitlist-banner {
+    padding:2rem 1.35rem;
+  }
+  .board-info { padding:1.2rem 1.3rem; }
+
+  /* consistent vertical rhythm between stacked cards */
+  .kits-grid, .subs-grid, .tiers-grid, .services-grid,
+  .reviews-grid, .boards-grid, .coming-soon-features { gap:0.9rem; }
+
+  /* callouts stacked back to back were touching */
+  .callout + .callout, .highlight + .highlight { margin-top:0.8rem; }
+
+  /* headings inside cards were sized for wide columns */
+  .cta-box h3, .coming-soon-title, .waitlist-banner h2 { font-size:1.7rem; line-height:1.2; }
+  .tier-price, .sub-price { font-size:2.4rem; }
+  .tier-name, .sub-name { font-size:1.7rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TABLETS
+   The layout previously jumped from mobile (≤900px) straight to a
+   desktop built for 1400px+. That left iPad landscape cramped and
+   iPad portrait stacked into one column with width to spare.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Landscape iPad & small laptops (901–1200px) ── */
+@media(min-width:901px) and (max-width:1200px){
+  nav { padding:1.25rem 2rem; }
+  .nav-links { gap:1.35rem; }
+  .nav-links a { font-size:0.65rem; letter-spacing:0.13em; }
+  .nav-cta { padding:0.55rem 1.05rem; font-size:0.65rem; }
+  .nav-right { gap:0.6rem; }
+
+  .section-inner { padding:4.5rem 3rem; }
+  .page-header   { padding:9rem 3rem 3.5rem; }
+  .jump-links    { padding:1.5rem 3rem; }
+  .content       { padding:3.5rem 3rem; }
+  footer         { padding:3.5rem 3rem 2.5rem; }
+  .hero          { padding:0 3rem; }
+  .hero-scroll   { left:3rem; }
+
+  .about-grid      { gap:3rem; }
+  .commission-wrap { gap:3rem; }
+  .two-col         { gap:2rem; }
+  .sidebar         { padding:3rem 1.4rem; }
+  .portfolio-grid  { padding:0 3rem 1rem; }
+
+  .section-title { font-size:clamp(2rem,3.6vw,2.9rem); }
+  .page-title    { font-size:clamp(2.4rem,4.6vw,3.6rem); }
+}
+
+/* ── Portrait iPad (701–900px) ── */
+@media(min-width:701px) and (max-width:900px){
+  .section-inner { padding:4.5rem 2.5rem; }
+  .page-header   { padding:8.5rem 2.5rem 3rem; }
+  .jump-links    { padding:1.5rem 2.5rem; }
+  .content       { padding:3.5rem 2.5rem; }
+  footer         { padding:3.5rem 2.5rem 2.5rem; }
+  .hero          { padding:0 2.5rem; }
+  .hero-scroll   { left:2.5rem; }
+
+  /* natural pairs sit side by side instead of stacking */
+  .subs-grid, .tiers-grid { grid-template-columns:1fr 1fr; gap:1.2rem; }
+  .boards-grid            { grid-template-columns:1fr 1fr; }
+  .coming-soon-features   { grid-template-columns:repeat(3,1fr); }
+  .how-grid               { grid-template-columns:repeat(4,1fr); }
+  .reviews-grid           { grid-template-columns:1fr 1fr; }
+  .services-grid          { grid-template-columns:1fr 1fr; }
+  .kits-grid              { grid-template-columns:1fr 1fr; }
+
+  /* there's room for these to sit horizontally again */
+  .hero-actions { flex-direction:row; max-width:none; width:auto; }
+  .about-grid { grid-template-columns:minmax(0,0.8fr) 1fr; gap:2.5rem; }
+  .about-image-wrap { max-width:300px; }
+  .commission-wrap { grid-template-columns:1fr; gap:2.5rem; }
+  .form-row { grid-template-columns:1fr 1fr; }
+  .form-group.full { grid-column:span 2; }
+
+  /* portfolio goes two-up with a full-width hero */
+  .portfolio-grid { padding:0 2.5rem 1rem; gap:1rem; grid-auto-rows:118px; }
+  .portfolio-item          { grid-column:span 6 !important; grid-row:span 2 !important; }
+  .portfolio-item.feature  { grid-column:span 12 !important; grid-row:span 3 !important; }
+  .portfolio-item.tall     { grid-row:span 3 !important; }
+  .portfolio-item.strip    { grid-column:span 12 !important; grid-row:span 1 !important; }
+
+  /* type sized for mobile is slightly large at this width */
+  .section-label, .page-eyebrow { font-size:0.66rem; }
+  .section-sub, .page-sub { font-size:0.92rem; }
+}
+</style>
+</head>
+<body>
+<div class="orb"></div>
+
+<div class="card">
+  <div class="corner tl"></div><div class="corner tr"></div>
+  <div class="corner bl"></div><div class="corner br"></div>
+
+  <div class="check">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+
+  <p class="eyebrow">Payment received</p>
+  <h1>Thank you — <em>let's begin.</em></h1>
+  <div class="divider"></div>
+
+  <p class="msg">
+    Your payment went through and BoviBerry has been notified. Every project is handled personally, and yours is now in the queue.
+  </p>
+
+  <div class="next-steps">
+    <p class="next-label">What happens next</p>
+    <ol>
+      <li>You'll get a receipt by email from Stripe within a few minutes.</li>
+      <li>BoviBerry will reach out personally within <strong style="color:var(--shimmer);font-weight:400">48 hours</strong> to gather details and get started.</li>
+      <li>If you haven't sent a brief yet, the commission form is the fastest way to share your vision.</li>
+    </ol>
+  </div>
+
+  <p class="signature">— BoviBerry</p>
+
+  <div class="actions">
+    <a href="index.html#commission" class="btn btn-primary">Send your brief →</a>
+    <a href="moodboard.html" class="btn btn-ghost">Build a mood board</a>
+  </div>
+
+  <p class="receipt-note">
+    Didn't get a receipt? Check your spam folder, or reach out through the
+    <a href="index.html#commission" style="color:var(--gold-dim);text-decoration:none;border-bottom:1px solid var(--stroke);">contact form</a> and it'll get sorted.
+  </p>
+</div>
+
+<script>
+if((localStorage.getItem('bb-theme')||'dark') === 'light') document.documentElement.setAttribute('data-theme','light');
+</script>
+</body>
+</html>

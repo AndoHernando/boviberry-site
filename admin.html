@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --brand-green:#2C7449; --brand-lime:#9BD16B; --brand-amber:#FFAA1B;
+  --brand-cocoa:#412A13; --brand-clay:#815121;
+  --black:#13100B; --black-mid:#1A1510; --black-soft:#2A1E12; --black-card:#1D1811;
+  --gold:#9BD16B; --gold-light:#B8E08F; --gold-dim:#7BB04F;
+  --gold-faint:rgba(155,209,107,0.12); --shimmer:#F5EFE3;
+  --muted:#B0A18A; --stroke:rgba(155,209,107,0.18); --stroke-soft:rgba(155,209,107,0.08);
+  --green:#4caf7d; --red:#c94c4c; --amber:#c9904c;
+  --green-faint:rgba(76,175,125,0.1); --red-faint:rgba(201,76,76,0.1); --amber-faint:rgba(201,144,76,0.1);
+}
+body { background:var(--black); color:var(--shimmer); font-family:'Jost',sans-serif; font-weight:300; min-height:100vh; }
+
+/* LOGIN */
+.login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem; }
+.login-box { width:100%; max-width:400px; background:var(--black-card); border:1px solid var(--stroke-soft); padding:3rem 2.5rem; position:relative; }
+.login-box::before { content:''; position:absolute; top:0; left:1.5rem; right:1.5rem; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.login-logo { font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--gold-light); text-align:center; margin-bottom:0.4rem; }
+.login-sub { font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); text-align:center; margin-bottom:2.5rem; }
+.login-label { font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dim); display:block; margin-bottom:0.5rem; }
+.login-input { width:100%; background:var(--black-soft); border:1px solid var(--stroke-soft); color:var(--shimmer); padding:0.85rem 1rem; font-family:'Jost',sans-serif; font-size:0.9rem; outline:none; margin-bottom:1.2rem; transition:border-color 0.2s; }
+.login-input:focus { border-color:var(--gold-dim); }
+.login-btn { width:100%; padding:0.9rem; background:var(--gold); color:var(--black); border:none; cursor:pointer; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:400; transition:background 0.25s; }
+.login-btn:hover { background:var(--gold-light); }
+.login-btn:disabled { opacity:0.6; cursor:default; }
+.login-error { font-size:0.78rem; color:var(--red); text-align:center; margin-top:1rem; display:none; line-height:1.6; }
+.login-error.show { display:block; }
+
+/* DASHBOARD */
+.admin-wrap { display:none; }
+.admin-wrap.show { display:block; }
+.admin-nav { position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.2rem 3rem; background:rgba(19,16,11,0.95); backdrop-filter:blur(18px); border-bottom:1px solid var(--stroke); flex-wrap:wrap; gap:1rem; }
+.admin-nav-left { display:flex; align-items:center; gap:1.2rem; }
+.admin-logo { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--gold-light); }
+.admin-badge { font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; padding:0.25rem 0.7rem; background:var(--gold-faint); border:1px solid var(--stroke); color:var(--gold-dim); }
+.admin-nav-right { display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; }
+.logout-btn { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); background:none; border:1px solid var(--stroke-soft); padding:0.4rem 1rem; cursor:pointer; font-family:'Jost',sans-serif; transition:all 0.2s; }
+.logout-btn:hover { color:var(--shimmer); border-color:var(--muted); }
+
+/* SYNC INDICATOR */
+.sync-dot { display:flex; align-items:center; gap:0.45rem; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); transition:color 0.3s; }
+.sync-dot::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--green); transition:background 0.3s; }
+.sync-dot.syncing { color:var(--amber); }
+.sync-dot.syncing::before { background:var(--amber); animation:pulse 0.9s ease-in-out infinite; }
+.sync-dot.error { color:var(--red); }
+.sync-dot.error::before { background:var(--red); animation:none; }
+@keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+/* WAITLIST TOGGLE */
+.waitlist-toggle-wrap { display:flex; align-items:center; gap:0.8rem; }
+.waitlist-toggle-label { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); }
+.toggle-switch { position:relative; width:44px; height:24px; cursor:pointer; display:inline-block; }
+.toggle-switch input { opacity:0; width:0; height:0; }
+.toggle-track { position:absolute; inset:0; background:var(--black-soft); border:1px solid var(--stroke-soft); border-radius:24px; transition:all 0.3s; }
+.toggle-switch input:checked + .toggle-track { background:rgba(155,209,107,0.2); border-color:var(--gold-dim); }
+.toggle-thumb { position:absolute; top:3px; left:3px; width:16px; height:16px; background:var(--muted); border-radius:50%; transition:all 0.25s; pointer-events:none; }
+.toggle-switch input:checked ~ .toggle-thumb { left:23px; background:var(--gold); }
+.waitlist-on-badge { font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.2rem 0.6rem; background:rgba(155,209,107,0.15); border:1px solid var(--gold-dim); color:var(--gold); display:none; }
+.waitlist-on-badge.show { display:inline-block; }
+
+.admin-main { padding:2.5rem 3rem; }
+
+/* STATS */
+.admin-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; margin-bottom:2rem; }
+.admin-stat { background:var(--black-card); border:1px solid var(--stroke-soft); padding:1.4rem; }
+.admin-stat-num { font-family:'Cormorant Garamond',serif; font-size:2.1rem; font-style:italic; color:var(--gold-light); display:block; margin-bottom:0.2rem; line-height:1; }
+.admin-stat-label { font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); }
+
+/* NUDGE */
+.nudge-banner { display:none; background:rgba(201,144,76,0.08); border:1px solid rgba(201,144,76,0.3); padding:1rem 1.5rem; margin-bottom:2rem; align-items:center; gap:1rem; }
+.nudge-banner.show { display:flex; }
+.nudge-banner p { font-size:0.82rem; color:var(--amber); line-height:1.5; }
+.nudge-banner strong { font-weight:400; color:var(--gold-light); }
+
+/* TABS */
+.admin-tabs { display:flex; border-bottom:1px solid var(--stroke-soft); margin-bottom:2rem; flex-wrap:wrap; }
+.tab-btn { padding:0.8rem 1.6rem; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; background:none; border:none; color:var(--muted); cursor:pointer; font-family:'Jost',sans-serif; border-bottom:2px solid transparent; transition:all 0.2s; margin-bottom:-1px; }
+.tab-btn.active { color:var(--gold-light); border-bottom-color:var(--gold); }
+.tab-btn:hover { color:var(--shimmer); }
+.tab-count { display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; padding:0 4px; background:var(--gold-faint); border:1px solid var(--stroke); border-radius:9px; font-size:0.6rem; color:var(--gold-dim); margin-left:0.4rem; }
+.tab-count.alert { background:rgba(201,76,76,0.15); border-color:rgba(201,76,76,0.3); color:var(--red); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+/* COMMISSION BOARD */
+.commission-board { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+.board-col { background:var(--black-card); border:1px solid var(--stroke-soft); }
+.board-col-header { padding:1rem 1.2rem; border-bottom:1px solid var(--stroke-soft); display:flex; justify-content:space-between; align-items:center; }
+.board-col-title { font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); }
+.board-col-count { font-size:0.65rem; color:var(--gold-dim); background:var(--gold-faint); padding:0.15rem 0.5rem; border:1px solid var(--stroke); }
+.board-col-body { padding:0.8rem; display:flex; flex-direction:column; gap:0.6rem; min-height:180px; }
+.commission-card { background:var(--black-soft); border:1px solid var(--stroke-soft); padding:1rem 1.1rem; position:relative; transition:border-color 0.2s, opacity 0.2s; }
+.commission-card.status-new { border-left:2px solid var(--gold-dim); }
+.commission-card.status-in_progress { border-left:2px solid var(--amber); }
+.commission-card.status-complete { border-left:2px solid var(--green); opacity:0.72; }
+.commission-card:hover { border-color:var(--gold-dim); }
+.commission-card.pending-sync { opacity:0.55; }
+.cc-name { font-size:0.85rem; font-weight:400; color:var(--shimmer); margin-bottom:0.2rem; }
+.cc-service { font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:0.5rem; }
+.cc-meta { font-size:0.7rem; color:var(--muted); margin-bottom:0.8rem; line-height:1.55; }
+.cc-meta a { color:var(--gold-dim); text-decoration:none; }
+.cc-actions { display:flex; gap:0.4rem; flex-wrap:wrap; }
+.cc-btn { font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.3rem 0.6rem; border:1px solid; background:transparent; cursor:pointer; font-family:'Jost',sans-serif; transition:all 0.15s; }
+.cc-btn:active { transform:scale(0.96); }
+.cc-btn-start { color:var(--amber); border-color:rgba(201,144,76,0.35); }
+.cc-btn-start:hover { background:var(--amber-faint); }
+.cc-btn-done { color:var(--green); border-color:rgba(76,175,125,0.35); }
+.cc-btn-done:hover { background:var(--green-faint); }
+.cc-btn-delete { color:var(--red); border-color:rgba(201,76,76,0.35); }
+.cc-btn-delete:hover { background:var(--red-faint); }
+.cc-btn-reopen { color:var(--muted); border-color:var(--stroke-soft); }
+.cc-btn-reopen:hover { color:var(--shimmer); }
+.board-empty { text-align:center; padding:2rem 1rem; color:var(--muted); font-size:0.78rem; font-style:italic; }
+.commission-vision { font-size:0.78rem; color:var(--muted); line-height:1.65; margin-bottom:0.8rem; border-left:2px solid var(--stroke); padding-left:0.8rem; font-style:italic; display:none; }
+.cc-toggle-vision { font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-dim); background:none; border:none; cursor:pointer; font-family:'Jost',sans-serif; padding:0; margin-bottom:0.6rem; }
+.cc-toggle-vision:hover { color:var(--gold-light); }
+
+/* REVIEWS */
+.review-row { background:var(--black-card); border:1px solid var(--stroke-soft); padding:1.6rem 2rem; margin-bottom:0.8rem; display:grid; grid-template-columns:1fr auto; gap:1.5rem; align-items:start; position:relative; transition:border-color 0.2s, opacity 0.2s; }
+.review-row.is-featured { border-color:var(--gold-dim); }
+.review-row.is-featured::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.row-top { display:flex; align-items:center; gap:1rem; margin-bottom:0.6rem; flex-wrap:wrap; }
+.row-name { font-size:0.9rem; font-weight:400; color:var(--shimmer); }
+.row-stars { display:flex; gap:2px; }
+.row-star { font-size:0.75rem; color:var(--gold); }
+.row-star.empty { opacity:0.2; }
+.row-meta { display:flex; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem; }
+.row-badge { font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.2rem 0.6rem; border:1px solid; }
+.badge-pending { color:var(--amber); border-color:rgba(201,144,76,0.3); background:var(--amber-faint); }
+.badge-approved { color:var(--green); border-color:rgba(76,175,125,0.3); background:var(--green-faint); }
+.badge-featured { color:var(--gold); border-color:rgba(155,209,107,0.3); background:var(--gold-faint); }
+.row-service-tag { font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); border:1px solid var(--stroke-soft); padding:0.2rem 0.6rem; }
+.row-text { font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic; color:var(--shimmer); line-height:1.65; margin-bottom:0.4rem; }
+.row-date { font-size:0.68rem; color:var(--muted); }
+.row-actions { display:flex; flex-direction:column; gap:0.5rem; min-width:140px; }
+.action-btn { padding:0.5rem 0.9rem; font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; border:1px solid; cursor:pointer; font-family:'Jost',sans-serif; transition:all 0.15s; background:transparent; white-space:nowrap; }
+.action-btn:active { transform:scale(0.97); }
+.btn-approve { color:var(--green); border-color:rgba(76,175,125,0.35); }
+.btn-approve:hover { background:var(--green-faint); }
+.btn-feature { color:var(--gold); border-color:rgba(155,209,107,0.35); }
+.btn-feature:hover { background:var(--gold-faint); }
+.btn-unfeature { color:var(--muted); border-color:var(--stroke-soft); }
+.btn-unfeature:hover { color:var(--shimmer); }
+.btn-delete { color:var(--red); border-color:rgba(201,76,76,0.35); }
+.btn-delete:hover { background:var(--red-faint); }
+
+/* WAITLIST */
+.waitlist-table { width:100%; border-collapse:collapse; }
+.waitlist-table th { font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-dim); padding:0.8rem 1rem; border-bottom:1px solid var(--stroke-soft); text-align:left; font-weight:400; }
+.waitlist-table td { font-size:0.82rem; color:var(--muted); padding:0.9rem 1rem; border-bottom:1px solid var(--stroke-soft); }
+.waitlist-table tr:last-child td { border-bottom:none; }
+.waitlist-table td:first-child { color:var(--shimmer); font-weight:400; }
+.waitlist-table tr:hover td { background:var(--black-card); }
+
+/* MOODBOARDS */
+.mb-card { background:var(--black-card); border:1px solid var(--stroke-soft); padding:2rem; margin-bottom:1.2rem; position:relative; }
+.mb-card::before { content:''; position:absolute; top:0; left:1.5rem; right:1.5rem; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); }
+.mb-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.2rem; flex-wrap:wrap; gap:1rem; }
+.mb-client-name { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--shimmer); margin-bottom:0.2rem; }
+.mb-client-email { font-size:0.75rem; color:var(--gold-dim); text-decoration:none; }
+.mb-date { font-size:0.68rem; color:var(--muted); }
+.mb-images { display:grid; grid-template-columns:repeat(6,1fr); gap:0.6rem; margin-bottom:1.5rem; }
+.mb-img { aspect-ratio:1; overflow:hidden; border:1px solid var(--stroke-soft); cursor:pointer; transition:transform 0.2s; background:var(--black-soft); }
+.mb-img:hover { transform:scale(1.03); }
+.mb-img img { width:100%; height:100%; object-fit:cover; display:block; }
+.mb-section-label { font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem; }
+.mb-section-label::before { content:''; display:block; width:14px; height:1px; background:var(--gold-dim); }
+.mb-links { margin-bottom:1.2rem; }
+.mb-link { display:block; font-size:0.78rem; color:var(--muted); text-decoration:none; padding:0.3rem 0; border-bottom:1px solid var(--stroke-soft); word-break:break-all; transition:color 0.2s; }
+.mb-link:hover { color:var(--gold-light); }
+.mb-details { font-size:0.85rem; color:var(--muted); line-height:1.75; font-style:italic; border-left:2px solid var(--stroke); padding-left:1rem; margin-bottom:1.2rem; }
+.mb-colors { display:flex; gap:0.5rem; margin-bottom:1.5rem; flex-wrap:wrap; padding-bottom:1.3rem; }
+.mb-color { width:36px; height:36px; border:1px solid var(--stroke); position:relative; }
+.mb-color-hex { position:absolute; bottom:-1.3rem; left:50%; transform:translateX(-50%); font-size:0.55rem; color:var(--muted); white-space:nowrap; }
+.mb-img-modal {
+  display:none; position:fixed; inset:0; z-index:2000;
+  background:var(--black);
+  align-items:center; justify-content:center;
+  padding:2rem; cursor:pointer;
+  height:100vh; height:100dvh;
+  overscroll-behavior:contain;
+  padding-top:max(2rem, env(safe-area-inset-top));
+  padding-bottom:max(2rem, env(safe-area-inset-bottom));
+}
+.mb-img-modal.active { display:flex; }
+.mb-img-modal img { max-width:92%; max-height:82vh; max-height:82dvh; border:1px solid var(--stroke); object-fit:contain; }
+
+/* SHARED */
+.admin-loading { text-align:center; padding:3rem; color:var(--muted); font-size:0.85rem; }
+.loading-dots { display:flex; justify-content:center; gap:5px; margin-bottom:1rem; }
+.loading-dots span { width:7px; height:7px; background:var(--gold-dim); border-radius:50%; animation:dotPulse 1.4s infinite; }
+.loading-dots span:nth-child(2){animation-delay:0.2s} .loading-dots span:nth-child(3){animation-delay:0.4s}
+@keyframes dotPulse{0%,80%,100%{opacity:0.2;transform:scale(0.8)}40%{opacity:1;transform:scale(1)}}
+.empty-state { text-align:center; padding:4rem 2rem; color:var(--muted); }
+.empty-state h3 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-style:italic; color:var(--shimmer); margin-bottom:0.8rem; }
+
+
+/* ── PRICING / CATALOG ── */
+.cat-group { margin-bottom:2rem; }
+.cat-group-title { font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:0.8rem; display:flex; align-items:center; gap:0.6rem; }
+.cat-group-title::before { content:''; display:block; width:18px; height:1px; background:var(--gold-dim); }
+
+.cat-row {
+  display:grid; grid-template-columns:1fr 120px 120px 110px 90px;
+  gap:1rem; align-items:center;
+  background:var(--black-card); border:1px solid var(--stroke-soft);
+  padding:1rem 1.2rem; margin-bottom:0.5rem;
+  transition:border-color 0.2s, opacity 0.2s;
+}
+.cat-row.on-sale { border-color:var(--amber); }
+.cat-row.hidden-item { opacity:0.45; }
+.cat-head {
+  display:grid; grid-template-columns:1fr 120px 120px 110px 90px;
+  gap:1rem; padding:0 1.2rem 0.5rem;
+  font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);
+}
+.cat-label { font-size:0.88rem; color:var(--shimmer); }
+.cat-id { font-size:0.62rem; color:var(--muted); margin-top:0.15rem; }
+.cat-input {
+  width:100%; background:var(--black-soft); border:1px solid var(--stroke-soft);
+  color:var(--shimmer); padding:0.5rem 0.6rem; font-family:'Jost',sans-serif;
+  font-size:0.85rem; outline:none; transition:border-color 0.2s; text-align:center;
+}
+.cat-input:focus { border-color:var(--gold-dim); }
+.cat-input.sale { color:var(--amber); }
+.cat-input:disabled { opacity:0.35; cursor:not-allowed; }
+.cat-toggle { display:flex; justify-content:center; }
+.cat-hint { font-size:0.75rem; color:var(--muted); line-height:1.7; margin-bottom:1.5rem; }
+.cat-hint strong { color:var(--gold-light); font-weight:400; }
+
+@media(max-width:900px){
+  .cat-head { display:none; }
+  .cat-row { grid-template-columns:1fr 1fr; gap:0.7rem; }
+  .cat-row > :first-child { grid-column:span 2; }
+  .cat-input { text-align:left; }
+}
+
+
+/* ── SPAM FLAG ── */
+.commission-card.flagged, .mb-card.flagged { border-color:var(--red); }
+.flag-banner {
+  background:rgba(201,76,76,0.1); border:1px solid rgba(201,76,76,0.35);
+  padding:0.7rem 0.85rem; margin-bottom:0.8rem;
+}
+.flag-title {
+  font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase;
+  color:var(--red); margin-bottom:0.35rem; display:flex; align-items:center; gap:0.35rem;
+}
+.flag-reason { font-size:0.72rem; color:var(--muted); line-height:1.5; margin-bottom:0.6rem; }
+.flag-clear {
+  font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase;
+  padding:0.3rem 0.6rem; border:1px solid var(--stroke-soft);
+  background:transparent; color:var(--muted); cursor:pointer;
+  font-family:'Jost',sans-serif; transition:all 0.2s;
+}
+.flag-clear:hover { border-color:var(--green); color:var(--green); }
+.cc-age { font-size:0.62rem; color:var(--muted); letter-spacing:0.08em; }
+.cc-age.stale { color:var(--amber); }
+
+
+/* ── CATALOG: ADVANCED FIELDS & ADD ── */
+.cat-more {
+  background:none; border:none; color:var(--gold-dim); cursor:pointer;
+  font-family:'Jost',sans-serif; font-size:0.58rem; letter-spacing:0.12em;
+  text-transform:uppercase; padding:0.2rem 0; margin-top:0.3rem;
+}
+.cat-more:hover { color:var(--gold-light); }
+.cat-adv {
+  display:none; grid-column:1 / -1;
+  border-top:1px solid var(--stroke-soft); margin-top:0.8rem; padding-top:0.9rem;
+}
+.cat-adv.open { display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; }
+.cat-field label {
+  display:block; font-size:0.55rem; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:0.3rem;
+}
+.cat-field select.cat-input { text-align:left; }
+.cat-danger {
+  grid-column:1 / -1; display:flex; justify-content:flex-end;
+  padding-top:0.4rem;
+}
+.cat-add-btn {
+  width:100%; padding:0.75rem; margin-bottom:0.5rem;
+  border:1px dashed var(--stroke); background:transparent;
+  color:var(--gold-dim); cursor:pointer; font-family:'Jost',sans-serif;
+  font-size:0.62rem; letter-spacing:0.16em; text-transform:uppercase;
+  transition:all 0.2s;
+}
+.cat-add-btn:hover { border-color:var(--gold-dim); color:var(--gold-light); background:var(--gold-faint); }
+@media(max-width:900px){ .cat-adv.open { grid-template-columns:1fr 1fr; } }
+
+/* TOAST */
+.toast { position:fixed; bottom:2rem; right:2rem; z-index:9999; padding:0.9rem 1.5rem; background:var(--black-card); border:1px solid var(--stroke); border-left:3px solid var(--gold); font-size:0.8rem; color:var(--shimmer); opacity:0; transform:translateY(10px); transition:all 0.25s; pointer-events:none; max-width:340px; line-height:1.5; }
+.toast.show { opacity:1; transform:translateY(0); }
+.toast.error { border-left-color:var(--red); }
+.toast.warning { border-left-color:var(--amber); }
+
+@media(max-width:1000px){
+  .admin-nav { padding:1rem 1.5rem; }
+  .admin-main { padding:2rem 1.5rem; }
+  .admin-stats { grid-template-columns:repeat(2,1fr); }
+  .commission-board { grid-template-columns:1fr; }
+  .mb-images { grid-template-columns:repeat(3,1fr); }
+  .review-row { grid-template-columns:1fr; }
+}
+
+/* ══════════ TABLETS ══════════
+   She'll realistically use the studio panel from an iPad, and the
+   three-column board was too tight below ~1200px. */
+@media(min-width:701px) and (max-width:1200px){
+  .admin-nav { padding:1.1rem 1.6rem; }
+  .admin-main { padding:2rem 1.6rem; }
+  .admin-stats { grid-template-columns:repeat(3,1fr); }
+  .commission-board { grid-template-columns:1fr 1fr; }
+  .mb-images { grid-template-columns:repeat(4,1fr); }
+  .review-row { grid-template-columns:1fr auto; }
+}
+@media(min-width:701px) and (max-width:900px){
+  .admin-stats { grid-template-columns:repeat(2,1fr); }
+  .commission-board { grid-template-columns:1fr; }
+  .mb-images { grid-template-columns:repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">BoviBerry</div>
+    <div class="login-sub">Studio access</div>
+    <label class="login-label" for="adminPass">Password</label>
+    <input type="password" class="login-input" id="adminPass" autocomplete="current-password" onkeydown="if(event.key==='Enter')tryLogin()">
+    <button class="login-btn" id="loginBtn" onclick="tryLogin()">Enter →</button>
+    <p class="login-error" id="loginError"></p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="admin-wrap" id="adminWrap">
+  <nav class="admin-nav">
+    <div class="admin-nav-left">
+      <span class="admin-logo">BoviBerry</span>
+      <span class="admin-badge">Studio</span>
+      <span class="sync-dot" id="syncDot">Saved</span>
+    </div>
+    <div class="admin-nav-right">
+      <div class="waitlist-toggle-wrap">
+        <span class="waitlist-toggle-label">Waitlist</span>
+        <label class="toggle-switch" title="Pause new commissions">
+          <input type="checkbox" id="waitlistToggle" onchange="toggleWaitlist(this.checked)">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+        <span class="waitlist-on-badge" id="waitlistBadge">ON</span>
+      </div>
+      <a href="index.html" style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;">← Site</a>
+      <button class="logout-btn" onclick="logout()">Log out</button>
+    </div>
+  </nav>
+
+  <div class="admin-main">
+    <div class="admin-stats">
+      <div class="admin-stat"><span class="admin-stat-num" id="aStatNew">—</span><span class="admin-stat-label">New commissions</span></div>
+      <div class="admin-stat"><span class="admin-stat-num" id="aStatInProgress">—</span><span class="admin-stat-label">In progress</span></div>
+      <div class="admin-stat"><span class="admin-stat-num" id="aStatComplete">—</span><span class="admin-stat-label">Completed</span></div>
+      <div class="admin-stat"><span class="admin-stat-num" id="aStatReviews">—</span><span class="admin-stat-label">Pending reviews</span></div>
+      <div class="admin-stat"><span class="admin-stat-num" id="aStatWaitlist">—</span><span class="admin-stat-label">On waitlist</span></div>
+    </div>
+
+    <div class="nudge-banner" id="nudgeBanner">
+      <span style="font-size:1.4rem">⚠️</span>
+      <p>You have <strong id="nudgeCount">5</strong> unclaimed commissions. Consider enabling the <strong>Waitlist</strong> toggle above to pause new requests while you work through your queue.</p>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="tab-btn active" onclick="switchTab('commissions',this)">Commissions <span class="tab-count" id="tabCommCount">0</span></button>
+      <button class="tab-btn" onclick="switchTab('reviews-pending',this)">Reviews — Pending <span class="tab-count alert" id="tabReviewPending">0</span></button>
+      <button class="tab-btn" onclick="switchTab('reviews-all',this)">Reviews — All <span class="tab-count" id="tabReviewAll">0</span></button>
+      <button class="tab-btn" onclick="switchTab('waitlist-list',this)">Waitlist <span class="tab-count" id="tabWaitCount">0</span></button>
+      <button class="tab-btn" onclick="switchTab('moodboards',this)">Moodboards <span class="tab-count" id="tabMbCount">0</span></button>
+      <button class="tab-btn" onclick="switchTab('catalog',this)">Pricing <span class="tab-count" id="tabCatCount">0</span></button>
+    </div>
+
+    <div class="tab-panel active" id="tab-commissions">
+      <div class="commission-board" id="commissionBoard">
+        <div class="admin-loading"><div class="loading-dots"><span></span><span></span><span></span></div>Loading…</div>
+      </div>
+    </div>
+    <div class="tab-panel" id="tab-reviews-pending"><div id="reviewsPendingList"></div></div>
+    <div class="tab-panel" id="tab-reviews-all"><div id="reviewsAllList"></div></div>
+    <div class="tab-panel" id="tab-waitlist-list"><div id="waitlistList"></div></div>
+    <div class="tab-panel" id="tab-moodboards"><div id="moodboardsList"></div></div>
+    <div class="tab-panel" id="tab-catalog"><div id="catalogList"></div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// CONFIG — the password is NOT here. It lives in Apps Script.
+// ============================================================
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzekrL5Rt0MpbpSxUtoicKFDGRK3_oVpNqN60kARVH3grNpZa0RJho2Gbpj6_CpZ5ip/exec';
+
+let TOKEN = sessionStorage.getItem('bb_token') || '';
+let allCommissions = [], allReviews = [], allWaitlist = [], allMoodboards = [];
+let mbImagesLoaded = false;
+
+// ── SHA-256 (matches Apps Script's hash) ──
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// ── SYNC INDICATOR ──
+let pending = 0;
+function syncStart() {
+  pending++;
+  const d = document.getElementById('syncDot');
+  d.className = 'sync-dot syncing'; d.textContent = 'Saving…';
+}
+function syncEnd(failed) {
+  pending = Math.max(0, pending - 1);
+  const d = document.getElementById('syncDot');
+  if (failed) { d.className = 'sync-dot error'; d.textContent = 'Not saved'; return; }
+  if (pending === 0) { d.className = 'sync-dot'; d.textContent = 'Saved'; }
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(() => t.className = 'toast', 3500);
+}
+
+// ── AUTH ──
+async function tryLogin() {
+  const input = document.getElementById('adminPass');
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('loginError');
+  const pass = input.value;
+  if (!pass) return;
+
+  btn.textContent = 'Checking…'; btn.disabled = true; err.classList.remove('show');
+
+  try {
+    const hash = await sha256(pass);
+    const res = await fetch(SHEET_URL + '?action=adminLogin&h=' + encodeURIComponent(hash));
+    const data = await res.json();
+    if (data.ok && data.token) {
+      TOKEN = data.token;
+      sessionStorage.setItem('bb_token', TOKEN);
+      input.value = '';
+      openDashboard();
+    } else {
+      err.textContent = data.error || 'Incorrect password.';
+      err.classList.add('show');
+      input.value = '';
+    }
+  } catch (e) {
+    err.textContent = 'Could not reach the server. Check your connection and try again.';
+    err.classList.add('show');
+  }
+  btn.textContent = 'Enter →'; btn.disabled = false;
+}
+
+function openDashboard() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminWrap').classList.add('show');
+  loadAll();
+}
+
+function forceRelogin(msg) {
+  sessionStorage.removeItem('bb_token'); TOKEN = '';
+  document.getElementById('adminWrap').classList.remove('show');
+  document.getElementById('loginScreen').style.display = 'flex';
+  const err = document.getElementById('loginError');
+  err.textContent = msg || 'Session expired — please log in again.';
+  err.classList.add('show');
+}
+
+async function logout() {
+  const t = TOKEN;
+  sessionStorage.removeItem('bb_token'); TOKEN = '';
+  try { await send({ action: 'adminLogout', token: t }); } catch (e) {}
+  location.reload();
+}
+
+// ── NETWORK ──
+// POST without a Content-Type header stays a "simple" CORS request,
+// so we can read the response instead of firing blind.
+async function send(payload) {
+  const res = await fetch(SHEET_URL, { method: 'POST', body: JSON.stringify(payload) });
+  return res.json();
+}
+
+/**
+ * Optimistic mutation: update the screen NOW, sync in the background.
+ * If the server rejects it, roll back and say so.
+ */
+function mutate(applyLocal, revertLocal, payload, successMsg) {
+  applyLocal();
+  renderAll();
+  syncStart();
+  payload.token = TOKEN;
+
+  send(payload).then(data => {
+    if (data && data.error === 'unauthorized') {
+      revertLocal(); renderAll(); syncEnd(true);
+      forceRelogin('Your session expired. Log in again to save changes.');
+      return;
+    }
+    syncEnd(false);
+    if (successMsg) showToast(successMsg);
+  }).catch(() => {
+    // Network hiccup — the write usually still landed. Flag it rather than
+    // silently reverting and confusing her.
+    syncEnd(true);
+    showToast("Couldn't confirm that save. Refresh to check it went through.", 'warning');
+  });
+}
+
+// ── TABS ──
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'moodboards' && !mbImagesLoaded) loadMoodboardImages();
+}
+
+// ── RENDER: everything reads from local state, so it's instant ──
+function renderAll() {
+  renderCommissionBoard();
+  renderReviews();
+  renderWaitlist();
+  renderMoodboards();
+  renderCatalog();
+}
+
+function stars(n) {
+  let out = '';
+  for (let i = 0; i < 5; i++) out += '<span class="row-star' + (i < n ? '' : ' empty') + '">★</span>';
+  return out;
+}
+function esc(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ── COMMISSIONS ──
+
+/** Human-readable age, so stale requests stand out without extra tracking. */
+function ageLabel(dateStr) {
+  if (!dateStr) return { text:'', stale:false };
+  var d = new Date(dateStr);
+  if (isNaN(d)) return { text:'', stale:false };
+  var days = Math.floor((Date.now() - d.getTime()) / 86400000);
+  if (days <= 0) return { text:'Today', stale:false };
+  if (days === 1) return { text:'Yesterday', stale:false };
+  return { text: days + ' days ago', stale: days >= 7 };
+}
+
+function buildCommissionCard(c) {
+  const flagged = String(c.flag).toLowerCase() === 'true';
+  const age = ageLabel(c.date);
+  return `<div class="commission-card status-${esc(c.status)} ${flagged ? 'flagged' : ''}">
+    ${flagged ? `<div class="flag-banner">
+      <div class="flag-title">⚠ Possible spam</div>
+      <div class="flag-reason">${esc(c.flagReason || 'Matched several spam signals')}</div>
+      <button class="flag-clear" onclick="clearFlag('${c.id}','commission')">Mark as legitimate</button>
+    </div>` : ''}
+    <div class="cc-name">${esc(c.name)}</div>
+    <div class="cc-service">${esc(c.service)}</div>
+    <div class="cc-meta">
+      ${c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a><br>` : ''}
+      ${c.phone && c.phone !== 'Not provided' ? `📞 ${esc(c.phone)}<br>` : ''}
+      ${c.socialPlatform && c.socialPlatform !== '—' ? `${esc(c.socialPlatform)}: ${esc(c.socialHandle || '—')}<br>` : ''}
+      Budget: ${esc(c.budget || '—')} &nbsp;·&nbsp; ${esc(c.timeline || '—')}<br>
+      Found via: ${esc(c.referral || '—')}<br>
+      <span class="cc-age ${age.stale ? 'stale' : ''}">${esc(c.date || '')}${age.text ? ' · ' + age.text : ''}</span>
+    </div>
+    ${c.vision ? `<button class="cc-toggle-vision" onclick="toggleVision('${c.id}')">▸ View brief</button>
+    <div class="commission-vision" id="vision-${c.id}">${esc(c.vision)}${c.references && c.references !== 'None provided' ? '<br><br><strong style="color:var(--shimmer);font-weight:400">References:</strong><br>' + esc(c.references) : ''}</div>` : ''}
+    <div class="cc-actions">
+      ${c.status === 'new' ? `<button class="cc-btn cc-btn-start" onclick="updateStatus('${c.id}','in_progress')">▶ Start</button>` : ''}
+      ${c.status === 'in_progress' ? `<button class="cc-btn cc-btn-done" onclick="updateStatus('${c.id}','complete')">✓ Complete</button>` : ''}
+      ${c.status === 'complete' ? `<button class="cc-btn cc-btn-reopen" onclick="updateStatus('${c.id}','in_progress')">↩ Reopen</button>` : ''}
+      <button class="cc-btn cc-btn-delete" onclick="deleteCommission('${c.id}')">✕ Remove</button>
+    </div>
+  </div>`;
+}
+
+function renderCommissionBoard() {
+  const cols = [
+    { key:'new',         title:'🟡 New',         empty:'No new requests' },
+    { key:'in_progress', title:'🟠 In Progress', empty:'Nothing in progress' },
+    { key:'complete',    title:'🟢 Complete',    empty:'None completed yet' }
+  ];
+  const counts = {};
+  cols.forEach(col => counts[col.key] = allCommissions.filter(c => c.status === col.key));
+
+  document.getElementById('aStatNew').textContent = counts.new.length;
+  document.getElementById('aStatInProgress').textContent = counts.in_progress.length;
+  document.getElementById('aStatComplete').textContent = counts.complete.length;
+  document.getElementById('tabCommCount').textContent = allCommissions.length;
+
+  if (counts.new.length >= 5) {
+    document.getElementById('nudgeCount').textContent = counts.new.length;
+    document.getElementById('nudgeBanner').classList.add('show');
+  } else {
+    document.getElementById('nudgeBanner').classList.remove('show');
+  }
+
+  document.getElementById('commissionBoard').innerHTML = cols.map(col => {
+    const items = counts[col.key];
+    return `<div class="board-col">
+      <div class="board-col-header">
+        <span class="board-col-title">${col.title}</span>
+        <span class="board-col-count">${items.length}</span>
+      </div>
+      <div class="board-col-body">${items.length ? items.map(buildCommissionCard).join('') : `<div class="board-empty">${col.empty}</div>`}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleVision(id) {
+  const el = document.getElementById('vision-' + id);
+  const btn = el.previousElementSibling;
+  const open = el.style.display === 'block';
+  el.style.display = open ? 'none' : 'block';
+  btn.textContent = open ? '▸ View brief' : '▾ Hide brief';
+}
+
+function updateStatus(id, status) {
+  const prev = allCommissions.find(c => c.id === id).status;
+  mutate(
+    () => { allCommissions = allCommissions.map(c => c.id === id ? {...c, status} : c); },
+    () => { allCommissions = allCommissions.map(c => c.id === id ? {...c, status: prev} : c); },
+    { action:'updateCommissionStatus', id, status },
+    'Moved to ' + ({ new:'New', in_progress:'In Progress', complete:'Complete' }[status])
+  );
+}
+
+function deleteCommission(id) {
+  if (!confirm('Remove this commission? This cannot be undone.')) return;
+  const snapshot = allCommissions.slice();
+  mutate(
+    () => { allCommissions = allCommissions.filter(c => c.id !== id); },
+    () => { allCommissions = snapshot; },
+    { action:'deleteCommission', id },
+    'Commission removed.'
+  );
+}
+
+// ── REVIEWS ──
+function buildReviewRow(r) {
+  const isPending = String(r.approved).toLowerCase() !== 'true';
+  const isFeatured = String(r.featured).toLowerCase() === 'true';
+  return `<div class="review-row ${isFeatured ? 'is-featured' : ''}">
+    <div>
+      <div class="row-top">
+        <span class="row-name">${esc(r.name)}</span>
+        <div class="row-stars">${stars(parseInt(r.rating))}</div>
+      </div>
+      <div class="row-meta">
+        <span class="row-badge ${isPending ? 'badge-pending' : 'badge-approved'}">${isPending ? 'Pending' : 'Approved'}</span>
+        ${isFeatured ? '<span class="row-badge badge-featured">✦ Featured</span>' : ''}
+        ${r.service ? `<span class="row-service-tag">${esc(r.service)}</span>` : ''}
+      </div>
+      <p class="row-text">"${esc(r.review)}"</p>
+      <p class="row-date">${esc(r.date || '')}</p>
+    </div>
+    <div class="row-actions">
+      ${isPending ? `<button class="action-btn btn-approve" onclick="approveReview('${r.id}')">✓ Approve</button>` : ''}
+      ${!isPending && !isFeatured ? `<button class="action-btn btn-feature" onclick="featureReview('${r.id}',true)">★ Feature</button>` : ''}
+      ${isFeatured ? `<button class="action-btn btn-unfeature" onclick="featureReview('${r.id}',false)">✕ Unfeature</button>` : ''}
+      <button class="action-btn btn-delete" onclick="deleteReview('${r.id}')">✕ Delete</button>
+    </div>
+  </div>`;
+}
+
+function renderReviews() {
+  const pendingR = allReviews.filter(r => String(r.approved).toLowerCase() !== 'true');
+  const sorted = allReviews.slice().sort((a,b) =>
+    (String(b.featured).toLowerCase() === 'true') - (String(a.featured).toLowerCase() === 'true'));
+
+  document.getElementById('aStatReviews').textContent = pendingR.length;
+  document.getElementById('tabReviewPending').textContent = pendingR.length;
+  document.getElementById('tabReviewAll').textContent = allReviews.length;
+
+  document.getElementById('reviewsPendingList').innerHTML = pendingR.length
+    ? pendingR.map(buildReviewRow).join('')
+    : '<div class="empty-state"><h3>All clear.</h3><p>No reviews waiting for approval.</p></div>';
+  document.getElementById('reviewsAllList').innerHTML = allReviews.length
+    ? sorted.map(buildReviewRow).join('')
+    : '<div class="empty-state"><h3>No reviews yet.</h3></div>';
+}
+
+function approveReview(id) {
+  mutate(
+    () => { allReviews = allReviews.map(r => r.id === id ? {...r, approved:'true'} : r); },
+    () => { allReviews = allReviews.map(r => r.id === id ? {...r, approved:'false'} : r); },
+    { action:'approveReview', id },
+    'Review approved — now live on the site.'
+  );
+}
+
+function featureReview(id, feature) {
+  mutate(
+    () => { allReviews = allReviews.map(r => r.id === id ? {...r, featured: feature ? 'true':'false'} : r); },
+    () => { allReviews = allReviews.map(r => r.id === id ? {...r, featured: feature ? 'false':'true'} : r); },
+    { action:'featureReview', id, feature },
+    feature ? 'Review featured ✦' : 'Review unfeatured.'
+  );
+}
+
+function deleteReview(id) {
+  if (!confirm('Delete this review permanently?')) return;
+  const snapshot = allReviews.slice();
+  mutate(
+    () => { allReviews = allReviews.filter(r => r.id !== id); },
+    () => { allReviews = snapshot; },
+    { action:'deleteReview', id },
+    'Review deleted.'
+  );
+}
+
+// ── WAITLIST ──
+function renderWaitlist() {
+  document.getElementById('aStatWaitlist').textContent = allWaitlist.length;
+  document.getElementById('tabWaitCount').textContent = allWaitlist.length;
+  document.getElementById('waitlistList').innerHTML = allWaitlist.length
+    ? `<table class="waitlist-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Interested in</th><th>Date</th><th></th></tr></thead>
+        <tbody>${allWaitlist.map(w => `<tr>
+          <td>${esc(w.name)}</td>
+          <td><a href="mailto:${esc(w.email)}" style="color:var(--gold-dim);text-decoration:none;">${esc(w.email)}</a></td>
+          <td>${esc(w.service || '—')}</td>
+          <td>${esc(w.date || '—')}</td>
+          <td><button class="action-btn btn-approve" onclick="convertToCommission('${w.id}')">→ Commission</button></td>
+        </tr>`).join('')}</tbody>
+      </table>`
+    : '<div class="empty-state"><h3>Waitlist is empty.</h3><p>People will appear here when they join.</p></div>';
+}
+
+function convertToCommission(id) {
+  const person = allWaitlist.find(w => w.id === id);
+  if (!person || !confirm(`Convert ${person.name} from the waitlist to a new commission?`)) return;
+  const snapshot = allWaitlist.slice();
+  const newComm = {
+    id: 'tmp-' + Date.now(), name: person.name, email: person.email,
+    phone: 'Not provided', socialPlatform: '—', socialHandle: '—',
+    service: person.service, budget: '—', vision: 'Converted from waitlist',
+    references: 'None provided', timeline: '—', referral: 'Waitlist',
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),
+    status: 'new'
+  };
+  mutate(
+    () => { allWaitlist = allWaitlist.filter(w => w.id !== id); allCommissions = [newComm, ...allCommissions]; },
+    () => { allWaitlist = snapshot; allCommissions = allCommissions.filter(c => c.id !== newComm.id); },
+    { action:'convertWaitlistToCommission', id },
+    `${person.name} moved to commissions — check the New column.`
+  );
+}
+
+// ── MOODBOARDS ──
+let mbImages = {};
+
+function renderMoodboards() {
+  document.getElementById('tabMbCount').textContent = allMoodboards.length;
+  document.getElementById('moodboardsList').innerHTML = allMoodboards.length
+    ? allMoodboards.slice().reverse().map(mb => {
+        const imgs = mbImages[mb.id] || [];
+        const linkList = (mb.links && mb.links !== 'None')
+          ? mb.links.split('\n').map(l => `<a class="mb-link" href="${esc(l)}" target="_blank" rel="noopener">${esc(l)}</a>`).join('')
+          : '<span style="font-size:0.78rem;color:var(--muted);">No links provided</span>';
+        const colorList = (mb.colors && mb.colors !== 'None')
+          ? mb.colors.split(',').map(c => `<div class="mb-color" style="background:${esc(c.trim())}"><span class="mb-color-hex">${esc(c.trim())}</span></div>`).join('')
+          : '<span style="font-size:0.78rem;color:var(--muted);">No colors selected</span>';
+        const imgGrid = imgs.length
+          ? `<p class="mb-section-label">References (${imgs.length})</p>
+             <div class="mb-images">${imgs.map((img,i) => `<div class="mb-img" onclick="openMbImage('${mb.id}',${i})"><img src="${img}" alt="Reference" loading="lazy"></div>`).join('')}</div>`
+          : (mbImagesLoaded ? '' : '<p class="mb-section-label">Loading references…</p>');
+        const mbFlagged = String(mb.flag).toLowerCase() === 'true';
+        return `<div class="mb-card ${mbFlagged ? 'flagged' : ''}">
+          ${mbFlagged ? `<div class="flag-banner">
+            <div class="flag-title">⚠ Possible spam</div>
+            <div class="flag-reason">${esc(mb.flagReason || 'Matched several spam signals')}</div>
+            <button class="flag-clear" onclick="clearFlag('${mb.id}','moodboard')">Mark as legitimate</button>
+          </div>` : ''}
+          <div class="mb-header">
+            <div>
+              <div class="mb-client-name">${esc(mb.name)}</div>
+              <a class="mb-client-email" href="mailto:${esc(mb.email)}">${esc(mb.email)}</a>
+            </div>
+            <div style="text-align:right;">
+              <div class="mb-date">${esc(mb.date || '')}</div>
+              <button class="action-btn btn-delete" style="margin-top:0.6rem;" onclick="deleteMoodboard('${mb.id}')">✕ Delete board</button>
+            </div>
+          </div>
+          ${imgGrid}
+          <p class="mb-section-label">Inspiration links</p>
+          <div class="mb-links">${linkList}</div>
+          <p class="mb-section-label">Vision</p>
+          <div class="mb-details">${mb.details && mb.details !== 'None' ? esc(mb.details) : 'No description provided'}</div>
+          <p class="mb-section-label">Color palette</p>
+          <div class="mb-colors">${colorList}</div>
+        </div>`;
+      }).join('')
+    : '<div class="empty-state"><h3>No mood boards yet.</h3><p>When clients build boards they\'ll appear here.</p></div>';
+}
+
+// Images are big — only fetched when the tab is actually opened
+async function loadMoodboardImages() {
+  if (!allMoodboards.length) { mbImagesLoaded = true; return; }
+  try {
+    const res = await fetch(SHEET_URL + '?action=getMoodboardImages&token=' + encodeURIComponent(TOKEN));
+    mbImages = await res.json();
+    mbImagesLoaded = true;
+    renderMoodboards();
+  } catch (e) {
+    mbImagesLoaded = true;
+    showToast('Could not load mood board images.', 'error');
+  }
+}
+
+
+// keep the dashboard from scrolling behind the image modal (iOS-safe)
+let _mbY = 0;
+function lockMb(){
+  _mbY = window.scrollY;
+  document.body.style.position='fixed'; document.body.style.top=`-${_mbY}px`;
+  document.body.style.left='0'; document.body.style.right='0'; document.body.style.width='100%';
+}
+function unlockMb(){
+  document.body.style.position=''; document.body.style.top='';
+  document.body.style.left=''; document.body.style.right=''; document.body.style.width='';
+  window.scrollTo(0,_mbY);
+}
+
+function openMbImage(mbId, i) {
+  let modal = document.getElementById('mbImgModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.className = 'mb-img-modal'; modal.id = 'mbImgModal';
+    modal.onclick = () => { modal.classList.remove('active'); unlockMb(); };
+    document.body.appendChild(modal);
+  }
+  modal.innerHTML = '<img src="' + (mbImages[mbId] || [])[i] + '">';
+  modal.classList.add('active');
+  lockMb();
+}
+
+function deleteMoodboard(id) {
+  if (!confirm('Delete this mood board and all its images? This cannot be undone.')) return;
+  const snapshot = allMoodboards.slice();
+  mutate(
+    () => { allMoodboards = allMoodboards.filter(m => m.id !== id); delete mbImages[id]; },
+    () => { allMoodboards = snapshot; },
+    { action:'deleteMoodboard', id },
+    'Mood board deleted.'
+  );
+}
+
+// ── WAITLIST TOGGLE ──
+function toggleWaitlist(enabled) {
+  document.getElementById('waitlistBadge').classList.toggle('show', enabled);
+  syncStart();
+  send({ action:'setWaitlist', enabled, token: TOKEN })
+    .then(() => {
+      syncEnd(false);
+      showToast(enabled
+        ? 'Waitlist enabled — the commission form is now paused on the site.'
+        : 'Waitlist disabled — commissions are open again.', enabled ? 'warning' : '');
+    })
+    .catch(() => { syncEnd(true); showToast('Could not save that setting.', 'error'); });
+}
+
+
+
+function clearFlag(id, kind) {
+  const list = kind === 'moodboard' ? allMoodboards : allCommissions;
+  const item = list.find(x => x.id === id);
+  if (!item) return;
+  mutate(
+    () => { item.flag = 'false'; },
+    () => { item.flag = 'true'; },
+    { action:'clearFlag', id, sheet: kind },
+    'Marked as legitimate.'
+  );
+}
+
+// ── CATALOG (pricing control) ──
+let allCatalog = [];
+
+const CAT_GROUPS = [
+  { key:'stream', title:'Streaming subscriptions', match: id => id.indexOf('stream-') === 0 },
+  { key:'social', title:'Social media subscriptions', match: id => id.indexOf('social-') === 0 },
+  { key:'logo',  title:'Logo design',           match: id => id.indexOf('logo-') === 0 },
+  { key:'punch', title:'Punch cards',           match: id => id.indexOf('punch-') === 0 },
+  { key:'addon', title:'Add-ons & extras',      match: id => id.indexOf('addon-') === 0 },
+  { key:'kit',   title:'Brand & creator kits',  match: id => id.indexOf('kit-') === 0 }
+];
+
+const truthy = v => String(v).toLowerCase() === 'true';
+
+function renderCatalog() {
+  const wasOpen = Array.from(document.querySelectorAll('.cat-adv.open')).map(e => e.id);
+  document.getElementById('tabCatCount').textContent = allCatalog.length;
+  const el = document.getElementById('catalogList');
+
+  if (!allCatalog.length) {
+    el.innerHTML = '<div class="empty-state"><h3>No catalog yet.</h3>' +
+      '<p>It builds itself the first time the backend runs. Redeploy the Apps Script and refresh.</p></div>';
+    return;
+  }
+
+  const head = '<div class="cat-head"><span>Item</span><span>Price</span>' +
+               '<span>Sale price</span><span>On sale</span><span>Visible</span></div>';
+
+  el.innerHTML =
+    '<p class="cat-hint">Changes save automatically and go live on the site straight away. ' +
+    'Type prices however you want them to read — <strong>$99</strong>, <strong>From $120</strong>, ' +
+    '<strong>+25%</strong>. Turning an item off hides it everywhere without deleting anything.</p>' +
+    CAT_GROUPS.map(g => {
+      const items = allCatalog.filter(i => g.match(i.id));
+      if (!items.length) return '';
+      return `<div class="cat-group">
+        <div class="cat-group-title">${g.title}</div>
+        ${head}
+        ${items.map(catRow).join('')}
+        <button class="cat-add-btn" onclick="catAdd('${g.key}')">+ Add an item to ${g.title.toLowerCase()}</button>
+      </div>`;
+    }).join('');
+
+  wasOpen.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.add('open');
+      const btn = el.parentElement.querySelector('.cat-more');
+      if (btn) btn.textContent = '▾ Form settings';
+    }
+  });
+}
+
+function catRow(it) {
+  const onSale  = truthy(it.onSale);
+  const visible = truthy(it.active);
+  return `<div class="cat-row ${onSale ? 'on-sale' : ''} ${visible ? '' : 'hidden-item'}" id="cat-${it.id}">
+    <div>
+      <div class="cat-label">${esc(it.label)}</div>
+      <div class="cat-id">${esc(it.id)}</div>
+    </div>
+    <input class="cat-input" type="text" value="${esc(it.price)}" placeholder="—"
+           onchange="catSave('${it.id}','price',this.value)">
+    <input class="cat-input sale" type="text" value="${esc(it.salePrice)}" placeholder="—"
+           ${onSale ? '' : 'disabled'}
+           onchange="catSave('${it.id}','salePrice',this.value)">
+    <div class="cat-toggle">
+      <label class="toggle-switch" title="Show a sale price on the site">
+        <input type="checkbox" ${onSale ? 'checked' : ''} onchange="catSave('${it.id}','onSale',this.checked)">
+        <div class="toggle-track"></div><div class="toggle-thumb"></div>
+      </label>
+    </div>
+    <div class="cat-toggle">
+      <label class="toggle-switch" title="Show or hide this item on the site">
+        <input type="checkbox" ${visible ? 'checked' : ''} onchange="catSave('${it.id}','active',this.checked)">
+        <div class="toggle-track"></div><div class="toggle-thumb"></div>
+      </label>
+    </div>
+
+    <div class="cat-adv" id="adv-${it.id}">
+      <div class="cat-field">
+        <label>Behaviour on the form</label>
+        <select class="cat-input" onchange="catSave('${it.id}','kind',this.value)">
+          <option value="subscription" ${it.kind==='subscription'?'selected':''}>Subscription — recurring, no delivery date</option>
+          <option value="fixed"        ${it.kind==='fixed'?'selected':''}>Fixed price — budget locked</option>
+          <option value="quote"        ${(!it.kind||it.kind==='quote')?'selected':''}>Quoted — client picks a budget range</option>
+        </select>
+      </div>
+      <div class="cat-field">
+        <label>Dropdown group</label>
+        <input class="cat-input" type="text" value="${esc(it.formGroup)}" placeholder="e.g. Monthly subscriptions"
+               onchange="catSave('${it.id}','formGroup',this.value)">
+      </div>
+      <div class="cat-field">
+        <label>Sort order</label>
+        <input class="cat-input" type="text" value="${esc(it.sortOrder)}" placeholder="10"
+               onchange="catSave('${it.id}','sortOrder',this.value)">
+      </div>
+      <div class="cat-field">
+        <label>Typical turnaround</label>
+        <input class="cat-input" type="text" value="${esc(it.turnaround)}" placeholder="7–14 business days"
+               onchange="catSave('${it.id}','turnaround',this.value)">
+      </div>
+      <div class="cat-field">
+        <label>Min days (for the rush warning)</label>
+        <input class="cat-input" type="text" value="${esc(it.minDays)}" placeholder="7"
+               onchange="catSave('${it.id}','minDays',this.value)">
+      </div>
+      <div class="cat-field">
+        <label>Stripe payment link</label>
+        <input class="cat-input" type="text" value="${esc(it.stripeLink)}" placeholder="https://buy.stripe.com/…"
+               onchange="catSave('${it.id}','stripeLink',this.value)">
+      </div>
+      <div class="cat-danger">
+        <button class="action-btn btn-delete" onclick="catDelete('${it.id}','${esc(it.label)}')">✕ Delete permanently</button>
+      </div>
+    </div>
+
+    <button class="cat-more" onclick="catToggleAdv('${it.id}',this)">▸ Form settings</button>
+  </div>`;
+}
+
+
+function catToggleAdv(id, btn) {
+  const el = document.getElementById('adv-' + id);
+  const open = el.classList.toggle('open');
+  btn.textContent = open ? '▾ Form settings' : '▸ Form settings';
+}
+
+const GROUP_DEFAULTS = {
+  stream: { formGroup:'Streaming — YouTube / Twitch', kind:'subscription', sortOrder:19 },
+  social: { formGroup:'Social — Instagram / TikTok / Pinterest', kind:'subscription', sortOrder:29 },
+  logo:  { formGroup:'Logo design',           kind:'fixed',        sortOrder:39, turnaround:'7–14 business days', minDays:7 },
+  punch: { formGroup:'Individual projects',   kind:'fixed',        sortOrder:49, turnaround:'3–5 business days',  minDays:3 },
+  addon: { formGroup:'Add-ons',               kind:'fixed',        sortOrder:59 },
+  kit:   { formGroup:'Brand & creator kits',  kind:'quote',        sortOrder:69 }
+};
+
+function catAdd(groupKey) {
+  const label = prompt('Name for the new item?\n\nThis is what clients see in the service dropdown.');
+  if (!label || !label.trim()) return;
+
+  const suggested = groupKey + '-' + label.trim().toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24);
+  const id = prompt('Short id for this item (letters, numbers and dashes):', suggested);
+  if (!id || !id.trim()) return;
+
+  if (allCatalog.some(i => i.id === id.trim())) {
+    showToast('That id is already in use — pick another.', 'error');
+    return;
+  }
+
+  const price = prompt('Price as you want it shown (e.g. $99). Leave blank if quoted.') || '';
+  const d = GROUP_DEFAULTS[groupKey] || { kind:'quote', formGroup:'', sortOrder:999 };
+
+  const item = {
+    id: id.trim(), label: label.trim(), price, salePrice:'', onSale:'false',
+    active:'true', note:'', kind:d.kind, formGroup:d.formGroup,
+    turnaround:d.turnaround || '', minDays:d.minDays || '', stripeLink:'',
+    sortOrder:d.sortOrder
+  };
+
+  mutate(
+    () => { allCatalog.push(item); },
+    () => { allCatalog = allCatalog.filter(i => i.id !== item.id); },
+    Object.assign({ action:'addCatalogItem' }, item),
+    `"${item.label}" added — it's live on the commission form now.`
+  );
+}
+
+function catDelete(id, label) {
+  if (!confirm(`Delete "${label}" permanently?\n\nIf you only want it off the site for now, use the Visible toggle instead — that's reversible.`)) return;
+  const snapshot = allCatalog.slice();
+  mutate(
+    () => { allCatalog = allCatalog.filter(i => i.id !== id); },
+    () => { allCatalog = snapshot; },
+    { action:'deleteCatalogItem', id },
+    'Item deleted.'
+  );
+}
+
+function catSave(id, field, value) {
+  const item = allCatalog.find(i => i.id === id);
+  if (!item) return;
+  const before = item[field];
+
+  const applied = (field === 'onSale' || field === 'active')
+    ? (value ? 'true' : 'false')
+    : value;
+
+  mutate(
+    () => { item[field] = applied; },
+    () => { item[field] = before; },
+    { action: 'updateCatalogItem', id, [field]: value },
+    field === 'active'  ? (value ? 'Item shown on the site.' : 'Item hidden from the site.')
+  : field === 'onSale'  ? (value ? 'Sale turned on — remember to set a sale price.' : 'Sale turned off.')
+  : 'Saved.'
+  );
+}
+
+// ── INITIAL LOAD — one request instead of four ──
+async function loadAll() {
+  try {
+    const res = await fetch(SHEET_URL + '?action=getAdminBundle&token=' + encodeURIComponent(TOKEN));
+    const d = await res.json();
+    if (d.error === 'unauthorized') { forceRelogin(); return; }
+
+    allCommissions = d.commissions || [];
+    allReviews     = d.reviews || [];
+    allWaitlist    = d.waitlist || [];
+    allMoodboards  = d.moodboards || [];
+    allCatalog     = d.catalog || [];
+
+    const on = String(d.waitlistOn) === 'true';
+    document.getElementById('waitlistToggle').checked = on;
+    document.getElementById('waitlistBadge').classList.toggle('show', on);
+
+    renderAll();
+    syncEnd(false);
+  } catch (e) {
+    document.getElementById('commissionBoard').innerHTML =
+      '<div class="admin-loading"><p style="color:var(--muted)">Could not load data. Check the Apps Script deployment.</p></div>';
+    showToast('Failed to load data.', 'error');
+  }
+}
+
+// Resume an existing session
+if (TOKEN) openDashboard();
+</script>
+</body>
+</html>

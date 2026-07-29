@@ -1,0 +1,2772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BoviBerry — Art & Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<meta name="description" content="BoviBerry — Digital art, graphic design, photo manipulation and brand identity for creators and businesses.">
+<meta name="theme-color" content="#13100B">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+:root {
+  --brand-green:#2C7449; --brand-lime:#9BD16B; --brand-amber:#FFAA1B;
+  --brand-cocoa:#412A13; --brand-clay:#815121;
+  --black:     #13100B;
+  --black-mid: #1A1510;
+  --black-soft:#2A1E12;
+  --black-card:#1D1811;
+  --gold:      #9BD16B;
+  --gold-light:#B8E08F;
+  --gold-dim:  #7BB04F;
+  --gold-faint:rgba(155,209,107,0.12);
+  --shimmer:   #F5EFE3;
+  --white-soft:#E2D9C6;
+  --muted:     #B0A18A;
+  --stroke:    rgba(155,209,107,0.18);
+  --stroke-soft:rgba(155,209,107,0.08);
+  --transition-theme: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+/* ── LIGHT MODE ── */
+[data-theme="light"] {
+  --black:      #F5EFE3;
+  --black-mid:  #EFE8DA;
+  --black-soft: #E5DBC8;
+  --black-card: #EFE8DA;
+  --gold:       #2C7449;
+  --gold-light: #815121;
+  --gold-dim:   #815121;
+  --gold-faint: rgba(44,116,73,0.1);
+  --shimmer:    #291B0C;
+  --white-soft: #412A13;
+  --muted:      #574733;
+  --stroke:     rgba(44,116,73,0.2);
+  --stroke-soft:rgba(44,116,73,0.1);
+}
+
+body {
+  background: var(--black);
+  color: var(--shimmer);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  transition: var(--transition-theme);
+}
+
+/* ── GRAIN TEXTURE ── */
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9999;
+  opacity:0.035;
+  will-change: transform;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1.4rem 5rem;
+  background:rgba(19,16,11,0.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--stroke);
+}
+.nav-logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem; font-weight:400; letter-spacing:0.06em;
+  color:var(--gold-light); text-decoration:none;
+}
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a {
+  font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--muted); text-decoration:none; transition:color 0.2s;
+}
+.nav-links a:hover { color:var(--gold-light); }
+.nav-cta {
+  font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+  padding:0.6rem 1.5rem; border:1px solid var(--gold-dim);
+  color:var(--gold-light); text-decoration:none;
+  transition:all 0.25s; background:transparent;
+}
+.nav-cta:hover { background:var(--gold-faint); border-color:var(--gold); }
+
+/* ── THEME TOGGLE ── */
+.theme-toggle {
+  width:36px; height:36px; border:1px solid var(--stroke);
+  background:transparent; cursor:pointer; color:var(--muted);
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.25s; margin-right:0.5rem; flex-shrink:0;
+}
+.theme-toggle:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+.theme-toggle svg { width:16px; height:16px; }
+.icon-moon { display:block; }
+.icon-sun  { display:none; }
+[data-theme="light"] .icon-moon { display:none; }
+[data-theme="light"] .icon-sun  { display:block; }
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  display:none; position:fixed; inset:0; z-index:2000;
+  background:var(--black);
+  align-items:center; justify-content:center;
+  padding:2rem; animation:lbFadeIn 0.3s ease;
+  /* dvh tracks iOS Safari's collapsing address bar; vh does not */
+  height:100vh; height:100dvh;
+  overscroll-behavior:contain;
+  padding-top:max(2rem, env(safe-area-inset-top));
+  padding-bottom:max(2rem, env(safe-area-inset-bottom));
+}
+.lightbox.active { display:flex; }
+@keyframes lbFadeIn { from{opacity:0} to{opacity:1} }
+
+.lightbox-inner {
+  position:relative; max-width:1000px; width:100%;
+  display:flex; flex-direction:column; align-items:center; gap:1.5rem;
+}
+.lightbox-img-wrap {
+  width:100%; max-height:72vh; max-height:72dvh;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--stroke); position:relative; overflow:hidden;
+  background:var(--black-soft);
+}
+.lightbox-img-wrap img {
+  max-width:100%; max-height:72vh; max-height:72dvh;
+  object-fit:contain; display:block;
+}
+.lightbox-placeholder {
+  width:100%; height:400px;
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:1rem; color:var(--muted);
+  font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase;
+}
+.lightbox-placeholder svg { opacity:0.2; }
+.lightbox-info {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  width:100%; padding:0 0.2rem; gap:1rem;
+}
+.lightbox-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem; font-weight:300; color:var(--shimmer);
+}
+.lightbox-category {
+  font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--gold-dim); margin-top:0.3rem;
+}
+.lightbox-close {
+  position:absolute; top:-1rem; right:-1rem;
+  width:40px; height:40px; border:1px solid var(--stroke);
+  background:var(--black-card); cursor:pointer; color:var(--muted);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.2rem; transition:all 0.2s; z-index:10;
+}
+.lightbox-close:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+.lightbox-nav {
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:44px; height:44px; border:1px solid var(--stroke);
+  background:rgba(19,16,11,0.8); cursor:pointer; color:var(--muted);
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s; font-size:1rem; z-index:10;
+}
+.lightbox-nav:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+.lightbox-prev { left:-60px; }
+.lightbox-next { right:-60px; }
+.lightbox-counter {
+  font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted);
+  white-space:nowrap;
+}
+
+/* ── LIGHTBOX ON PHONES ──
+   The arrows and close button sit outside the frame on desktop, which runs
+   them off-screen on a phone. Bring them inside and give them a solid chip
+   so they read clearly over artwork. */
+@media(max-width:900px){
+  .lightbox { padding:1rem; padding-top:max(1rem, env(safe-area-inset-top)); padding-bottom:max(1rem, env(safe-area-inset-bottom)); }
+  .lightbox-inner { gap:1rem; }
+  .lightbox-img-wrap, .lightbox-img-wrap img { max-height:62vh; max-height:62dvh; }
+
+  .lightbox-close {
+    top:0.6rem; right:0.6rem;
+    width:38px; height:38px;
+    background:rgba(19,16,11,0.88);
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    color:var(--shimmer); border-color:var(--stroke);
+  }
+  .lightbox-nav {
+    width:42px; height:42px;
+    background:rgba(19,16,11,0.88);
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    color:var(--shimmer);
+    top:auto; bottom:calc(50% + 10px); transform:none;
+  }
+  .lightbox-prev { left:0.6rem; }
+  .lightbox-next { right:0.6rem; }
+
+  .lightbox-info { flex-direction:column; align-items:flex-start; gap:0.4rem; }
+  .lightbox-title { font-size:1.25rem; }
+  .lightbox-category { font-size:0.72rem; }
+  .lightbox-counter { font-size:0.72rem; }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:flex-start;
+  padding:0 5rem;
+  position:relative; overflow:hidden;
+}
+
+/* large decorative SVG background lines */
+.hero-bg-svg {
+  position:absolute; right:-80px; top:50%;
+  transform:translateY(-50%);
+  width:620px; height:620px;
+  opacity:0.07; pointer-events:none;
+}
+
+/* gold shimmer orbs */
+.orb {
+  position:absolute; border-radius:50%;
+  filter:blur(90px); pointer-events:none;
+  will-change: transform;
+}
+.orb-1 { width:400px;height:400px; background:radial-gradient(circle,rgba(155,209,107,0.18),transparent 70%); top:-60px;right:10%; }
+.orb-2 { width:280px;height:280px; background:radial-gradient(circle,rgba(155,209,107,0.10),transparent 70%); bottom:80px;left:5%; }
+
+.hero-eyebrow {
+  font-size:0.68rem; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--gold-dim); margin-bottom:1.6rem;
+  display:flex; align-items:center; gap:0.8rem;
+}
+.hero-eyebrow::before {
+  content:''; display:block; width:32px; height:1px; background:var(--gold-dim);
+}
+
+.hero-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(4rem,7vw,7rem);
+  font-weight:300; line-height:1.02; letter-spacing:-0.01em;
+  color:var(--shimmer); margin-bottom:1.8rem; max-width:700px;
+}
+.hero-title em {
+  font-style:italic; color:var(--gold-light);
+}
+.hero-title .outline-text {
+  -webkit-text-stroke:1px rgba(245,240,232,0.25);
+  color:transparent;
+}
+
+.hero-sub {
+  font-size:0.95rem; line-height:1.85; color:var(--muted);
+  max-width:420px; margin-bottom:3rem; font-weight:300;
+}
+
+.hero-actions { display:flex; gap:1.2rem; align-items:center; }
+
+.btn-gold {
+  padding:0.9rem 2.2rem; background:var(--gold);
+  color:var(--black); text-decoration:none;
+  font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+  font-weight:400; transition:all 0.25s; display:inline-block;
+}
+.btn-gold:hover { background:var(--gold-light); }
+
+.btn-outline {
+  padding:0.9rem 2.2rem; border:1px solid var(--stroke);
+  color:var(--white-soft); text-decoration:none;
+  font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+  transition:all 0.25s; display:inline-block;
+}
+.btn-outline:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+
+.hero-scroll {
+  position:absolute; bottom:2.5rem; left:5rem;
+  display:flex; align-items:center; gap:0.8rem;
+  font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--muted);
+}
+.scroll-line {
+  display:block; width:40px; height:1px;
+  background:var(--gold-dim);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100%{opacity:0.4;width:40px} 50%{opacity:1;width:60px} }
+
+/* ── SECTION BASE ── */
+section { position:relative; }
+.section-inner { padding:7rem 5rem; }
+
+.section-label {
+  font-size:0.65rem; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--gold-dim); margin-bottom:1rem;
+  display:flex; align-items:center; gap:0.8rem;
+}
+.section-label::before { content:''; display:block; width:24px; height:1px; background:var(--gold-dim); }
+
+.section-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,4.5vw,4rem);
+  font-weight:300; line-height:1.1; color:var(--shimmer);
+  margin-bottom:1.2rem;
+}
+.section-title em { font-style:italic; color:var(--gold-light); }
+
+.section-sub {
+  font-size:0.9rem; line-height:1.8; color:var(--muted);
+  max-width:520px; margin-bottom:3.5rem;
+}
+
+/* ── DIVIDER ── */
+.gold-divider {
+  width:100%; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
+  margin:0;
+}
+
+/* ── ABOUT ── */
+.about-grid {
+  display:grid; grid-template-columns:minmax(0,0.75fr) 1fr; gap:5rem; align-items:center;
+}
+.about-image-wrap {
+  position:relative; aspect-ratio:4/5;
+  width:100%; max-width:340px;
+  background:var(--black-soft);
+  border:1px solid var(--stroke);
+  overflow:hidden;
+}
+.about-image-wrap img {
+  width:100%; height:100%; display:block;
+}
+.about-image-wrap img.cover   { object-fit:cover; }
+.about-image-wrap img.contain { object-fit:contain; padding:2.5rem; }
+.about-image-placeholder {
+  width:100%; height:100%;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:1rem; color:var(--muted);
+}
+.about-image-placeholder svg { opacity:0.3; }
+.about-image-placeholder p { font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; }
+.about-corner {
+  position:absolute; width:20px; height:20px;
+  border-color:var(--gold-dim); border-style:solid;
+}
+.about-corner.tl { top:12px; left:12px; border-width:1px 0 0 1px; }
+.about-corner.br { bottom:12px; right:12px; border-width:0 1px 1px 0; }
+
+.about-text .big-quote {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem; font-weight:300; font-style:italic;
+  color:var(--gold-light); line-height:1.5;
+  border-left:2px solid var(--gold-dim);
+  padding-left:1.5rem; margin-bottom:2rem;
+}
+.about-text p {
+  font-size:0.9rem; line-height:1.85; color:var(--muted);
+  margin-bottom:1rem;
+}
+.about-tags {
+  display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:2rem;
+}
+.tag {
+  font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase;
+  padding:0.4rem 0.9rem; border:1px solid var(--stroke);
+  color:var(--gold-dim); background:var(--gold-faint);
+}
+
+/* ── SERVICES ── */
+.services-bg { background:var(--black-mid); }
+.services-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1.5px;
+  background:var(--stroke);
+  border:1px solid var(--stroke);
+}
+.service-card {
+  background:var(--black-card); padding:2.5rem 2rem;
+  transition:background 0.3s;
+  cursor:default;
+}
+.service-card:hover { background:var(--black-soft); }
+.service-icon {
+  width:40px; height:40px; margin-bottom:1.5rem;
+  color:var(--gold);
+}
+.service-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem; font-weight:400; color:var(--shimmer);
+  margin-bottom:0.8rem;
+}
+.service-card p {
+  font-size:0.85rem; line-height:1.8; color:var(--muted);
+  margin-bottom:1.5rem;
+}
+.service-price {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem; font-style:italic; color:var(--gold-light);
+  display:block; margin-bottom:0.3rem;
+}
+.service-price-note {
+  font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ── PORTFOLIO ── */
+.portfolio-grid {
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-auto-rows:96px;
+  grid-auto-flow:dense;
+  gap:1.1rem;
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 2rem 1rem;
+}
+.portfolio-item {
+  background:var(--black-soft);
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  border:1px solid var(--stroke-soft);
+  position:relative; overflow:hidden;
+  cursor:pointer;
+  transition:border-color 0.35s, transform 0.35s;
+}
+.portfolio-item:hover { border-color:var(--gold-dim); transform:translateY(-2px); }
+/* ── TILE SHAPES ──────────────────────────────────────────────
+   Set with the `size` value in the PORTFOLIO list below.
+   feature — big hero, wide landscape
+   wide    — landscape
+   strip   — ultra-wide band, good for patterns
+   tall    — portrait, good for posters
+   half    — half width landscape, good for 16:9 thumbs
+   panel   — half width, squarer, good for logos
+────────────────────────────────────────────────────────────── */
+.portfolio-item.feature { grid-column:span 7; grid-row:span 3; }
+.portfolio-item.wide    { grid-column:span 5; grid-row:span 2; }
+.portfolio-item.strip   { grid-column:span 5; grid-row:span 1; }
+.portfolio-item.tall    { grid-column:span 4; grid-row:span 4; }
+.portfolio-item.half    { grid-column:span 6; grid-row:span 2; }
+.portfolio-item.panel   { grid-column:span 6; grid-row:span 3; }
+
+.portfolio-item-inner {
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:0.5rem;
+  color:var(--muted); font-size:0.7rem;
+  letter-spacing:0.15em; text-transform:uppercase;
+}
+.portfolio-item-inner svg { opacity:0.2; margin-bottom:0.4rem; }
+
+.portfolio-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(19,16,11,0.94) 0%,rgba(19,16,11,0.25) 55%,transparent 100%);
+  opacity:0; transition:opacity 0.3s;
+  display:flex; align-items:flex-end; padding:1.1rem;
+}
+.portfolio-item:hover .portfolio-overlay { opacity:1; }
+.portfolio-overlay-text h4 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.98rem; color:var(--shimmer); margin-bottom:0.2rem; line-height:1.2;
+}
+.portfolio-overlay-text span {
+  font-size:0.58rem; letter-spacing:0.16em;
+  text-transform:uppercase; color:var(--gold-dim);
+}
+.portfolio-corner-accent {
+  position:absolute; top:12px; right:12px;
+  width:16px; height:16px; border-top:1px solid var(--gold-dim); border-right:1px solid var(--gold-dim);
+  opacity:0; transition:opacity 0.35s;
+}
+.portfolio-item:hover .portfolio-corner-accent { opacity:1; }
+
+/* ── BRAND KITS ── */
+.kits-bg { background:var(--black-mid); }
+.kits-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+.kit-card {
+  background:var(--black-card); border:1px solid var(--stroke-soft);
+  padding:2rem 1.8rem; position:relative; overflow:hidden;
+  transition:border-color 0.3s, transform 0.3s;
+}
+.kit-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
+  opacity:0; transition:opacity 0.3s;
+}
+.kit-card:hover { border-color:var(--gold-dim); transform:translateY(-3px); }
+.kit-card:hover::before { opacity:1; }
+
+.kit-badge {
+  display:inline-block; font-size:0.6rem; letter-spacing:0.18em;
+  text-transform:uppercase; padding:0.3rem 0.7rem;
+  background:var(--gold-faint); border:1px solid var(--stroke);
+  color:var(--gold-dim); margin-bottom:1.2rem;
+}
+.kit-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem; font-weight:400; color:var(--shimmer);
+  margin-bottom:0.6rem;
+}
+.kit-card p { font-size:0.85rem; line-height:1.75; color:var(--muted); margin-bottom:1.5rem; }
+.kit-includes {
+  list-style:none; margin-bottom:1.8rem;
+}
+.kit-includes li {
+  font-size:0.8rem; color:var(--muted);
+  padding:0.4rem 0; border-bottom:1px solid var(--stroke-soft);
+  display:flex; align-items:center; gap:0.5rem;
+}
+.kit-includes li::before {
+  content:''; display:inline-block; width:4px; height:4px;
+  background:var(--gold-dim); flex-shrink:0;
+}
+.kit-price {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem; color:var(--gold-light); font-style:italic;
+}
+.kit-price-period { font-size:0.75rem; color:var(--muted); }
+
+/* ── SERVICE LINK ── */
+.service-link {
+  font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase;
+  color:var(--gold-dim); text-decoration:none;
+  border-bottom:1px solid var(--stroke); padding-bottom:2px;
+  transition:color 0.2s, border-color 0.2s; display:inline-block;
+}
+.service-link:hover { color:var(--gold-light); border-color:var(--gold-dim); }
+
+/* ── SUBSCRIPTIONS ── */
+.subs-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:880px; }
+.sub-card {
+  background:var(--black-card); border:1px solid var(--stroke-soft);
+  padding:2.4rem 2.1rem; position:relative; overflow:hidden;
+  transition:border-color 0.3s, transform 0.3s;
+}
+.sub-card:hover { border-color:var(--gold-dim); transform:translateY(-3px); }
+.sub-card.featured { border-color:var(--gold-dim); }
+.sub-card.featured::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.sub-badge {
+  display:inline-block; font-size:0.58rem; letter-spacing:0.18em;
+  text-transform:uppercase; padding:0.3rem 0.8rem;
+  border:1px solid var(--stroke); background:var(--gold-faint);
+  color:var(--gold-dim); margin-bottom:1.3rem;
+}
+.sub-badge.gold { border-color:var(--gold-dim); color:var(--gold); background:rgba(155,209,107,0.18); }
+.sub-name {
+  font-family:'Cormorant Garamond',serif; font-size:2rem;
+  font-weight:400; color:var(--shimmer); margin-bottom:0.4rem;
+}
+.sub-price {
+  font-family:'Cormorant Garamond',serif; font-size:2.8rem;
+  font-style:italic; color:var(--gold-light); line-height:1; margin-bottom:1.4rem;
+}
+.sub-period { font-family:'Jost',sans-serif; font-size:0.8rem; font-style:normal; color:var(--muted); letter-spacing:0.08em; }
+
+.sub-kit-banner {
+  border:1px solid var(--stroke-soft); background:var(--black-soft);
+  padding:0.8rem 1rem; margin-bottom:1.5rem;
+  display:flex; flex-direction:column; gap:0.2rem;
+}
+.sub-kit-banner.gold { border-color:var(--gold-dim); background:var(--gold-faint); }
+.sub-kit-label { font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); }
+.sub-kit-name {
+  font-family:'Cormorant Garamond',serif; font-size:1.1rem;
+  color:var(--gold-light); text-decoration:none; transition:color 0.2s;
+}
+.sub-kit-name:hover { color:var(--gold); }
+
+.sub-list { list-style:none; margin-bottom:1.8rem; }
+.sub-list li {
+  font-size:0.85rem; color:var(--muted); line-height:1.6;
+  padding:0.5rem 0 0.5rem 1.3rem; position:relative;
+  border-bottom:1px solid var(--stroke-soft);
+}
+.sub-list li:last-child { border-bottom:none; }
+.sub-list li::before {
+  content:''; position:absolute; left:0; top:1rem;
+  width:5px; height:5px; background:var(--gold-dim);
+}
+.sub-list li.inherited { color:var(--gold-dim); font-style:italic; }
+.sub-list li.inherited::before { background:var(--gold); }
+
+.sub-cta {
+  display:block; text-align:center; padding:0.85rem;
+  background:var(--gold); color:var(--black); text-decoration:none;
+  font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase;
+  font-weight:400; transition:background 0.25s;
+}
+.sub-cta:hover { background:var(--gold-light); }
+.sub-cta.outline { background:transparent; border:1px solid var(--gold-dim); color:var(--gold-light); }
+.sub-cta.outline:hover { background:var(--gold-faint); }
+.sub-cta-alt {
+  display:block; text-align:center; margin-top:0.7rem;
+  font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--muted); text-decoration:none; transition:color 0.2s;
+}
+.sub-cta-alt:hover { color:var(--gold-light); }
+
+/* ── KIT TIER NOTES ── */
+.kit-tier-note {
+  font-size:0.72rem; color:var(--gold-dim); line-height:1.6;
+  padding:0.7rem 0.9rem; margin-bottom:1.2rem;
+  border:1px solid var(--stroke); background:var(--gold-faint);
+}
+.kit-tier-note a { color:var(--gold-light); text-decoration:none; border-bottom:1px solid var(--stroke); }
+.kit-tier-note a:hover { color:var(--gold); }
+.kit-tier-note.solo { color:var(--muted); border-color:var(--stroke-soft); background:var(--black-soft); }
+.kit-cta {
+  display:block; text-align:center; padding:0.75rem;
+  border:1px solid var(--gold-dim); color:var(--gold-light);
+  text-decoration:none; font-size:0.68rem; letter-spacing:0.16em;
+  text-transform:uppercase; transition:background 0.25s;
+}
+.kit-cta:hover { background:var(--gold-faint); }
+
+/* ── REVIEWS ── */
+.reviews-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;
+  margin-bottom:3rem; min-height:180px;
+}
+.review-card {
+  background:var(--black-card); border:1px solid var(--stroke-soft);
+  padding:2rem 1.8rem; position:relative; overflow:hidden;
+  transition:border-color 0.3s;
+}
+.review-card.featured {
+  border-color:var(--gold-dim);
+}
+.review-card.featured::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.review-featured-badge {
+  display:inline-flex; align-items:center; gap:0.4rem;
+  font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1rem;
+}
+.review-stars { display:flex; gap:3px; margin-bottom:1rem; }
+.review-star { color:var(--gold); font-size:0.85rem; }
+.review-star.empty { color:var(--black-soft); }
+.review-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem; font-style:italic; font-weight:300;
+  color:var(--shimmer); line-height:1.7; margin-bottom:1.2rem;
+}
+.review-author {
+  font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase;
+  color:var(--gold-dim);
+}
+.review-service {
+  font-size:0.7rem; color:var(--muted); margin-top:0.2rem;
+}
+.reviews-loading {
+  grid-column:span 3; display:flex;
+  align-items:center; justify-content:center; gap:0.5rem; padding:3rem;
+}
+.reviews-loading-dot {
+  width:6px; height:6px; background:var(--gold-dim); border-radius:50%;
+  animation:dotPulse 1.4s ease-in-out infinite;
+}
+.reviews-loading-dot:nth-child(2) { animation-delay:0.2s; }
+.reviews-loading-dot:nth-child(3) { animation-delay:0.4s; }
+@keyframes dotPulse { 0%,80%,100%{opacity:0.2;transform:scale(0.8)} 40%{opacity:1;transform:scale(1)} }
+.reviews-empty {
+  grid-column:span 3; text-align:center; padding:3rem;
+  color:var(--muted); font-size:0.85rem;
+}
+.reviews-cta { text-align:center; }
+
+/* ── COMMISSION FORM ── */
+.commission-bg { background:var(--black); }
+.commission-wrap {
+  display:grid; grid-template-columns:1fr 1.4fr; gap:6rem; align-items:start;
+}
+.commission-info h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem; font-weight:400; color:var(--shimmer); margin-bottom:0.8rem;
+}
+.commission-info p { font-size:0.85rem; line-height:1.8; color:var(--muted); margin-bottom:2rem; }
+
+.process-steps { margin-top:2.5rem; }
+.step { display:flex; gap:1.2rem; margin-bottom:1.8rem; }
+.step-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem; color:var(--gold-dim); line-height:1;
+  min-width:2rem; font-style:italic;
+}
+.step-text h4 { font-size:0.85rem; color:var(--shimmer); margin-bottom:0.3rem; font-weight:400; }
+.step-text p { font-size:0.8rem; color:var(--muted); line-height:1.65; }
+
+/* FORM */
+.commission-form {
+  background:var(--black-card); border:1px solid var(--stroke-soft);
+  padding:2.5rem; position:relative;
+}
+.commission-form::before {
+  content:''; position:absolute; top:0; left:2rem; right:2rem; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
+}
+.form-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem; font-weight:300; color:var(--shimmer);
+  margin-bottom:0.4rem;
+}
+.form-subtitle { font-size:0.8rem; color:var(--muted); margin-bottom:2rem; }
+
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.form-group { margin-bottom:1.2rem; }
+.form-group.full { grid-column:span 2; }
+
+label {
+  display:block; font-size:0.65rem; letter-spacing:0.18em;
+  text-transform:uppercase; color:var(--gold-dim); margin-bottom:0.5rem;
+}
+input[type="text"], input[type="email"], input[type="tel"], input[type="url"], select, textarea {
+  width:100%; background:var(--black-soft); border:1px solid var(--stroke-soft);
+  color:var(--shimmer); padding:0.8rem 1rem;
+  font-family:'Jost',sans-serif; font-size:0.875rem; font-weight:300;
+  outline:none; transition:border-color 0.2s;
+  -webkit-appearance:none; appearance:none;
+}
+input:focus, select:focus, textarea:focus { border-color:var(--gold-dim); }
+input::placeholder, textarea::placeholder { color:var(--muted); }
+
+/* ── PHONE FIELD ── */
+input[type="tel"] {
+  font-variant-numeric:tabular-nums;
+  letter-spacing:0.04em;
+}
+input[type="tel"]:not(:placeholder-shown) { color:var(--shimmer); }
+select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a6e30' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 1rem center; padding-right:2.5rem; cursor:pointer; }
+select option { background:var(--black-card); color:var(--shimmer); }
+textarea { resize:vertical; min-height:120px; }
+
+.form-submit {
+  width:100%; padding:1rem; background:var(--gold);
+  color:var(--black); border:none; cursor:pointer;
+  font-family:'Jost',sans-serif; font-size:0.72rem;
+  letter-spacing:0.2em; text-transform:uppercase; font-weight:400;
+  transition:background 0.25s; margin-top:0.5rem;
+}
+.form-submit:hover { background:var(--gold-light); }
+
+.form-note { font-size:0.72rem; color:var(--muted); margin-top:1rem; text-align:center; line-height:1.6; }
+
+/* ── FIELD VALIDATION ── */
+.field-error {
+  font-size:0.68rem; color:#c94c4c; margin-top:0.4rem;
+  display:none; letter-spacing:0.05em;
+}
+.field-error.show { display:block; }
+input.invalid { border-color:#c94c4c !important; }
+.phone-nudge {
+  font-size:0.68rem; color:var(--gold-dim); margin-top:0.4rem;
+  display:none; letter-spacing:0.05em;
+}
+.phone-nudge.show { display:block; }
+
+/* ── OPTIONAL LABEL TAG ── */
+.label-optional {
+  font-size:0.55rem; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--muted); margin-left:0.4rem;
+  border:1px solid var(--stroke-soft); padding:0.12rem 0.4rem;
+  vertical-align:middle;
+}
+
+/* ── PHONE FIELD ── */
+.phone-field {
+  display:flex; align-items:stretch;
+  background:var(--black-soft);
+  border:1px solid var(--stroke-soft);
+  transition:border-color 0.2s;
+}
+.phone-field:focus-within { border-color:var(--gold-dim); }
+.phone-prefix {
+  display:flex; align-items:center; gap:0.35rem;
+  padding:0 0.85rem;
+  font-size:0.8rem; letter-spacing:0.08em;
+  color:var(--gold-dim);
+  background:var(--gold-faint);
+  border-right:1px solid var(--stroke-soft);
+  user-select:none; flex-shrink:0;
+}
+.phone-prefix svg { width:13px; height:13px; opacity:0.8; }
+.phone-field input[type="tel"] {
+  flex:1; min-width:0;
+  background:transparent; border:none;
+  padding:0.8rem 1rem;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:0.04em;
+}
+.phone-field input[type="tel"]:focus { border:none; outline:none; }
+
+/* ── FOOTER ── */
+footer {
+  padding:4rem 5rem 3rem;
+  border-top:1px solid var(--stroke-soft);
+  display:flex; justify-content:space-between; align-items:flex-end;
+  flex-wrap:wrap; gap:2rem;
+}
+.footer-brand .nav-logo { display:block; margin-bottom:0.6rem; }
+.footer-brand p { font-size:0.78rem; color:var(--muted); max-width:260px; line-height:1.7; }
+.footer-links { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+.footer-links a { font-size:0.78rem; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.footer-links a:hover { color:var(--gold-light); }
+.footer-social { display:flex; gap:1rem; align-items:center; }
+.social-link {
+  width:36px; height:36px; border:1px solid var(--stroke-soft);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--muted); text-decoration:none; transition:all 0.2s;
+  font-size:0.75rem;
+}
+.footer-email {
+  font-size:0.78rem; color:var(--muted); text-decoration:none;
+  border-bottom:1px solid var(--stroke-soft); padding-bottom:2px;
+  transition:color 0.2s, border-color 0.2s;
+}
+.footer-email:hover { color:var(--gold-light); border-color:var(--gold-dim); }
+.social-link:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+.footer-copy {
+  width:100%; border-top:1px solid var(--stroke-soft);
+  padding-top:1.5rem; margin-top:1rem;
+  font-size:0.68rem; letter-spacing:0.1em; color:var(--muted);
+  display:flex; justify-content:space-between;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.fade-up { animation:fadeUp 0.8s ease forwards; }
+.fade-up-1 { animation-delay:0.1s; opacity:0; }
+.fade-up-2 { animation-delay:0.25s; opacity:0; }
+.fade-up-3 { animation-delay:0.4s; opacity:0; }
+.fade-up-4 { animation-delay:0.55s; opacity:0; }
+
+/* ── SUCCESS SCREEN ── */
+.success-overlay {
+  display:none;
+  position:fixed; inset:0; z-index:1000;
+  background:var(--black);
+  align-items:center; justify-content:center;
+  flex-direction:column; text-align:center;
+  padding:2rem;
+  animation:fadeIn 0.5s ease;
+  height:100vh; height:100dvh;
+  overscroll-behavior:contain; overflow-y:auto;
+  padding-top:max(2rem, env(safe-area-inset-top));
+  padding-bottom:max(2rem, env(safe-area-inset-bottom));
+}
+.success-overlay.active { display:flex; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+.success-box {
+  max-width:520px; width:100%;
+  border:1px solid var(--stroke);
+  padding:3.5rem 3rem;
+  position:relative; background:var(--black-card);
+}
+.success-box::before {
+  content:''; position:absolute; top:0; left:2rem; right:2rem; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.success-box::after {
+  content:''; position:absolute; bottom:0; left:2rem; right:2rem; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
+}
+.success-corner {
+  position:absolute; width:16px; height:16px;
+  border-color:var(--gold-dim); border-style:solid;
+}
+.success-corner.tl { top:12px; left:12px; border-width:1px 0 0 1px; }
+.success-corner.tr { top:12px; right:12px; border-width:1px 1px 0 0; }
+.success-corner.bl { bottom:12px; left:12px; border-width:0 0 1px 1px; }
+.success-corner.br { bottom:12px; right:12px; border-width:0 1px 1px 0; }
+
+.success-icon {
+  width:56px; height:56px; margin:0 auto 1.8rem;
+  border:1px solid var(--gold-dim); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold);
+}
+.success-eyebrow {
+  font-size:0.65rem; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--gold-dim); margin-bottom:1rem;
+}
+.success-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.4rem; font-weight:300; color:var(--shimmer);
+  line-height:1.1; margin-bottom:1rem;
+}
+.success-title em { font-style:italic; color:var(--gold-light); }
+.success-msg {
+  font-size:0.88rem; line-height:1.85; color:var(--muted);
+  margin-bottom:2rem;
+}
+.success-divider {
+  width:40px; height:1px; background:var(--gold-dim);
+  margin:0 auto 2rem;
+}
+.success-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem; font-style:italic; color:var(--gold-light);
+  margin-bottom:2rem;
+}
+.success-close {
+  font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase;
+  padding:0.8rem 2rem; border:1px solid var(--gold-dim);
+  color:var(--gold-light); background:transparent; cursor:pointer;
+  font-family:'Jost',sans-serif; transition:all 0.25s;
+}
+.success-close:hover { background:var(--gold-faint); }
+
+/* ── REVIEWS PREVIEW ── */
+.reviews-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.5rem; margin-bottom:3rem; min-height:180px;
+  align-items:start;
+}
+.review-card {
+  background:var(--black-card); border:1px solid var(--stroke-soft);
+  padding:2rem 1.8rem; position:relative; overflow:hidden;
+  transition:border-color 0.3s, transform 0.3s;
+}
+.review-card:hover { border-color:var(--gold-dim); transform:translateY(-3px); }
+.review-card.featured {
+  border-color:var(--gold-dim);
+  background:linear-gradient(135deg,var(--black-card),rgba(155,209,107,0.05));
+}
+.review-card.featured::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.featured-badge {
+  display:inline-block; font-size:0.58rem; letter-spacing:0.18em;
+  text-transform:uppercase; padding:0.25rem 0.6rem;
+  background:var(--gold-faint); border:1px solid var(--gold-dim);
+  color:var(--gold); margin-bottom:1rem;
+}
+.review-stars { color:var(--gold); font-size:0.9rem; margin-bottom:0.8rem; letter-spacing:2px; }
+.review-text {
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:1.05rem; line-height:1.65; color:var(--white-soft);
+  margin-bottom:1.2rem;
+}
+.review-author {
+  font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--gold-dim);
+}
+.review-service {
+  font-size:0.68rem; color:var(--muted); margin-top:0.2rem;
+}
+.reviews-loading {
+  grid-column:span 3; display:flex;
+  align-items:center; justify-content:center; gap:0.5rem; padding:3rem;
+}
+.reviews-loading-dot {
+  width:6px; height:6px; border-radius:50%; background:var(--gold-dim);
+  animation:dotPulse 1.2s ease-in-out infinite;
+}
+.reviews-loading-dot:nth-child(2) { animation-delay:0.2s; }
+.reviews-loading-dot:nth-child(3) { animation-delay:0.4s; }
+@keyframes dotPulse { 0%,100%{opacity:0.2;transform:scale(0.8)} 50%{opacity:1;transform:scale(1.2)} }
+.reviews-empty {
+  grid-column:span 3; text-align:center; padding:3rem;
+  color:var(--muted); font-size:0.85rem; line-height:1.8;
+}
+.reviews-cta { text-align:center; }
+
+/* ── CUSTOM CURSOR ── */
+*, *::before, *::after { cursor: none !important; }
+.cursor-dot {
+  position:fixed; width:8px; height:8px; border-radius:50%;
+  background:var(--gold); pointer-events:none; z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s ease, background 0.2s ease, width 0.2s ease, height 0.2s ease;
+  will-change:transform;
+}
+.cursor-ring {
+  position:fixed; width:32px; height:32px; border-radius:50%;
+  border:1px solid rgba(155,209,107,0.5); pointer-events:none; z-index:99998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.12s ease, width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+  will-change:transform;
+}
+.cursor-dot.hovering { width:4px; height:4px; background:var(--gold-light); }
+.cursor-ring.hovering { width:48px; height:48px; border-color:rgba(155,209,107,0.8); }
+.cursor-dot.clicking { transform:translate(-50%,-50%) scale(0.6); }
+@media(pointer:coarse){ .cursor-dot,.cursor-ring { display:none; } *, *::before, *::after { cursor:auto !important; } }
+
+/* ── WAITLIST FORM ── */
+.waitlist-section { display:none; }
+.waitlist-section.active { display:block; }
+.commission-section { display:block; }
+.commission-section.hidden { display:none; }
+.waitlist-banner {
+  background:var(--black-card); border:1px solid var(--gold-dim);
+  padding:4rem 5rem; text-align:center; position:relative;
+}
+.waitlist-banner::before { content:''; position:absolute; top:0; left:3rem; right:3rem; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.waitlist-banner::after { content:''; position:absolute; bottom:0; left:3rem; right:3rem; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); }
+.waitlist-icon { font-size:2rem; margin-bottom:1rem; }
+.waitlist-banner h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.5rem); font-weight:300; color:var(--shimmer); margin-bottom:1rem; }
+.waitlist-banner h2 em { font-style:italic; color:var(--gold-light); }
+.waitlist-banner p { font-size:0.9rem; color:var(--muted); max-width:480px; margin:0 auto 2.5rem; line-height:1.8; }
+.waitlist-form-wrap { max-width:480px; margin:0 auto; text-align:left; }
+.waitlist-success { display:none; text-align:center; padding:2rem; }
+.waitlist-success.show { display:block; }
+.waitlist-success h3 { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-style:italic; color:var(--gold-light); margin-bottom:0.5rem; }
+.waitlist-success p { font-size:0.85rem; color:var(--muted); line-height:1.7; }
+
+@media(max-width:900px){
+  nav { padding:1.2rem 2rem; }
+  .nav-links { display:none; }
+  .section-inner { padding:5rem 2rem; }
+  .hero { padding:0 2rem; }
+  .hero-scroll { left:2rem; }
+  .about-grid { grid-template-columns:1fr; gap:3rem; }
+  .services-grid { grid-template-columns:1fr; }
+  .kits-grid { grid-template-columns:1fr; }
+  .subs-grid { grid-template-columns:1fr; }
+  .commission-wrap { grid-template-columns:1fr; gap:3rem; }
+  .portfolio-grid { padding:0 0 1rem; gap:0.9rem; grid-auto-rows:88px; }
+  .portfolio-item { grid-column:span 12 !important; grid-row:span 2 !important; }
+  .portfolio-item.tall { grid-row:span 3 !important; }
+  .portfolio-item.strip { grid-row:span 1 !important; }
+  .about-image-wrap { max-width:280px; }
+  footer { flex-direction:column; align-items:flex-start; padding:3rem 2rem 2rem; }
+  .form-row { grid-template-columns:1fr; }
+  .form-group.full { grid-column:span 1; }
+}
+
+/* ══════════ MOBILE NAV ══════════ */
+.menu-btn {
+  display:none; width:36px; height:36px;
+  border:1px solid var(--stroke); background:transparent;
+  cursor:pointer; position:relative; padding:0;
+}
+.menu-btn span {
+  display:block; position:absolute; left:9px; width:18px; height:1px;
+  background:var(--gold-light); transition:transform 0.28s ease, opacity 0.2s ease;
+}
+.menu-btn span:nth-child(1){ top:12px; }
+.menu-btn span:nth-child(2){ top:17px; }
+.menu-btn span:nth-child(3){ top:22px; }
+.menu-btn.open span:nth-child(1){ transform:translateY(5px) rotate(45deg); }
+.menu-btn.open span:nth-child(2){ opacity:0; }
+.menu-btn.open span:nth-child(3){ transform:translateY(-5px) rotate(-45deg); }
+
+.mobile-menu {
+  display:none; position:fixed; left:0; right:0; z-index:490;
+  background:var(--black-mid); border-bottom:1px solid var(--stroke);
+  list-style:none; padding:0.5rem 0 1.2rem;
+  max-height:0; overflow:hidden;
+  transition:max-height 0.32s ease, opacity 0.25s ease;
+  opacity:0;
+}
+.mobile-menu.open { max-height:70vh; opacity:1; overflow-y:auto; }
+.mobile-menu li { list-style:none; }
+.mobile-menu a {
+  display:block; padding:0.95rem 2rem;
+  font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--white-soft); text-decoration:none;
+  border-bottom:1px solid var(--stroke-soft);
+  transition:color 0.2s, background 0.2s;
+}
+.mobile-menu a:hover, .mobile-menu a.active { color:var(--gold-light); background:var(--gold-faint); }
+
+/* ══════════ MOBILE REFINEMENTS ══════════ */
+@media(max-width:900px){
+  .menu-btn { display:block; }
+  .mobile-menu { display:block; }
+
+  /* small text was too dim and too small on phones */
+  .section-label, .page-eyebrow, .sidebar-label { font-size:0.7rem; letter-spacing:0.2em; }
+  .section-sub, .page-sub { font-size:0.95rem; line-height:1.85; }
+  .service-card p, .kit-card p, .sub-list li, .tier-list li,
+  .kit-includes li, .step-text p, .commission-info p,
+  .block p, .block ul li, .policy-block p, .policy-block ul li,
+  .faq-answer-inner, .callout p, .highlight p,
+  .included-list li, .price-note, .form-note, .box-sub { font-size:0.92rem; line-height:1.8; }
+  label, .login-label { font-size:0.72rem; }
+  .footer-links a, .footer-brand p, .footer-email { font-size:0.88rem; }
+  .footer-copy { font-size:0.75rem; flex-direction:column; gap:0.5rem; }
+  .review-text, .row-text { font-size:1.05rem; }
+  .kit-tier-note, .sub-kit-label, .sub-cta-alt, .tier-cta-alt { font-size:0.78rem; }
+  .buy-btn { font-size:0.7rem; padding:0.55rem 1rem; }
+  .tag, .row-service-tag, .review-service-tag { font-size:0.72rem; }
+
+  /* tap targets */
+  .btn-gold, .btn-outline, .nav-cta, .sub-cta, .tier-cta,
+  .form-submit, .btn-submit, .filter-btn, .jump-link { min-height:44px; }
+  .filter-btn, .jump-link { font-size:0.75rem; padding:0.7rem 1.1rem; }
+}
+
+/* stack wide tables into readable blocks instead of squeezing them */
+@media(max-width:640px){
+  .price-table thead, .data-table thead { display:none; }
+  .price-table, .price-table tbody, .price-table tr, .price-table td,
+  .data-table, .data-table tbody, .data-table tr, .data-table td { display:block; width:100%; }
+  .price-table tr, .data-table tr { border-bottom:1px solid var(--stroke-soft); padding:0.6rem 0; }
+  .price-table tr:last-child, .data-table tr:last-child { border-bottom:none; }
+  .price-table td, .data-table td { border:none; padding:0.35rem 1rem; text-align:left !important; }
+  .price-table td:last-child, .data-table td:last-child { text-align:left !important; }
+}
+
+/* very small phones */
+@media(max-width:420px){
+  nav { padding:1rem 1.2rem; }
+  .page-header, .section-inner, .content { padding-left:1.2rem !important; padding-right:1.2rem !important; }
+  footer { padding-left:1.2rem; padding-right:1.2rem; }
+  .mobile-menu a { padding-left:1.2rem; }
+  .hero { padding:0 1.2rem; }
+  .hero-scroll { left:1.2rem; }
+}
+
+/* ══════════ NAV LAYOUT + SCROLL BEHAVIOUR ══════════ */
+.nav-right { display:flex; align-items:center; gap:0.7rem; flex-shrink:0; }
+.nav-right > * { flex-shrink:0; }
+
+nav {
+  transition:transform 0.35s cubic-bezier(.4,0,.2,1),
+             padding 0.3s ease,
+             box-shadow 0.3s ease,
+             background 0.3s ease;
+  will-change:transform;
+}
+/* slides away when scrolling down, returns the moment you scroll up */
+nav.nav-hidden { transform:translateY(-100%); }
+/* condenses slightly once you've left the top of the page */
+nav.nav-scrolled {
+  padding-top:0.95rem; padding-bottom:0.95rem;
+  box-shadow:0 10px 30px rgba(0,0,0,0.28);
+}
+nav.nav-scrolled .nav-logo { font-size:1.4rem; }
+.nav-logo { transition:font-size 0.3s ease; }
+
+/* the bar was hardcoded dark — give light mode its own surface */
+[data-theme="light"] nav { background:rgba(245,239,227,0.88); }
+[data-theme="light"] nav.nav-scrolled { background:rgba(245,239,227,0.96); box-shadow:0 10px 30px rgba(65,42,19,0.10); }
+[data-theme="light"] .mobile-menu { background:var(--black-mid); }
+
+@media(max-width:900px){
+  .nav-right { gap:0.5rem; }
+  .nav-cta { padding:0.6rem 1rem; font-size:0.68rem; }
+}
+@media(max-width:420px){
+  .nav-right { gap:0.4rem; }
+  .nav-cta { display:none; }   /* the mobile menu already has Commission */
+}
+
+/* ══════════ MOBILE CONSISTENCY PASS ══════════ */
+@media(max-width:900px){
+  /* review cards were still 3-across on phones — one narrow column each */
+  .reviews-grid { grid-template-columns:1fr; gap:1rem; min-height:0; }
+  .reviews-loading, .reviews-empty { grid-column:1 / -1; }
+
+  /* two hero buttons side by side overflow a narrow screen */
+  .hero-actions { flex-direction:column; align-items:stretch; gap:0.8rem; width:100%; max-width:340px; }
+  .hero-actions .btn-gold, .hero-actions .btn-outline { text-align:center; }
+
+  /* keep long words from forcing horizontal scroll */
+  .review-text, .row-text, .cc-meta, .mb-link { overflow-wrap:anywhere; }
+}
+@media(max-width:420px){
+  .reviews-cta .btn-outline { display:block; text-align:center; }
+}
+
+/* ══════════ SHARED MOBILE SAFEGUARDS ══════════ */
+@media(max-width:900px){
+  /* nothing should be able to force sideways scrolling */
+  html, body { overflow-x:hidden; max-width:100%; }
+  img, svg, table, pre { max-width:100%; }
+  h1, h2, h3, p, li, td { overflow-wrap:break-word; }
+
+  /* wrapping rows that were laid out for desktop widths */
+  .jump-links { gap:0.6rem; }
+  .footer-links { gap:0.8rem; }
+  footer { gap:1.5rem; }
+  .section-inner { padding-left:2rem; padding-right:2rem; }
+}
+
+/* ══════════ CARD CONSISTENCY (MOBILE) ══════════
+   Desktop padding ranges from 1rem to 3rem depending on the component.
+   On a phone that reads as sloppy, so every boxed element lands on the
+   same rhythm. */
+@media(max-width:700px){
+  .service-card, .kit-card, .sub-card, .tier-card, .review-card,
+  .included-box, .commission-form, .leave-review-box, .kit-card,
+  .board-section, .mb-card, .success-box, .login-box, .board-col {
+    padding:1.5rem 1.35rem;
+  }
+  .callout, .highlight, .policy-highlight, .kit-tier-note,
+  .sub-kit-banner, .kit-banner, .next-steps {
+    padding:1.1rem 1.2rem;
+  }
+  .cta-box, .coming-soon-wrap, .waitlist-banner {
+    padding:2rem 1.35rem;
+  }
+  .board-info { padding:1.2rem 1.3rem; }
+
+  /* consistent vertical rhythm between stacked cards */
+  .kits-grid, .subs-grid, .tiers-grid, .services-grid,
+  .reviews-grid, .boards-grid, .coming-soon-features { gap:0.9rem; }
+
+  /* callouts stacked back to back were touching */
+  .callout + .callout, .highlight + .highlight { margin-top:0.8rem; }
+
+  /* headings inside cards were sized for wide columns */
+  .cta-box h3, .coming-soon-title, .waitlist-banner h2 { font-size:1.7rem; line-height:1.2; }
+  .tier-price, .sub-price { font-size:2.4rem; }
+  .tier-name, .sub-name { font-size:1.7rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TABLETS
+   The layout previously jumped from mobile (≤900px) straight to a
+   desktop built for 1400px+. That left iPad landscape cramped and
+   iPad portrait stacked into one column with width to spare.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Landscape iPad & small laptops (901–1200px) ── */
+@media(min-width:901px) and (max-width:1200px){
+  nav { padding:1.25rem 2rem; }
+  .nav-links { gap:1.35rem; }
+  .nav-links a { font-size:0.65rem; letter-spacing:0.13em; }
+  .nav-cta { padding:0.55rem 1.05rem; font-size:0.65rem; }
+  .nav-right { gap:0.6rem; }
+
+  .section-inner { padding:4.5rem 3rem; }
+  .page-header   { padding:9rem 3rem 3.5rem; }
+  .jump-links    { padding:1.5rem 3rem; }
+  .content       { padding:3.5rem 3rem; }
+  footer         { padding:3.5rem 3rem 2.5rem; }
+  .hero          { padding:0 3rem; }
+  .hero-scroll   { left:3rem; }
+
+  .about-grid      { gap:3rem; }
+  .commission-wrap { gap:3rem; }
+  .two-col         { gap:2rem; }
+  .sidebar         { padding:3rem 1.4rem; }
+  .portfolio-grid  { padding:0 3rem 1rem; }
+
+  .section-title { font-size:clamp(2rem,3.6vw,2.9rem); }
+  .page-title    { font-size:clamp(2.4rem,4.6vw,3.6rem); }
+}
+
+/* ── Portrait iPad (701–900px) ── */
+@media(min-width:701px) and (max-width:900px){
+  .section-inner { padding:4.5rem 2.5rem; }
+  .page-header   { padding:8.5rem 2.5rem 3rem; }
+  .jump-links    { padding:1.5rem 2.5rem; }
+  .content       { padding:3.5rem 2.5rem; }
+  footer         { padding:3.5rem 2.5rem 2.5rem; }
+  .hero          { padding:0 2.5rem; }
+  .hero-scroll   { left:2.5rem; }
+
+  /* natural pairs sit side by side instead of stacking */
+  .subs-grid, .tiers-grid { grid-template-columns:1fr 1fr; gap:1.2rem; }
+  .boards-grid            { grid-template-columns:1fr 1fr; }
+  .coming-soon-features   { grid-template-columns:repeat(3,1fr); }
+  .how-grid               { grid-template-columns:repeat(4,1fr); }
+  .reviews-grid           { grid-template-columns:1fr 1fr; }
+  .services-grid          { grid-template-columns:1fr 1fr; }
+  .kits-grid              { grid-template-columns:1fr 1fr; }
+
+  /* there's room for these to sit horizontally again */
+  .hero-actions { flex-direction:row; max-width:none; width:auto; }
+  .about-grid { grid-template-columns:minmax(0,0.8fr) 1fr; gap:2.5rem; }
+  .about-image-wrap { max-width:300px; }
+  .commission-wrap { grid-template-columns:1fr; gap:2.5rem; }
+  .form-row { grid-template-columns:1fr 1fr; }
+  .form-group.full { grid-column:span 2; }
+
+  /* portfolio goes two-up with a full-width hero */
+  .portfolio-grid { padding:0 2.5rem 1rem; gap:1rem; grid-auto-rows:118px; }
+  .portfolio-item          { grid-column:span 6 !important; grid-row:span 2 !important; }
+  .portfolio-item.feature  { grid-column:span 12 !important; grid-row:span 3 !important; }
+  .portfolio-item.tall     { grid-row:span 3 !important; }
+  .portfolio-item.strip    { grid-column:span 12 !important; grid-row:span 1 !important; }
+
+  /* type sized for mobile is slightly large at this width */
+  .section-label, .page-eyebrow { font-size:0.66rem; }
+  .section-sub, .page-sub { font-size:0.92rem; }
+}
+
+/* ── SALE STYLING ── */
+.price-was {
+  text-decoration:line-through;
+  opacity:0.5; font-size:0.62em;
+  margin-right:0.4em; font-style:normal;
+}
+.price-now { color:var(--brand-amber); }
+.sale-flag {
+  display:inline-block;
+  font-family:'Jost',sans-serif;
+  font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--black); background:var(--brand-amber);
+  padding:0.22rem 0.6rem; margin-bottom:0.8rem;
+  font-style:normal; font-weight:400;
+}
+tr .sale-flag { margin:0 0 0.4rem 0; }
+.stock-flag {
+  display:inline-block;
+  font-family:'Jost',sans-serif;
+  font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--muted); background:var(--black-mid);
+  border:1px solid var(--stroke-soft);
+  padding:0.22rem 0.6rem; margin-bottom:0.8rem;
+  font-style:normal; font-weight:400;
+}
+[data-cat-row].out-of-stock { opacity:0.55; }
+[data-cat-row].out-of-stock .buy-btn { pointer-events:none; opacity:0.4; }
+
+/* ── SPAM PROTECTION ── */
+/* Hidden from people, visible to bots. Off-screen rather than display:none,
+   because some bots skip fields that are display:none. */
+.hp-field {
+  position:absolute !important; left:-9999px !important; top:auto !important;
+  width:1px !important; height:1px !important; overflow:hidden !important;
+  opacity:0 !important; pointer-events:none !important;
+}
+.cf-wrap { margin:1rem 0 0.5rem; min-height:0; }
+.cf-wrap:empty { margin:0; }
+
+/* ── FORM: LOCKED FIELDS & INLINE NOTES ── */
+.locked-field {
+  width:100%; background:var(--black-mid); border:1px solid var(--stroke);
+  color:var(--gold-light); padding:0.8rem 1rem;
+  font-family:'Jost',sans-serif; font-size:0.875rem; font-weight:400;
+  outline:none; cursor:default; -webkit-appearance:none;
+}
+.field-note {
+  font-size:0.7rem; line-height:1.55; color:var(--muted);
+  margin-top:0.45rem; display:none; letter-spacing:0.02em;
+}
+.field-note.show { display:block; }
+.field-note.warn { color:var(--brand-amber); }
+.field-note strong { color:var(--shimmer); font-weight:400; }
+
+/* ── SUBSCRIPTION SUB-SECTIONS ── */
+.sub-section { margin-bottom:4rem; }
+.sub-section:last-of-type { margin-bottom:2rem; }
+.sub-section-head {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  gap:1.5rem; flex-wrap:wrap;
+  padding-bottom:1.1rem; margin-bottom:1.8rem;
+  border-bottom:1px solid var(--stroke-soft);
+}
+.sub-section-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem; font-weight:400; color:var(--gold-light);
+  line-height:1.1; margin-bottom:0.3rem;
+}
+.sub-section-sub { font-size:0.85rem; color:var(--muted); line-height:1.6; }
+.platform-tags { display:flex; gap:0.45rem; flex-wrap:wrap; }
+.platform-tag {
+  font-size:0.58rem; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--gold-dim); border:1px solid var(--stroke);
+  background:var(--gold-faint); padding:0.3rem 0.7rem;
+}
+.subs-grid { grid-template-columns:repeat(3,1fr); }
+.subs-footnote {
+  font-size:0.82rem; color:var(--muted); line-height:1.7;
+  padding-top:1.5rem; border-top:1px solid var(--stroke-soft);
+}
+
+
+@media(min-width:701px) and (max-width:900px){
+  .subs-grid { grid-template-columns:1fr 1fr; }
+  .subs-grid > :last-child { grid-column:span 2; }
+}
+@media(max-width:700px){
+  .subs-grid { grid-template-columns:1fr; }
+  .sub-section-head { align-items:flex-start; }
+  .sub-section-title { font-size:1.7rem; }
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">BoviBerry</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#kits">Brand Kits</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="boards.html">Boards</a></li>
+    <li><a href="#commission">Commission</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+    <a href="#commission" class="nav-cta">Work with me</a>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- Decorative background SVG lines inspired by the reference -->
+  <svg class="hero-bg-svg" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M300 80 C 220 120, 100 200, 140 320 C 180 440, 320 480, 400 400 C 480 320, 500 180, 420 120 C 380 90, 340 70, 300 80Z" stroke="#9BD16B" stroke-width="1" fill="none"/>
+    <path d="M300 140 C 240 170, 150 240, 180 340 C 210 430, 330 460, 400 380 C 460 310, 460 200, 390 155 C 360 135, 330 125, 300 140Z" stroke="#9BD16B" stroke-width="0.5" fill="none"/>
+    <circle cx="460" cy="160" r="8" fill="#9BD16B" opacity="0.6"/>
+    <circle cx="180" cy="380" r="12" fill="#9BD16B" opacity="0.4"/>
+    <circle cx="420" cy="420" r="5" fill="#9BD16B" opacity="0.5"/>
+    <path d="M 80 300 Q 150 200 260 250 Q 370 300 320 420" stroke="#9BD16B" stroke-width="0.8" fill="none"/>
+    <path d="M 500 100 Q 550 200 480 310 Q 410 400 350 350" stroke="#9BD16B" stroke-width="0.5" fill="none"/>
+    <!-- stars -->
+    <g opacity="0.5" fill="#9BD16B">
+      <path d="M140 130 L143 138 L152 138 L145 143 L148 152 L140 147 L132 152 L135 143 L128 138 L137 138Z" transform="scale(0.6) translate(90,60)"/>
+      <path d="M480 300 L482 306 L488 306 L483 310 L485 316 L480 312 L475 316 L477 310 L472 306 L478 306Z" transform="scale(0.5)translate(480,260)"/>
+    </g>
+  </svg>
+
+  <p class="hero-eyebrow fade-up fade-up-1">Digital art & design</p>
+  <h1 class="hero-title fade-up fade-up-2">
+    Where vision<br>
+    meets <em>craft</em><br>
+    <span class="outline-text">& intention.</span>
+  </h1>
+  <p class="hero-sub fade-up fade-up-3">
+    Graphic design, photo manipulation, and brand identity — created with an eye for the expressive and the unforgettable.
+  </p>
+  <div class="hero-actions fade-up fade-up-4">
+    <a href="#work" class="btn-gold">View my work</a>
+    <a href="#commission" class="btn-outline">Commission a piece</a>
+  </div>
+
+  <span class="hero-scroll">
+    <span class="scroll-line"></span>
+    Scroll
+  </span>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-image-wrap">
+        <!-- If Bovi_Icon is a logo/mark rather than a photo and it looks
+             cropped, change the class to "contain" instead of "cover". -->
+        <img src="images/Bovi_Icon.webp" alt="BoviBerry" class="cover">
+        <div class="about-corner tl"></div>
+        <div class="about-corner br"></div>
+      </div>
+      <div class="about-text">
+        <p class="section-label">About me</p>
+        <h2 class="section-title">Art that <em>speaks</em><br>before words do.</h2>
+        <div class="big-quote">
+          "I design for the feeling first — the concept follows naturally."
+        </div>
+        <p>Hi, I'm BoviBerry — a digital media design graduate with a passion for creating visuals that carry emotion and intention. My work lives in the space between graphic design, photo manipulation, and brand storytelling.</p>
+        <p>Whether you're a creator building your YouTube presence, a small business looking for a brand identity, or someone with a vision that needs a visual voice — I'm here to bring it to life.</p>
+        <div class="about-tags">
+          <span class="tag">Graphic Design</span>
+          <span class="tag">Brand Identity</span>
+          <span class="tag">Photo Editing</span>
+          <span class="tag">YouTube Branding</span>
+          <span class="tag">Content Creation</span>
+          <span class="tag">Digital Art</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- PORTFOLIO -->
+<section id="work">
+  <div class="section-inner" style="padding-bottom:2.5rem;max-width:1180px;margin:0 auto;">
+    <p class="section-label">Selected work</p>
+    <h2 class="section-title">The <em>portfolio.</em></h2>
+    <p class="section-sub">A curated look at projects across brand identity, photo manipulation, and content design.</p>
+  </div>
+  <div class="portfolio-grid" id="portfolioGrid"></div>
+
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- SERVICES -->
+<section id="services" class="services-bg">
+  <div class="section-inner">
+    <p class="section-label">What I offer</p>
+    <h2 class="section-title">Design <em>services.</em></h2>
+    <p class="section-sub">Each project is handled personally, with care for your vision from start to finish.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+        <h3>Brand Identity</h3>
+        <p>Logo design, color palette, typography system, and brand guidelines — everything you need to show up consistently and confidently.</p>
+        <a href="pricing.html#logos" class="service-link">See logo pricing →</a>
+      </div>
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+        </svg>
+        <h3>Photo Manipulation</h3>
+        <p>Cinematic composites, creative retouching, atmospheric edits — transforming photos into something that feels like a story.</p>
+        <a href="index.html#commission" class="service-link">Request a quote →</a>
+      </div>
+      <div class="service-card">
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+        </svg>
+        <h3>Graphic Design</h3>
+        <p>Posters, social media graphics, promotional material, event flyers — clean and expressive design for any purpose.</p>
+        <a href="pricing.html#projects" class="service-link">See project pricing →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- SUBSCRIPTIONS -->
+<section id="subscriptions">
+  <div class="section-inner">
+    <p class="section-label">Ongoing partnership</p>
+    <h2 class="section-title">Monthly <em>subscriptions.</em></h2>
+    <p class="section-sub">Two paths depending on where you're building. Every tier is month to month — no contract, cancel with 14 days notice.</p>
+
+    <!-- STREAMING -->
+    <div class="sub-section">
+      <div class="sub-section-head">
+        <div>
+          <h3 class="sub-section-title">Botanical Harvest</h3>
+          <p class="sub-section-sub">Built for streamers and video creators.</p>
+        </div>
+        <div class="platform-tags">
+          <span class="platform-tag">YouTube</span>
+          <span class="platform-tag">Twitch</span>
+        </div>
+      </div>
+      <div class="subs-grid">
+      <div class="sub-card" data-cat-row="stream-blueberry">
+        <span class="sub-badge">Tier 1</span>
+        <div class="sub-name">Blueberry</div>
+        <div class="sub-price"><span data-cat="stream-blueberry">$70</span><span class="sub-period">/month</span></div>
+          <ul class="sub-list"><li>10 sticker files / memes for free use</li><li>1 basic Twitch overlay <em>or</em> 1 basic YouTube banner</li><li>Top 3 trending games &amp; topics</li><li>1 custom Twitch emote <em>or</em> 1 YouTube thumbnail template</li><li>Content schedule calendar</li></ul>
+        <a href="#commission" class="sub-cta outline">Start with Blueberry →</a>
+        <a href="#commission" class="sub-cta-alt">Questions first? Get in touch</a>
+      </div>
+      <div class="sub-card featured" data-cat-row="stream-raspberry">
+        <span class="sub-badge gold">Tier 2 · Most popular</span>
+        <div class="sub-name">Raspberry</div>
+        <div class="sub-price"><span data-cat="stream-raspberry">$85</span><span class="sub-period">/month</span></div>
+          <ul class="sub-list"><li>20 sticker files / memes for free use</li><li>1 detailed Twitch overlay <em>or</em> 3 detailed YouTube banners</li><li>Top 10 trending games &amp; topics</li><li>3 custom Twitch emotes <em>or</em> 3 YouTube thumbnail templates</li><li>Content schedule calendar</li></ul>
+        <a href="#commission" class="sub-cta">Start with Raspberry →</a>
+        <a href="#commission" class="sub-cta-alt">Questions first? Get in touch</a>
+      </div>
+      <div class="sub-card" data-cat-row="stream-cherry">
+        <span class="sub-badge">Tier 3</span>
+        <div class="sub-name">Cherry</div>
+        <div class="sub-price"><span data-cat="stream-cherry">$100</span><span class="sub-period">/month</span></div>
+          <ul class="sub-list"><li>30 sticker files / memes for free use</li><li>1 <strong>animated</strong> Twitch overlay <em>or</em> 5 detailed YouTube banners</li><li>Top 20 trending games &amp; topics</li><li>5 custom Twitch emotes <em>or</em> 5 YouTube thumbnail templates</li><li>Content schedule calendar</li></ul>
+        <a href="#commission" class="sub-cta outline">Start with Cherry →</a>
+        <a href="#commission" class="sub-cta-alt">Questions first? Get in touch</a>
+      </div>
+      </div>
+    </div>
+
+    <!-- SOCIAL -->
+    <div class="sub-section">
+      <div class="sub-section-head">
+        <div>
+          <h3 class="sub-section-title">Farmers Market</h3>
+          <p class="sub-section-sub">Built for brands and creators growing on social.</p>
+        </div>
+        <div class="platform-tags">
+          <span class="platform-tag">Instagram</span>
+          <span class="platform-tag">TikTok</span>
+          <span class="platform-tag">Pinterest</span>
+        </div>
+      </div>
+      <div class="subs-grid">
+      <div class="sub-card" data-cat-row="social-blueberry">
+        <span class="sub-badge">Tier 1</span>
+        <div class="sub-name">Blueberry</div>
+        <div class="sub-price"><span data-cat="social-blueberry">$80</span><span class="sub-period">/month</span></div>
+          <ul class="sub-list"><li>10 trending hashtags with a posting schedule</li><li>Multi-photo post editing — up to 5 photos</li><li>On-brand theming consultation</li><li>Trending &amp; custom captions — 3 to 5</li><li>Free-use story templates — up to 2</li><li>Audience engagement ideas list</li></ul>
+        <a href="#commission" class="sub-cta outline">Start with Blueberry →</a>
+        <a href="#commission" class="sub-cta-alt">Questions first? Get in touch</a>
+      </div>
+      <div class="sub-card featured" data-cat-row="social-raspberry">
+        <span class="sub-badge gold">Tier 2 · Most popular</span>
+        <div class="sub-name">Raspberry</div>
+        <div class="sub-price"><span data-cat="social-raspberry">$95</span><span class="sub-period">/month</span></div>
+          <ul class="sub-list"><li>30 trending hashtags with a posting schedule</li><li>Multi-photo post editing — up to 10 photos</li><li>On-brand theming consultation</li><li>Trending &amp; custom captions — 5 to 7</li><li>Free-use story templates — up to 4</li><li>Audience engagement ideas list</li></ul>
+        <a href="#commission" class="sub-cta">Start with Raspberry →</a>
+        <a href="#commission" class="sub-cta-alt">Questions first? Get in touch</a>
+      </div>
+      <div class="sub-card" data-cat-row="social-cherry">
+        <span class="sub-badge">Tier 3</span>
+        <div class="sub-name">Cherry</div>
+        <div class="sub-price"><span data-cat="social-cherry">$110</span><span class="sub-period">/month</span></div>
+          <ul class="sub-list"><li>60 trending hashtags with a posting schedule</li><li>Multi-photo post editing — up to 15 photos</li><li>On-brand theming consultation</li><li>Trending &amp; custom captions — 7 to 10</li><li>Free-use story templates — up to 6</li><li>Audience engagement ideas list</li></ul>
+        <a href="#commission" class="sub-cta outline">Start with Cherry →</a>
+        <a href="#commission" class="sub-cta-alt">Questions first? Get in touch</a>
+      </div>
+      </div>
+    </div>
+
+    <p class="subs-footnote">Running both a channel and a social presence? Mention it in your commission request and the two can be quoted together.</p>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- BRAND KITS -->
+<section id="kits" class="kits-bg">
+  <div class="section-inner">
+    <p class="section-label">Ready-to-go packages</p>
+    <h2 class="section-title">YouTube & Brand <em>Kits.</em></h2>
+    <p class="section-sub">Complete visual packages — banners, templates, and brand assets, delivered ready to use as a one-time project.</p>
+    <div class="kits-grid">
+
+      <div class="kit-card" data-cat-row="kit-starter">
+        <span class="kit-badge">Standalone only</span>
+        <h3>Starter Kit</h3>
+        <p>Perfect for new creators launching their channel or brand presence.</p>
+        <ul class="kit-includes">
+          <li>Channel banner (2560×1440)</li>
+          <li>Profile avatar</li>
+          <li>5 thumbnail templates</li>
+          <li>Watermark / logo mark</li>
+          <li>Color palette guide</li>
+        </ul>
+        <div class="kit-tier-note solo">Not bundled into a subscription — available as a one-time kit.</div>
+        <a href="#commission" class="kit-cta">Get the Starter Kit →</a>
+      </div>
+
+      <div class="kit-card" data-cat-row="kit-creator-pro">
+        <span class="kit-badge">Creator</span>
+        <h3>Creator Pro Kit</h3>
+        <p>Everything a serious content creator needs to look polished and consistent.</p>
+        <ul class="kit-includes">
+          <li>Everything in Starter</li>
+          <li>10 thumbnail templates</li>
+          <li>End screen template</li>
+          <li>Social media kit (IG, TikTok)</li>
+          <li>Custom font pairing guide</li>
+          <li>1 revision round included</li>
+        </ul>
+        <div class="kit-tier-note solo">Available as a one-time kit.</div>
+        <a href="#commission" class="kit-cta">Get this kit on its own →</a>
+      </div>
+
+      <div class="kit-card" style="border-color:var(--gold-dim)" data-cat-row="kit-brand-identity">
+        <span class="kit-badge" style="background:rgba(155,209,107,0.2);border-color:var(--gold-dim);color:var(--gold)">Business</span>
+        <h3>Brand Identity Kit</h3>
+        <p>A full business branding package for small businesses and personal brands.</p>
+        <ul class="kit-includes">
+          <li>Primary + secondary logo</li>
+          <li>Full color palette system</li>
+          <li>Typography hierarchy</li>
+          <li>Business card design</li>
+          <li>Social media templates (×6)</li>
+          <li>Brand guidelines PDF</li>
+        </ul>
+        <div class="kit-tier-note solo">Available as a one-time kit.</div>
+        <a href="#commission" class="kit-cta">Get this kit on its own →</a>
+      </div>
+
+    </div>
+    <p style="font-size:0.8rem;color:var(--muted);margin-top:2rem;line-height:1.7;">Kit prices are quoted individually based on your brand and scope — <a href="#commission" style="color:var(--gold-dim);text-decoration:none;border-bottom:1px solid var(--stroke);">request a quote</a> and you'll have a number within 48 hours.</p>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- COMMISSION FORM -->
+<section id="commission" class="commission-bg commission-section">
+  <div class="section-inner">
+    <div class="commission-wrap">
+      <div class="commission-info">
+        <p class="section-label">Let's collaborate</p>
+        <h2 class="section-title">Start a <em>project.</em></h2>
+        <p class="section-sub" style="max-width:100%">Tell me about your vision and I'll get back to you within 48 hours with a custom quote and timeline.</p>
+
+        <h3>Availability</h3>
+        <p>Currently accepting new commissions. Turnaround depends on project scope — typically 3–14 days.</p>
+
+        <div class="process-steps">
+          <div class="step">
+            <span class="step-num">01</span>
+            <div class="step-text">
+              <h4>Submit your brief</h4>
+              <p>Fill out the form with as much detail as possible about your project.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">02</span>
+            <div class="step-text">
+              <h4>Review & quote</h4>
+              <p>I'll respond within 48 hours with a custom quote and estimated timeline.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">03</span>
+            <div class="step-text">
+              <h4>50% deposit to begin</h4>
+              <p>A deposit secures your spot. Remaining balance due on delivery.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">04</span>
+            <div class="step-text">
+              <h4>Delivery & revisions</h4>
+              <p>You'll receive your files with one revision round included.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMMISSION FORM -->
+      <div class="commission-form">
+        <h3 class="form-title">Commission request</h3>
+        <p class="form-subtitle">All fields help me give you the most accurate quote.</p>
+        <form id="commissionForm">
+
+          <!-- NAME + PHONE -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone number <span style="color:var(--muted);font-size:0.6rem;letter-spacing:0.1em;">(optional but helpful)</span></label>
+              <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel" maxlength="18" placeholder="(555) 123-4567">
+              <p class="phone-nudge" id="phoneNudge">✦ Adding a phone number helps BoviBerry reach you faster if needed.</p>
+            </div>
+          </div>
+
+          <!-- EMAIL + CONFIRM EMAIL -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="emailConfirm">Confirm email</label>
+              <input type="email" id="emailConfirm" name="emailConfirm" placeholder="jane@example.com" required>
+              <p class="field-error" id="emailError">Emails don't match — please check and try again.</p>
+            </div>
+          </div>
+
+          <!-- SOCIAL HANDLE -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="socialPlatform">Social platform</label>
+              <select id="socialPlatform" name="socialPlatform">
+                <option value="" disabled selected>Select platform...</option>
+                <option>Instagram</option>
+                <option>TikTok</option>
+                <option>YouTube</option>
+                <option>X / Twitter</option>
+                <option>Other</option>
+                <option>I don't have one</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="socialHandle">Your handle / username</label>
+              <input type="text" id="socialHandle" name="socialHandle" placeholder="@yourusername">
+            </div>
+          </div>
+
+          <!-- SERVICE + BUDGET -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="service">Service type</label>
+              <select id="service" name="service" required>
+                <option value="" disabled selected>Select a service...</option>
+                <optgroup label="Streaming — YouTube / Twitch">
+                  <option>Botanical Harvest — Blueberry</option>
+                  <option>Botanical Harvest — Raspberry</option>
+                  <option>Botanical Harvest — Cherry</option>
+                </optgroup>
+                <optgroup label="Social — Instagram / TikTok / Pinterest">
+                  <option>Farmers Market — Blueberry</option>
+                  <option>Farmers Market — Raspberry</option>
+                  <option>Farmers Market — Cherry</option>
+                </optgroup>
+                <optgroup label="Logo design">
+                  <option>Logo — Word mark</option>
+                  <option>Logo — Letterforms</option>
+                  <option>Logo — Pictorial</option>
+                  <option>Logo — Abstract</option>
+                  <option>Logo — Emblem</option>
+                  <option>Logo — Mascot</option>
+                  <option>Logo — Not sure which type</option>
+                </optgroup>
+                <optgroup label="Individual projects">
+                  <option>Punch card — Printable</option>
+                  <option>Punch card — Digital wallet</option>
+                  <option>Graphic Design</option>
+                  <option>Photo Manipulation</option>
+                  <option>Brand Identity</option>
+                </optgroup>
+                <option>Custom / other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="budget"><span id="budgetLabel">Estimated budget</span></label>
+              <select id="budget" name="budget">
+                <option value="" disabled selected>Select a range...</option>
+                <option>Under $50</option>
+                <option>$50 – $100</option>
+                <option>$100 – $200</option>
+                <option>$200 – $400</option>
+                <option>$400+</option>
+                <option>Let's discuss</option>
+              </select>
+              <input type="text" id="budgetFixed" class="locked-field" readonly style="display:none" tabindex="-1">
+              <p class="field-note" id="budgetNote"></p>
+            </div>
+          </div>
+
+          <!-- TIMELINE + HOW DID YOU FIND ME -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="timeline"><span id="timelineLabel">Preferred timeline</span></label>
+              <select id="timeline" name="timeline">
+                <option value="" disabled selected>When do you need it?</option>
+                <option>Within 1 week</option>
+                <option>1–2 weeks</option>
+                <option>2–4 weeks</option>
+                <option>No rush — let's do it right</option>
+              </select>
+              <input type="text" id="timelineFixed" class="locked-field" readonly style="display:none" tabindex="-1">
+              <p class="field-note" id="timelineNote"></p>
+            </div>
+            <div class="form-group">
+              <label for="referral">How did you find me?</label>
+              <select id="referral" name="referral">
+                <option value="" disabled selected>Select one...</option>
+                <option>Instagram</option>
+                <option>TikTok</option>
+                <option>YouTube</option>
+                <option>X / Twitter</option>
+                <option>Pinterest</option>
+                <option>Word of mouth / friend</option>
+                <option>Google search</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- VISION -->
+          <div class="form-group">
+            <label for="vision">Describe your vision</label>
+            <textarea id="vision" name="vision" placeholder="Tell me about the project — mood, style, what you want it to feel like, who it's for..." required></textarea>
+          </div>
+
+          <!-- REFERENCE LINKS -->
+          <div class="form-group">
+            <label for="references">Reference links <span style="color:var(--muted);font-size:0.6rem;letter-spacing:0.1em;">(optional)</span></label>
+            <textarea id="references" name="references" style="min-height:70px;" placeholder="Paste any reference links here — Pinterest boards, Google Drive folders, Instagram posts, websites you love..."></textarea>
+          </div>
+
+<div class="hp-field" aria-hidden="true">
+            <label>Company website</label>
+            <input type="text" name="company_website" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="cf-wrap"></div>
+          <button type="submit" class="form-submit" id="commissionSubmitBtn">Send my request →</button>
+          <a href="moodboard.html" style="display:block;text-align:center;margin-top:1rem;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;border:1px solid var(--stroke-soft);padding:0.8rem;transition:all 0.25s;" onmouseover="this.style.borderColor='var(--gold-dim)';this.style.color='var(--gold-light)'" onmouseout="this.style.borderColor='var(--stroke-soft)';this.style.color='var(--gold-dim)'">✦ Want to show your vision? Build a mood board →</a>
+          <p class="form-note">You'll hear back within 48 hours. Payment is handled after we agree on a quote — no surprises.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST SECTION (shown when waitlist is ON) -->
+<section id="commission-waitlist" class="commission-bg waitlist-section">
+  <div class="section-inner">
+    <div class="waitlist-banner">
+      <div class="waitlist-icon">✦</div>
+      <h2>Commissions are <em>currently closed.</em></h2>
+      <p>BoviBerry is fully booked right now — but you can join the waitlist and be the first to know when new spots open up.</p>
+      <div class="waitlist-form-wrap">
+        <form id="waitlistForm">
+          <div class="form-group"><label for="wname">Your name</label><input type="text" id="wname" placeholder="Jane Doe" required></div>
+          <div class="form-group"><label for="wemail">Email address</label><input type="email" id="wemail" placeholder="jane@example.com" required></div>
+          <div class="form-group">
+            <label for="wservice">Interested in</label>
+            <select id="wservice">
+              <option value="" disabled selected>What are you looking for?</option>
+              <option>Brand Identity</option>
+              <option>Photo Manipulation</option>
+              <option>Graphic Design</option>
+              <option>YouTube Starter Kit</option>
+              <option>Creator Pro Kit</option>
+              <option>Brand Identity Kit</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+<div class="hp-field" aria-hidden="true">
+            <label>Company website</label>
+            <input type="text" name="company_website" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="cf-wrap"></div>
+          <button type="submit" class="form-submit">Join the waitlist →</button>
+        </form>
+        <div class="waitlist-success" id="waitlistSuccess">
+          <h3>You're on the list.</h3>
+          <p>BoviBerry will reach out personally when commissions open back up. Thank you for your patience and support.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS PREVIEW SECTION -->
+<div class="gold-divider"></div>
+<section id="reviews">
+  <div class="section-inner">
+    <p class="section-label">Client love</p>
+    <h2 class="section-title">What people <em>say.</em></h2>
+    <p class="section-sub">Real words from real clients. Every piece made with care.</p>
+    <div class="reviews-grid" id="homepageReviews">
+      <div class="reviews-loading">
+        <span class="reviews-loading-dot"></span>
+        <span class="reviews-loading-dot"></span>
+        <span class="reviews-loading-dot"></span>
+      </div>
+    </div>
+    <div class="reviews-cta">
+      <a href="reviews.html" class="btn-outline">See all reviews &amp; leave yours →</a>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+    <div class="lightbox-img-wrap" id="lightboxImgWrap"></div>
+    <div class="lightbox-info">
+      <div>
+        <div class="lightbox-title" id="lightboxTitle"></div>
+        <div class="lightbox-category" id="lightboxCategory"></div>
+      </div>
+      <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-corner tl"></div>
+    <div class="success-corner tr"></div>
+    <div class="success-corner bl"></div>
+    <div class="success-corner br"></div>
+    <div class="success-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+    <p class="success-eyebrow">Commission received</p>
+    <h2 class="success-title">Your request is<br><em>on its way.</em></h2>
+    <div class="success-divider"></div>
+    <p class="success-msg">
+      Thank you for reaching out! Every commission is handled personally and with care.<br><br>
+      Expect a response within <strong style="color:var(--shimmer);font-weight:400">48 hours</strong> with a custom quote and next steps. In the meantime, feel free to browse the portfolio for more inspiration.
+    </p>
+    <p class="success-name">— BoviBerry</p>
+    <button class="success-close" onclick="document.getElementById('successOverlay').classList.remove('active')">
+      Back to the site
+    </button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a href="#" class="nav-logo">BoviBerry</a>
+    <p>Digital art & design — graphic design, photo manipulation, and brand identity for creators and businesses.</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#kits">Brand Kits</a></li>
+    <li><a href="#commission">Commission</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="faq.html">FAQ & Policy</a></li>
+    <li><a href="boards.html">Boards</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+  </ul>
+  <div class="footer-social">
+    <!-- Social icons go back here once she has business accounts:
+         <a href="https://instagram.com/HANDLE" class="social-link" title="Instagram" target="_blank" rel="noopener">IG</a>
+         <a href="https://tiktok.com/@HANDLE" class="social-link" title="TikTok" target="_blank" rel="noopener">TK</a>
+    -->
+    <a href="mailto:Boviberrystudios@gmail.com" class="footer-email">Boviberrystudios@gmail.com</a>
+  </div>
+  <div class="footer-copy">
+    <span>© 2026 BoviBerry. All rights reserved.</span>
+    <span>Made with intention.</span>
+  </div>
+</footer>
+
+<script>
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzekrL5Rt0MpbpSxUtoicKFDGRK3_oVpNqN60kARVH3grNpZa0RJho2Gbpj6_CpZ5ip/exec';
+
+// ── CUSTOM CURSOR ──
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  dot.style.left = mouseX + 'px';
+  dot.style.top  = mouseY + 'px';
+}, { passive: true });
+
+(function animateRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  ring.style.left = ringX + 'px';
+  ring.style.top  = ringY + 'px';
+  requestAnimationFrame(animateRing);
+})();
+
+document.querySelectorAll('a,button,[role="button"],.portfolio-item,.kit-card,.service-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { dot.classList.add('hovering'); ring.classList.add('hovering'); });
+  el.addEventListener('mouseleave', () => { dot.classList.remove('hovering'); ring.classList.remove('hovering'); });
+});
+document.addEventListener('mousedown', () => dot.classList.add('clicking'));
+document.addEventListener('mouseup',   () => dot.classList.remove('clicking'));
+
+// ── THEME TOGGLE ──
+const html = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('bb-theme') || 'dark';
+if(savedTheme === 'light') html.setAttribute('data-theme','light');
+themeToggle.addEventListener('click', () => {
+  const isLight = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  localStorage.setItem('bb-theme', isLight ? 'dark' : 'light');
+});
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; observer.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.service-card, .kit-card, .portfolio-item, .step').forEach(el => {
+  el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+
+
+// ── SCROLL LOCK ──
+// iOS Safari ignores `overflow:hidden` on <body>, so the page keeps scrolling
+// behind any overlay. Pinning the body and restoring the offset is the only
+// approach that actually holds on iPhone.
+let _lockedY = 0;
+function lockScroll() {
+  _lockedY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${_lockedY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.width = '100%';
+}
+function unlockScroll() {
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.width = '';
+  window.scrollTo(0, _lockedY);
+}
+
+// ════════════════════════════════════════════════════════════
+//  PORTFOLIO — add or edit projects here. One line each.
+//  img:      file in the images/ folder (name must match exactly)
+//  title:    shown on hover and in the lightbox
+//  category: label underneath
+//  size:     feature · wide · strip · tall · half · panel
+//            (see the tile shape notes in the CSS above)
+//  Reorder freely — the grid rearranges itself.
+// ════════════════════════════════════════════════════════════
+const PORTFOLIO = [
+  { img:'images/Koi_things_01_Artboard_1.webp',            title:'Koi',                category:'Graphic Design',   size:'feature' },
+  { img:'images/Banner.webp',                              title:'Channel Banner',     category:'YouTube Branding', size:'wide' },
+  { img:'images/Sushi_Pattern.webp',                       title:'Sushi Pattern',      category:'Graphic Design',   size:'strip' },
+
+  { img:'images/AJ_Invite_.webp',                          title:'Wedding Invitation', category:'Digital Art',      size:'tall' },
+  { img:'images/The_wild_robot_01_Artboard_1.webp',        title:'The Wild Robot',     category:'Digital Art',      size:'tall' },
+  { img:'images/MTnT_Logo_01_Artboard_1.webp',             title:'Mora This & That',   category:'Brand Identity',   size:'tall' },
+
+  { img:'images/DBD.webp',                                 title:'Dead by Daylight',   category:'YouTube Branding', size:'half' },
+  { img:'images/Super_Battle_Golf.webp',                   title:'Super Battle Golf',  category:'YouTube Branding', size:'half' },
+
+  { img:'images/Andys_game_store_logo_01_Artboard_1.webp', title:"Andy's Game Store",  category:'Graphic Design',   size:'panel' }
+];
+
+const placeholderSvg = `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+const placeholderTints = ['#2A1E12','#1D1811','#13110e','#181510','#121008','#15130d'];
+
+document.getElementById('portfolioGrid').innerHTML = PORTFOLIO.map((p, i) => `
+  <div class="portfolio-item ${p.size || 'half'}"${p.img ? ` style="background-image:url('${p.img}')"` : ` style="background:${placeholderTints[i % placeholderTints.length]}"`}>
+    ${p.img ? '' : `<div class="portfolio-item-inner">${placeholderSvg}<span>${i === 0 ? 'Featured work' : 'Your artwork'}</span></div>`}
+    <div class="portfolio-corner-accent"></div>
+    <div class="portfolio-overlay">
+      <div class="portfolio-overlay-text">
+        <h4>${p.title}</h4>
+        <span>${p.category}</span>
+      </div>
+    </div>
+  </div>`).join('');
+
+// ── PORTFOLIO LIGHTBOX ──
+const portfolioItems = Array.from(document.querySelectorAll('.portfolio-item'));
+const lightbox = document.getElementById('lightbox');
+const lightboxImgWrap = document.getElementById('lightboxImgWrap');
+const lightboxTitle = document.getElementById('lightboxTitle');
+const lightboxCategory = document.getElementById('lightboxCategory');
+const lightboxCounter = document.getElementById('lightboxCounter');
+let currentIndex = 0;
+
+function openLightbox(index) {
+  currentIndex = index;
+  const p = PORTFOLIO[index];
+  lightboxTitle.textContent = p.title;
+  lightboxCategory.textContent = p.category;
+  lightboxCounter.textContent = `${index + 1} / ${PORTFOLIO.length}`;
+  lightboxImgWrap.innerHTML = p.img
+    ? `<img src="${p.img}" alt="${p.title}">`
+    : `<div class="lightbox-placeholder">${placeholderSvg}<span>${p.title}</span><span style="font-size:0.65rem;opacity:0.5">${p.category}</span></div>`;
+  lightbox.classList.add('active');
+  lockScroll();
+}
+function closeLightbox() { lightbox.classList.remove('active'); unlockScroll(); }
+function navigateLightbox(dir) { currentIndex = (currentIndex + dir + PORTFOLIO.length) % PORTFOLIO.length; openLightbox(currentIndex); }
+
+portfolioItems.forEach((item, i) => item.addEventListener('click', () => openLightbox(i)));
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.getElementById('lightboxPrev').addEventListener('click', e => { e.stopPropagation(); navigateLightbox(-1); });
+document.getElementById('lightboxNext').addEventListener('click', e => { e.stopPropagation(); navigateLightbox(1); });
+lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if(!lightbox.classList.contains('active')) return;
+  if(e.key==='Escape') closeLightbox();
+  if(e.key==='ArrowLeft') navigateLightbox(-1);
+  if(e.key==='ArrowRight') navigateLightbox(1);
+}, { passive: true });
+
+// ── SWIPE TO NAVIGATE (phones) ──
+(function(){
+  let startX = 0, startY = 0, tracking = false;
+  const wrap = lightboxImgWrap;
+  wrap.addEventListener('touchstart', e => {
+    if(e.touches.length !== 1) return;
+    startX = e.touches[0].clientX; startY = e.touches[0].clientY; tracking = true;
+  }, { passive:true });
+  wrap.addEventListener('touchend', e => {
+    if(!tracking) return;
+    tracking = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    // horizontal intent only, so vertical scrolling still feels normal
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      navigateLightbox(dx < 0 ? 1 : -1);
+    }
+  }, { passive:true });
+})();
+
+// ── WAITLIST CHECK ──
+async function checkWaitlist() {
+  try {
+    const res = await fetch(SHEET_URL + '?action=getSettings');
+    const data = await res.json();
+    if(data.waitlist === 'true') {
+      document.querySelector('.commission-section').classList.add('hidden');
+      document.querySelector('.waitlist-section').classList.add('active');
+    }
+  } catch(e) {}
+}
+checkWaitlist();
+
+// ── WAITLIST FORM ──
+document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('.form-submit');
+  btn.textContent = 'Joining...'; btn.disabled = true;
+  const payload = {
+    action: 'joinWaitlist',
+    name: document.getElementById('wname').value,
+    email: document.getElementById('wemail').value,
+    service: document.getElementById('wservice').value,
+    hp: hpValue(this), elapsed: elapsedMs(), cfToken: cfToken(),
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  };
+  try {
+    await fetch(SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    this.style.display = 'none';
+    document.getElementById('waitlistSuccess').classList.add('show');
+  } catch(err) { btn.textContent = 'Error — try again'; btn.disabled = false; }
+});
+
+// ── HOMEPAGE REVIEWS ──
+async function loadHomepageReviews() {
+  const container = document.getElementById('homepageReviews');
+  try {
+    const res = await fetch(SHEET_URL + '?action=getApproved');
+    const data = await res.json();
+    const approved = data.filter(r => r.approved.toLowerCase() === 'true');
+    const featured = approved.filter(r => r.featured.toLowerCase() === 'true');
+    const toShow = (featured.length ? featured : approved).slice(0,3);
+    if(!toShow.length) {
+      container.innerHTML = '<div class="reviews-empty" style="grid-column:span 3;text-align:center;padding:2rem;color:var(--muted);">No featured reviews yet — <a href="reviews.html" style="color:var(--gold-dim);text-decoration:none;border-bottom:1px solid var(--gold-dim)">be the first</a>.</div>';
+      return;
+    }
+    container.innerHTML = toShow.map(r => `
+      <div class="review-card${r.featured.toLowerCase()==='true'?' featured':''}">
+        ${r.featured.toLowerCase()==='true'?'<span class="featured-badge">✦ Featured</span>':''}
+        <div class="review-stars">${'★'.repeat(parseInt(r.rating))}${'☆'.repeat(5-parseInt(r.rating))}</div>
+        <p class="review-text">"${r.review}"</p>
+        <p class="review-author">${r.name}</p>
+        <p class="review-service">${r.service}</p>
+      </div>`).join('');
+  } catch(e) {
+    container.innerHTML = '<div style="grid-column:span 3;text-align:center;padding:2rem;color:var(--muted);font-size:0.85rem;">Reviews coming soon.</div>';
+  }
+}
+loadHomepageReviews();
+
+// ── COMMISSION FORM → GOOGLE SHEET ──
+const form = document.getElementById('commissionForm');
+const overlay = document.getElementById('successOverlay');
+const emailInput = document.getElementById('email');
+const emailConfirm = document.getElementById('emailConfirm');
+const emailError = document.getElementById('emailError');
+const phoneInput = document.getElementById('phone');
+const phoneNudge = document.getElementById('phoneNudge');
+
+// Show phone nudge when user leaves phone field empty
+phoneInput.addEventListener('blur', () => {
+  if(!phoneInput.value.trim()) phoneNudge.classList.add('show');
+  else phoneNudge.classList.remove('show');
+});
+phoneInput.addEventListener('input', () => phoneNudge.classList.remove('show'));
+
+// ── LIVE PHONE FORMATTING ──
+// Types as (555) 123-4567 on its own. Backspace behaves normally because we
+// only add a separator once the digit that follows it has actually been typed.
+// A leading + switches to free-form so international numbers still work.
+function formatPhone(raw) {
+  if (raw.trim().startsWith('+')) {
+    // International — keep digits, spaces and dashes, don't impose US format
+    return '+' + raw.replace(/[^\d\s-]/g, '').replace(/^\+*/, '');
+  }
+  let d = raw.replace(/\D/g, '');
+  // A leading 1 on an 11-digit number is the US country code, not the area code
+  let prefix = '';
+  if (d.length === 11 && d[0] === '1') { prefix = '1 '; d = d.slice(1); }
+  d = d.slice(0, 10);
+  if (d.length <= 3) return prefix + d;
+  if (d.length <= 6) return `${prefix}(${d.slice(0,3)}) ${d.slice(3)}`;
+  return `${prefix}(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+}
+
+phoneInput.addEventListener('input', function (e) {
+  // Don't fight the user while they're deleting
+  const deleting = e.inputType && e.inputType.startsWith('delete');
+  const el = e.target;
+  const atEnd = el.selectionStart === el.value.length;
+  const formatted = formatPhone(el.value);
+
+  if (deleting && formatted.length >= el.value.length) return;
+
+  const before = el.value;
+  el.value = formatted;
+
+  // Keep the caret where the person expects it when editing mid-string
+  if (!atEnd) {
+    const diff = formatted.length - before.length;
+    const pos = Math.max(0, el.selectionStart + diff);
+    el.setSelectionRange(pos, pos);
+  }
+});
+
+// Tidy up anything pasted in
+phoneInput.addEventListener('paste', function (e) {
+  e.preventDefault();
+  const text = (e.clipboardData || window.clipboardData).getData('text');
+  this.value = formatPhone(text);
+});
+
+// Live email match check
+emailConfirm.addEventListener('input', () => {
+  if(emailConfirm.value && emailInput.value !== emailConfirm.value) {
+    emailError.classList.add('show');
+    emailConfirm.classList.add('invalid');
+  } else {
+    emailError.classList.remove('show');
+    emailConfirm.classList.remove('invalid');
+  }
+});
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // Email match validation
+  if(emailInput.value !== emailConfirm.value) {
+    emailError.classList.add('show');
+    emailConfirm.classList.add('invalid');
+    emailConfirm.scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+
+  // Phone nudge on submit if empty
+  if(!phoneInput.value.trim()) phoneNudge.classList.add('show');
+
+  const btn = document.getElementById('commissionSubmitBtn');
+  btn.textContent = 'Sending...'; btn.disabled = true; btn.style.opacity = '0.7';
+
+  const payload = {
+    action: 'submitCommission',
+    name: document.getElementById('name').value,
+    email: emailInput.value,
+    phone: phoneInput.value || 'Not provided',
+    socialPlatform: document.getElementById('socialPlatform').value || '—',
+    socialHandle: document.getElementById('socialHandle').value || '—',
+    service: document.getElementById('service').value,
+    budget: (document.getElementById('budgetFixed').style.display === 'none'
+              ? document.getElementById('budget').value
+              : document.getElementById('budgetFixed').value),
+    timeline: (document.getElementById('timelineFixed').style.display === 'none'
+                ? document.getElementById('timeline').value
+                : document.getElementById('timelineFixed').value),
+    referral: document.getElementById('referral').value || '—',
+    vision: document.getElementById('vision').value,
+    references: document.getElementById('references').value || 'None provided',
+    hp: hpValue(form), elapsed: elapsedMs(), cfToken: cfToken(),
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  };
+
+  try {
+    await fetch(SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    overlay.classList.add('active');
+    lockScroll();
+    form.reset();
+    phoneNudge.classList.remove('show');
+    emailError.classList.remove('show');
+    btn.textContent = 'Send my request →'; btn.disabled = false; btn.style.opacity = '1';
+  } catch(err) {
+    btn.textContent = 'Network error — try again';
+    btn.style.background = '#8a3030'; btn.disabled = false; btn.style.opacity = '1';
+  }
+});
+
+document.getElementById('successOverlay').addEventListener('click', function(e) {
+  if(e.target === this) { this.classList.remove('active'); unlockScroll(); }
+});
+document.querySelector('.success-close').addEventListener('click', function() {
+  overlay.classList.remove('active'); unlockScroll();
+});
+
+// ── MOBILE NAV (clones the desktop links so there's one source of truth) ──
+(function(){
+  const src = document.querySelector('.nav-links');
+  const btn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobileMenu');
+  if(!src || !btn || !panel) return;
+  panel.innerHTML = src.innerHTML;
+  const nav = document.querySelector('nav');
+  const place = () => panel.style.top = nav.offsetHeight + 'px';
+  place(); window.addEventListener('resize', place, {passive:true});
+  const close = () => { panel.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); };
+  btn.addEventListener('click', () => {
+    const open = panel.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  window.addEventListener('resize', () => { if(window.innerWidth > 900) close(); }, {passive:true});
+})();
+
+// ── SCROLL-AWARE NAV ──
+(function(){
+  const nav = document.querySelector('nav');
+  if(!nav) return;
+  const panel = document.getElementById('mobileMenu');
+  let lastY = window.scrollY;
+  let ticking = false;
+
+  function update(){
+    const y = window.scrollY;
+    const menuOpen = panel && panel.classList.contains('open');
+
+    if (y < 60) {
+      nav.classList.remove('nav-hidden','nav-scrolled');
+    } else {
+      nav.classList.add('nav-scrolled');
+      if (!menuOpen) {
+        // small threshold so tiny jitters don't flip it
+        if (y > lastY + 8)      nav.classList.add('nav-hidden');
+        else if (y < lastY - 8) nav.classList.remove('nav-hidden');
+      }
+    }
+    if (panel) panel.style.top = nav.offsetHeight + 'px';
+    lastY = y;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive:true });
+
+  // never leave the bar hidden when the menu is open
+  if (panel) {
+    new MutationObserver(() => {
+      if (panel.classList.contains('open')) nav.classList.remove('nav-hidden');
+      panel.style.top = nav.offsetHeight + 'px';
+    }).observe(panel, { attributes:true, attributeFilter:['class'] });
+  }
+})();
+
+// ── CATALOG HYDRATION ──
+// Prices are baked into the HTML above so the page renders instantly and still
+// works if the backend is unreachable. This then quietly applies whatever she
+// has set in the studio panel — updated prices, sale flags, hidden items.
+(function () {
+  var isTrue = function (v) { return String(v).toLowerCase() === 'true'; };
+
+  fetch(SHEET_URL + '?action=getCatalog')
+    .then(function (r) { return r.json(); })
+    .then(function (items) {
+      if (!Array.isArray(items)) return;
+      window.dispatchEvent(new CustomEvent('bb:catalog', { detail: items }));
+
+      items.forEach(function (it) {
+        var active = isTrue(it.active);
+        var onSale = isTrue(it.onSale) && it.salePrice;
+
+        // stay visible either way — inactive items get dimmed + labeled
+        // instead of removed, so nothing looks like it broke or vanished
+        document.querySelectorAll('[data-cat-row="' + it.id + '"]').forEach(function (el) {
+          el.classList.toggle('out-of-stock', !active);
+          var existingFlag = el.querySelector(':scope > .stock-flag');
+          if (!active) {
+            // <tr> can't take an arbitrary child, only card-style divs can
+            if (el.tagName !== 'TR' && !existingFlag) {
+              var flag = document.createElement('span');
+              flag.className = 'stock-flag';
+              flag.textContent = 'Out of Stock';
+              el.insertBefore(flag, el.firstChild);
+            }
+          } else if (existingFlag) {
+            existingFlag.remove();
+          }
+        });
+
+        // apply price — or swap in the Out of Stock label — and sale styling
+        document.querySelectorAll('[data-cat="' + it.id + '"]').forEach(function (el) {
+          if (!active) { el.textContent = 'Out of Stock'; return; }
+          if (!it.price && !onSale) return;
+          if (onSale) {
+            el.innerHTML = '<span class="price-was">' + it.price + '</span>' +
+                           '<span class="price-now">' + it.salePrice + '</span>';
+            var card = el.closest('[data-cat-row="' + it.id + '"]');
+            if (card && card.tagName !== 'TR' && !card.querySelector('.sale-flag')) {
+              var flag = document.createElement('span');
+              flag.className = 'sale-flag';
+              flag.textContent = 'On sale';
+              card.insertBefore(flag, card.firstChild);
+            }
+          } else {
+            el.textContent = it.price;
+          }
+        });
+      });
+    })
+    .catch(function () { /* backend unreachable — the baked-in prices stand */ });
+})();
+
+// ── SPAM PROTECTION ──
+// Three quiet layers: a hidden field bots fill in, how fast the form was
+// completed, and an optional Cloudflare Turnstile challenge. None of it is
+// visible to a real visitor.
+const TURNSTILE_SITE_KEY = '0x4AAAAAAD6ZQz0wbCYFxNZR';
+const FORM_LOADED_AT = Date.now();
+
+function hpValue(formEl) {
+  var el = (formEl || document).querySelector('.hp-field input');
+  return el ? el.value : '';
+}
+function elapsedMs() { return Date.now() - FORM_LOADED_AT; }
+function cfToken() {
+  try { return (typeof turnstile !== 'undefined') ? turnstile.getResponse() || '' : ''; }
+  catch (e) { return ''; }
+}
+
+(function loadTurnstile(){
+  if (!TURNSTILE_SITE_KEY) return;              // disabled until a key is set
+  var wraps = document.querySelectorAll('.cf-wrap');
+  if (!wraps.length) return;
+  wraps.forEach(function (w) {
+    var d = document.createElement('div');
+    d.className = 'cf-turnstile';
+    d.setAttribute('data-sitekey', TURNSTILE_SITE_KEY);
+    d.setAttribute('data-theme', 'auto');
+    w.appendChild(d);
+  });
+  var sc = document.createElement('script');
+  sc.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+  sc.async = true; sc.defer = true;
+  document.head.appendChild(sc);
+})();
+
+// ════════════════════════════════════════════════════════════
+//  FORM CONSISTENCY
+//  Stops the request contradicting itself — a fixed-price service can't
+//  be paired with a mismatched budget, a subscription can't be given a
+//  delivery date, and an unrealistic timeline gets flagged up front
+//  rather than becoming a difficult conversation later.
+//
+//  These entries are a FALLBACK only — they keep the form correct if the
+//  catalog can't be reached. The live source of truth is the Catalog sheet,
+//  and anything she adds there rebuilds this map and the dropdown on load.
+//  Adding a service should never require touching this file.
+// ════════════════════════════════════════════════════════════
+let SERVICE_CONFIG = {
+  'Botanical Harvest — Blueberry':  { cat:'stream-blueberry', kind:'subscription', price:'$25' },
+  'Botanical Harvest — Raspberry':  { cat:'stream-raspberry', kind:'subscription', price:'$40' },
+  'Botanical Harvest — Cherry':     { cat:'stream-cherry',    kind:'subscription', price:'$50' },
+  'Farmers Market — Blueberry':     { cat:'social-blueberry', kind:'subscription', price:'$35' },
+  'Farmers Market — Raspberry':     { cat:'social-raspberry', kind:'subscription', price:'$50' },
+  'Farmers Market — Cherry':        { cat:'social-cherry',    kind:'subscription', price:'$75' },
+
+  'Logo — Word mark':           { cat:'logo-wordmark',    kind:'fixed', price:'$199', turnaround:'7–14 business days', days:7 },
+  'Logo — Letterforms':         { cat:'logo-letterforms', kind:'fixed', price:'$249', turnaround:'7–14 business days', days:7 },
+  'Logo — Pictorial':           { cat:'logo-pictorial',   kind:'fixed', price:'$299', turnaround:'7–14 business days', days:7 },
+  'Logo — Abstract':            { cat:'logo-abstract',    kind:'fixed', price:'$299', turnaround:'7–14 business days', days:7 },
+  'Logo — Emblem':              { cat:'logo-emblem',      kind:'fixed', price:'$399', turnaround:'7–14 business days', days:7 },
+  'Logo — Mascot':              { cat:'logo-mascot',      kind:'fixed', price:'$499', turnaround:'10–14 business days', days:10 },
+  'Logo — Not sure which type': { kind:'quote', turnaround:'7–14 business days', days:7 },
+
+  'Punch card — Printable':     { cat:'punch-printable',  kind:'fixed', price:'$29', turnaround:'3–5 business days', days:3 },
+  'Punch card — Digital wallet':{ cat:'punch-digital',    kind:'fixed', price:'$69', turnaround:'5–7 business days', days:5 },
+
+  'Graphic Design':             { kind:'quote', turnaround:'3–5 business days', days:3 },
+  'Photo Manipulation':         { kind:'quote', turnaround:'2–4 business days', days:2 },
+  'Brand Identity':             { kind:'quote', turnaround:'10–14 business days', days:10 },
+  'Custom / other':             { kind:'quote' }
+};
+
+let CATALOG_BY_ID = {};
+
+(function formConsistency(){
+  const serviceEl  = document.getElementById('service');
+  const budgetEl   = document.getElementById('budget');
+  const budgetFix  = document.getElementById('budgetFixed');
+  const budgetNote = document.getElementById('budgetNote');
+  const budgetLbl  = document.getElementById('budgetLabel');
+  const timeEl     = document.getElementById('timeline');
+  const timeFix    = document.getElementById('timelineFixed');
+  const timeNote   = document.getElementById('timelineNote');
+  const timeLbl    = document.getElementById('timelineLabel');
+  const platformEl = document.getElementById('socialPlatform');
+  const handleEl   = document.getElementById('socialHandle');
+  if (!serviceEl) return;
+
+  function setNote(el, text, warn) {
+    el.innerHTML = text || '';
+    el.classList.toggle('show', !!text);
+    el.classList.toggle('warn', !!warn);
+  }
+
+
+  // ── BUILD THE FORM FROM THE CATALOG ──
+  // The dropdown and its behaviour are derived from the Catalog sheet, so a
+  // tier she adds in the studio panel appears here with the right price
+  // locking, grouping and turnaround — no code change needed.
+  function rebuildFromCatalog(items) {
+    const usable = items.filter(function (i) {
+      return String(i.active).toLowerCase() === 'true' && i.kind && i.formGroup;
+    });
+    if (!usable.length) return;          // nothing usable — keep the fallback
+
+    // 1. extend the behaviour map
+    usable.forEach(function (i) {
+      SERVICE_CONFIG[i.label] = {
+        cat: i.id,
+        kind: i.kind,
+        price: i.price,
+        turnaround: i.turnaround || '',
+        days: Number(i.minDays) || 0
+      };
+    });
+
+    // 2. rebuild the dropdown, preserving what they'd already picked
+    const previous = serviceEl.value;
+    usable.sort(function (a, b) {
+      return (Number(a.sortOrder) || 999) - (Number(b.sortOrder) || 999);
+    });
+
+    const groups = {}, groupOrder = [];
+    usable.forEach(function (i) {
+      if (!groups[i.formGroup]) { groups[i.formGroup] = []; groupOrder.push(i.formGroup); }
+      groups[i.formGroup].push(i);
+    });
+
+    let html = '<option value="" disabled selected>Select a service...</option>';
+    groupOrder.forEach(function (g) {
+      html += '<optgroup label="' + escapeAttr(g) + '">';
+      groups[g].forEach(function (i) {
+        html += '<option>' + escapeAttr(i.label) + '</option>';
+      });
+      html += '</optgroup>';
+    });
+    html += '<option>Custom / other</option>';
+
+    serviceEl.innerHTML = html;
+    if (previous && SERVICE_CONFIG[previous]) serviceEl.value = previous;
+  }
+
+  function escapeAttr(v) {
+    return String(v == null ? '' : v)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function applyService() {
+    const cfg = SERVICE_CONFIG[serviceEl.value] || { kind:'quote' };
+    const item = cfg.cat ? CATALOG_BY_ID[cfg.cat] : null;
+    const onSale = item && String(item.onSale).toLowerCase() === 'true' && item.salePrice;
+    // catalog price wins; the baked-in one keeps the form correct if it hasn't loaded
+    const price = (item ? (onSale ? item.salePrice : item.price) : '') || cfg.price || '';
+
+    // ── budget ──
+    if (cfg.kind === 'fixed' || cfg.kind === 'subscription') {
+      budgetEl.style.display = 'none';
+      budgetFix.style.display = '';
+      budgetFix.value = price
+        ? price + (cfg.kind === 'subscription' ? ' / month' : '')
+        : 'Set price — confirmed in your quote';
+      budgetLbl.textContent = cfg.kind === 'subscription' ? 'Monthly price' : 'Price';
+      setNote(budgetNote,
+        onSale
+          ? 'Currently on sale — was <strong>' + item.price + '</strong>. This is a set price, so there\'s no budget to estimate.'
+          : 'This is a set price, so there\'s no budget to estimate.');
+      budgetEl.selectedIndex = 0;   // clear any range they'd already picked
+    } else {
+      budgetEl.style.display = '';
+      budgetFix.style.display = 'none';
+      budgetLbl.textContent = 'Estimated budget';
+      setNote(budgetNote, cfg.kind === 'quote' && serviceEl.value
+        ? 'Quoted individually. A rough range helps shape the proposal — it isn\'t binding.'
+        : '');
+    }
+
+    // ── timeline ──
+    if (cfg.kind === 'subscription') {
+      timeEl.style.display = 'none';
+      timeFix.style.display = '';
+      timeFix.value = 'Ongoing — starts once you\'re set up';
+      timeLbl.textContent = 'Start date';
+      setNote(timeNote, 'Subscriptions run month to month, so there\'s no delivery date.');
+    } else {
+      timeEl.style.display = '';
+      timeFix.style.display = 'none';
+      timeLbl.textContent = 'Preferred timeline';
+      checkTimeline(cfg);
+    }
+  }
+
+  function checkTimeline(cfg) {
+    if (!cfg) cfg = SERVICE_CONFIG[serviceEl.value] || {};
+    if (!cfg.turnaround) { setNote(timeNote, ''); return; }
+
+    const chosen = timeEl.value;
+    const tooSoon = (chosen === 'Within 1 week' && cfg.days >= 7) ||
+                    (chosen === '1–2 weeks' && cfg.days >= 10);
+
+    if (tooSoon) {
+      setNote(timeNote,
+        'Heads up — this usually takes <strong>' + cfg.turnaround + '</strong>. ' +
+        'Rush delivery may be available for an extra 25%; mention it in your brief and it\'ll be quoted.',
+        true);
+    } else {
+      setNote(timeNote, 'Typically <strong>' + cfg.turnaround + '</strong> once your deposit clears.');
+    }
+  }
+
+  serviceEl.addEventListener('change', applyService);
+  timeEl.addEventListener('change', function(){ checkTimeline(); });
+
+  // handle field is pointless without a platform
+  if (platformEl && handleEl) {
+    platformEl.addEventListener('change', function(){
+      const none = platformEl.value === "I don't have one";
+      handleEl.disabled = none;
+      if (none) handleEl.value = '';
+      handleEl.placeholder = none ? '—' : '@yourusername';
+    });
+  }
+
+  // pick up live prices once the catalog lands, then re-apply
+  window.addEventListener('bb:catalog', function (e) {
+    const items = e.detail || [];
+    items.forEach(function (it) { CATALOG_BY_ID[it.id] = it; });
+    rebuildFromCatalog(items);
+    if (serviceEl.value) applyService();
+  });
+})();
+</script>
+</body>
+</html>

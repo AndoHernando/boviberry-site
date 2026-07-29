@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Keep the studio panel out of search results
+Disallow: /admin.html
+Disallow: /studio.html

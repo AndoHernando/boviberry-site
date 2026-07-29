@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ & Policy — BoviBerry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { }
+:root {
+  --brand-green:#2C7449; --brand-lime:#9BD16B; --brand-amber:#FFAA1B;
+  --brand-cocoa:#412A13; --brand-clay:#815121;
+  --black:#13100B; --black-mid:#1A1510; --black-soft:#2A1E12; --black-card:#1D1811;
+  --gold:#9BD16B; --gold-light:#B8E08F; --gold-dim:#7BB04F;
+  --gold-faint:rgba(155,209,107,0.12); --shimmer:#F5EFE3; --white-soft:#E2D9C6;
+  --muted:#B0A18A; --stroke:rgba(155,209,107,0.18); --stroke-soft:rgba(155,209,107,0.08);
+  --transition-theme: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+[data-theme="light"] {
+  --black:#F5EFE3; --black-mid:#EFE8DA; --black-soft:#E5DBC8; --black-card:#EFE8DA;
+  --gold:#2C7449; --gold-light:#815121; --gold-dim:#815121;
+  --gold-faint:rgba(44,116,73,0.1); --shimmer:#291B0C; --white-soft:#412A13;
+  --muted:#574733; --stroke:rgba(44,116,73,0.2); --stroke-soft:rgba(44,116,73,0.1);
+}
+body { background:var(--black); color:var(--shimmer); font-family:'Jost',sans-serif; font-weight:300; overflow-x:hidden; transition:var(--transition-theme); }
+body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:0.035; will-change:transform; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:500; display:flex; justify-content:space-between; align-items:center; padding:1.4rem 5rem; background:rgba(19,16,11,0.88); backdrop-filter:blur(18px); border-bottom:1px solid var(--stroke); }
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:400; letter-spacing:0.06em; color:var(--gold-light); text-decoration:none; }
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a { font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--gold-light); }
+.theme-toggle { width:36px; height:36px; border:1px solid var(--stroke); background:transparent; cursor:pointer; color:var(--muted); display:flex; align-items:center; justify-content:center; transition:all 0.25s; }
+.theme-toggle:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+.theme-toggle svg { width:16px; height:16px; }
+.icon-moon { display:block; } .icon-sun { display:none; }
+[data-theme="light"] .icon-moon { display:none; } [data-theme="light"] .icon-sun { display:block; }
+.nav-cta { font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; padding:0.6rem 1.5rem; border:1px solid var(--gold-dim); color:var(--gold-light); text-decoration:none; transition:all 0.25s; }
+.nav-cta:hover { background:var(--gold-faint); }
+
+/* CUSTOM CURSOR */
+*, *::before, *::after { cursor:none !important; }
+.cursor-dot { position:fixed; width:8px; height:8px; border-radius:50%; background:var(--gold); pointer-events:none; z-index:99999; transform:translate(-50%,-50%); transition:transform 0.1s ease, width 0.2s ease, height 0.2s ease; will-change:transform; }
+.cursor-ring { position:fixed; width:32px; height:32px; border-radius:50%; border:1px solid rgba(155,209,107,0.5); pointer-events:none; z-index:99998; transform:translate(-50%,-50%); transition:width 0.25s ease, height 0.25s ease; will-change:transform; }
+.cursor-dot.hovering { width:4px; height:4px; }
+.cursor-ring.hovering { width:48px; height:48px; border-color:rgba(155,209,107,0.8); }
+@media(pointer:coarse){ .cursor-dot,.cursor-ring{display:none} *,*::before,*::after{cursor:auto !important} }
+
+/* PAGE HEADER */
+.page-header { padding:10rem 5rem 5rem; position:relative; overflow:hidden; border-bottom:1px solid var(--stroke-soft); }
+.orb { position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; will-change:transform; }
+.orb-1 { width:400px; height:400px; background:radial-gradient(circle,rgba(155,209,107,0.14),transparent 70%); top:-100px; right:5%; }
+.page-eyebrow { font-size:0.68rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1.2rem; display:flex; align-items:center; gap:0.8rem; }
+.page-eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--gold-dim); }
+.page-title { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,6vw,5rem); font-weight:300; line-height:1.05; color:var(--shimmer); margin-bottom:1rem; }
+.page-title em { font-style:italic; color:var(--gold-light); }
+.page-sub { font-size:0.9rem; line-height:1.8; color:var(--muted); max-width:520px; }
+
+/* JUMP LINKS */
+.jump-links { display:flex; gap:1rem; padding:2rem 5rem; border-bottom:1px solid var(--stroke-soft); background:var(--black-mid); flex-wrap:wrap; }
+.jump-link { font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); text-decoration:none; padding:0.5rem 1rem; border:1px solid var(--stroke-soft); transition:all 0.2s; }
+.jump-link:hover { color:var(--gold-light); border-color:var(--gold-dim); background:var(--gold-faint); }
+
+/* GOLD DIVIDER */
+.gold-divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); }
+
+/* MAIN LAYOUT */
+.page-main { display:grid; grid-template-columns:220px 1fr; gap:0; min-height:60vh; }
+
+/* SIDEBAR NAV */
+.sidebar { padding:3rem 2rem; border-right:1px solid var(--stroke-soft); position:sticky; top:5rem; height:fit-content; }
+.sidebar-section { margin-bottom:2rem; }
+.sidebar-label { font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:0.8rem; display:block; }
+.sidebar-link { display:block; font-size:0.75rem; color:var(--muted); text-decoration:none; padding:0.35rem 0; border-left:2px solid transparent; padding-left:0.8rem; transition:all 0.2s; line-height:1.4; }
+.sidebar-link:hover { color:var(--gold-light); border-left-color:var(--gold-dim); }
+
+/* CONTENT */
+.content { padding:4rem 5rem; }
+
+/* SECTION HEADERS */
+.content-section { margin-bottom:5rem; }
+.content-section-header { display:flex; align-items:center; gap:1rem; margin-bottom:2.5rem; padding-bottom:1rem; border-bottom:1px solid var(--stroke-soft); }
+.content-section-icon { width:32px; height:32px; color:var(--gold); flex-shrink:0; }
+.content-section-title { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; color:var(--shimmer); }
+.content-section-title em { font-style:italic; color:var(--gold-light); }
+
+/* FAQ ACCORDION */
+.faq-group { margin-bottom:2rem; }
+.faq-group-label { font-size:0.62rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1rem; display:flex; align-items:center; gap:0.6rem; }
+.faq-group-label::before { content:''; display:block; width:16px; height:1px; background:var(--gold-dim); }
+
+.faq-item { border:1px solid var(--stroke-soft); margin-bottom:0.5rem; transition:border-color 0.2s; }
+.faq-item.open { border-color:var(--gold-dim); }
+.faq-question { width:100%; background:none; border:none; padding:1.2rem 1.5rem; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-family:'Jost',sans-serif; font-size:0.9rem; font-weight:400; color:var(--shimmer); text-align:left; transition:color 0.2s; gap:1rem; }
+.faq-question:hover { color:var(--gold-light); }
+.faq-item.open .faq-question { color:var(--gold-light); }
+.faq-chevron { width:16px; height:16px; color:var(--gold-dim); flex-shrink:0; transition:transform 0.3s ease; }
+.faq-item.open .faq-chevron { transform:rotate(180deg); }
+.faq-answer { max-height:0; overflow:hidden; transition:max-height 0.35s ease, padding 0.35s ease; }
+.faq-answer-inner { padding:0 1.5rem 1.5rem; font-size:0.875rem; line-height:1.85; color:var(--muted); }
+.faq-answer-inner strong { color:var(--shimmer); font-weight:400; }
+.faq-answer-inner a { color:var(--gold-dim); text-decoration:none; border-bottom:1px solid var(--stroke); }
+.faq-answer-inner a:hover { color:var(--gold-light); }
+.faq-item.open .faq-answer { max-height:500px; }
+
+/* POLICY SECTIONS */
+.policy-block { margin-bottom:2.5rem; }
+.policy-block h3 { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:400; color:var(--shimmer); margin-bottom:0.8rem; display:flex; align-items:center; gap:0.6rem; }
+.policy-block h3::before { content:''; display:inline-block; width:4px; height:4px; background:var(--gold-dim); flex-shrink:0; margin-bottom:1px; }
+.policy-block p { font-size:0.875rem; line-height:1.85; color:var(--muted); margin-bottom:0.8rem; }
+.policy-block ul { list-style:none; margin:0.5rem 0 0.8rem; }
+.policy-block ul li { font-size:0.875rem; line-height:1.75; color:var(--muted); padding:0.3rem 0 0.3rem 1.2rem; position:relative; }
+.policy-block ul li::before { content:''; position:absolute; left:0; top:0.75rem; width:4px; height:4px; background:var(--gold-dim); border-radius:50%; }
+.policy-block strong { color:var(--shimmer); font-weight:400; }
+.policy-highlight { background:var(--gold-faint); border:1px solid var(--stroke); border-left:3px solid var(--gold-dim); padding:1rem 1.2rem; margin:1rem 0; font-size:0.85rem; line-height:1.75; color:var(--muted); }
+.policy-highlight strong { color:var(--gold-light); font-weight:400; }
+
+/* LAST UPDATED */
+.last-updated { font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:3rem; display:flex; align-items:center; gap:0.5rem; }
+.last-updated::before { content:''; display:block; width:16px; height:1px; background:var(--muted); }
+
+/* CTA BOX */
+.cta-box { background:var(--black-card); border:1px solid var(--stroke-soft); padding:2.5rem; text-align:center; position:relative; margin-top:4rem; }
+.cta-box::before { content:''; position:absolute; top:0; left:2rem; right:2rem; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); }
+.cta-box h3 { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:300; color:var(--shimmer); margin-bottom:0.6rem; }
+.cta-box h3 em { font-style:italic; color:var(--gold-light); }
+.cta-box p { font-size:0.85rem; color:var(--muted); margin-bottom:1.8rem; line-height:1.7; }
+.btn-gold { padding:0.9rem 2.2rem; background:var(--gold); color:var(--black); text-decoration:none; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:400; transition:background 0.25s; display:inline-block; }
+.btn-gold:hover { background:var(--gold-light); }
+
+/* FOOTER */
+footer { padding:4rem 5rem 3rem; border-top:1px solid var(--stroke-soft); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:2rem; }
+.footer-brand p { font-size:0.78rem; color:var(--muted); max-width:260px; line-height:1.7; margin-top:0.5rem; }
+.footer-links { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+.footer-links a { font-size:0.78rem; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.footer-links a:hover { color:var(--gold-light); }
+.footer-social { display:flex; gap:1rem; }
+.social-link { width:36px; height:36px; border:1px solid var(--stroke-soft); display:flex; align-items:center; justify-content:center; color:var(--muted); text-decoration:none; transition:all 0.2s; font-size:0.75rem; }
+.footer-email {
+  font-size:0.78rem; color:var(--muted); text-decoration:none;
+  border-bottom:1px solid var(--stroke-soft); padding-bottom:2px;
+  transition:color 0.2s, border-color 0.2s;
+}
+.footer-email:hover { color:var(--gold-light); border-color:var(--gold-dim); }
+.social-link:hover { border-color:var(--gold-dim); color:var(--gold-light); }
+.footer-copy { width:100%; border-top:1px solid var(--stroke-soft); padding-top:1.5rem; margin-top:1rem; font-size:0.68rem; letter-spacing:0.1em; color:var(--muted); display:flex; justify-content:space-between; }
+
+@media(max-width:900px) {
+  nav { padding:1.2rem 2rem; } .nav-links { display:none; }
+  .page-header { padding:8rem 2rem 3rem; }
+  .jump-links { padding:1.5rem 2rem; }
+  .page-main { grid-template-columns:1fr; }
+  .sidebar { display:none; }
+  .content { padding:3rem 2rem; }
+  footer { flex-direction:column; align-items:flex-start; padding:3rem 2rem 2rem; }
+}
+
+/* ══════════ MOBILE NAV ══════════ */
+.menu-btn {
+  display:none; width:36px; height:36px;
+  border:1px solid var(--stroke); background:transparent;
+  cursor:pointer; position:relative; padding:0;
+}
+.menu-btn span {
+  display:block; position:absolute; left:9px; width:18px; height:1px;
+  background:var(--gold-light); transition:transform 0.28s ease, opacity 0.2s ease;
+}
+.menu-btn span:nth-child(1){ top:12px; }
+.menu-btn span:nth-child(2){ top:17px; }
+.menu-btn span:nth-child(3){ top:22px; }
+.menu-btn.open span:nth-child(1){ transform:translateY(5px) rotate(45deg); }
+.menu-btn.open span:nth-child(2){ opacity:0; }
+.menu-btn.open span:nth-child(3){ transform:translateY(-5px) rotate(-45deg); }
+
+.mobile-menu {
+  display:none; position:fixed; left:0; right:0; z-index:490;
+  background:var(--black-mid); border-bottom:1px solid var(--stroke);
+  list-style:none; padding:0.5rem 0 1.2rem;
+  max-height:0; overflow:hidden;
+  transition:max-height 0.32s ease, opacity 0.25s ease;
+  opacity:0;
+}
+.mobile-menu.open { max-height:70vh; opacity:1; overflow-y:auto; }
+.mobile-menu li { list-style:none; }
+.mobile-menu a {
+  display:block; padding:0.95rem 2rem;
+  font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--white-soft); text-decoration:none;
+  border-bottom:1px solid var(--stroke-soft);
+  transition:color 0.2s, background 0.2s;
+}
+.mobile-menu a:hover, .mobile-menu a.active { color:var(--gold-light); background:var(--gold-faint); }
+
+/* ══════════ MOBILE REFINEMENTS ══════════ */
+@media(max-width:900px){
+  .menu-btn { display:block; }
+  .mobile-menu { display:block; }
+
+  /* small text was too dim and too small on phones */
+  .section-label, .page-eyebrow, .sidebar-label { font-size:0.7rem; letter-spacing:0.2em; }
+  .section-sub, .page-sub { font-size:0.95rem; line-height:1.85; }
+  .service-card p, .kit-card p, .sub-list li, .tier-list li,
+  .kit-includes li, .step-text p, .commission-info p,
+  .block p, .block ul li, .policy-block p, .policy-block ul li,
+  .faq-answer-inner, .callout p, .highlight p,
+  .included-list li, .price-note, .form-note, .box-sub { font-size:0.92rem; line-height:1.8; }
+  label, .login-label { font-size:0.72rem; }
+  .footer-links a, .footer-brand p, .footer-email { font-size:0.88rem; }
+  .footer-copy { font-size:0.75rem; flex-direction:column; gap:0.5rem; }
+  .review-text, .row-text { font-size:1.05rem; }
+  .kit-tier-note, .sub-kit-label, .sub-cta-alt, .tier-cta-alt { font-size:0.78rem; }
+  .buy-btn { font-size:0.7rem; padding:0.55rem 1rem; }
+  .tag, .row-service-tag, .review-service-tag { font-size:0.72rem; }
+
+  /* tap targets */
+  .btn-gold, .btn-outline, .nav-cta, .sub-cta, .tier-cta,
+  .form-submit, .btn-submit, .filter-btn, .jump-link { min-height:44px; }
+  .filter-btn, .jump-link { font-size:0.75rem; padding:0.7rem 1.1rem; }
+}
+
+/* stack wide tables into readable blocks instead of squeezing them */
+@media(max-width:640px){
+  .price-table thead, .data-table thead { display:none; }
+  .price-table, .price-table tbody, .price-table tr, .price-table td,
+  .data-table, .data-table tbody, .data-table tr, .data-table td { display:block; width:100%; }
+  .price-table tr, .data-table tr { border-bottom:1px solid var(--stroke-soft); padding:0.6rem 0; }
+  .price-table tr:last-child, .data-table tr:last-child { border-bottom:none; }
+  .price-table td, .data-table td { border:none; padding:0.35rem 1rem; text-align:left !important; }
+  .price-table td:last-child, .data-table td:last-child { text-align:left !important; }
+}
+
+/* very small phones */
+@media(max-width:420px){
+  nav { padding:1rem 1.2rem; }
+  .page-header, .section-inner, .content { padding-left:1.2rem !important; padding-right:1.2rem !important; }
+  footer { padding-left:1.2rem; padding-right:1.2rem; }
+  .mobile-menu a { padding-left:1.2rem; }
+  .hero { padding:0 1.2rem; }
+  .hero-scroll { left:1.2rem; }
+}
+
+/* ══════════ NAV LAYOUT + SCROLL BEHAVIOUR ══════════ */
+.nav-right { display:flex; align-items:center; gap:0.7rem; flex-shrink:0; }
+.nav-right > * { flex-shrink:0; }
+
+nav {
+  transition:transform 0.35s cubic-bezier(.4,0,.2,1),
+             padding 0.3s ease,
+             box-shadow 0.3s ease,
+             background 0.3s ease;
+  will-change:transform;
+}
+/* slides away when scrolling down, returns the moment you scroll up */
+nav.nav-hidden { transform:translateY(-100%); }
+/* condenses slightly once you've left the top of the page */
+nav.nav-scrolled {
+  padding-top:0.95rem; padding-bottom:0.95rem;
+  box-shadow:0 10px 30px rgba(0,0,0,0.28);
+}
+nav.nav-scrolled .nav-logo { font-size:1.4rem; }
+.nav-logo { transition:font-size 0.3s ease; }
+
+/* the bar was hardcoded dark — give light mode its own surface */
+[data-theme="light"] nav { background:rgba(245,239,227,0.88); }
+[data-theme="light"] nav.nav-scrolled { background:rgba(245,239,227,0.96); box-shadow:0 10px 30px rgba(65,42,19,0.10); }
+[data-theme="light"] .mobile-menu { background:var(--black-mid); }
+
+@media(max-width:900px){
+  .nav-right { gap:0.5rem; }
+  .nav-cta { padding:0.6rem 1rem; font-size:0.68rem; }
+}
+@media(max-width:420px){
+  .nav-right { gap:0.4rem; }
+  .nav-cta { display:none; }   /* the mobile menu already has Commission */
+}
+
+/* ══════════ SHARED MOBILE SAFEGUARDS ══════════ */
+@media(max-width:900px){
+  /* nothing should be able to force sideways scrolling */
+  html, body { overflow-x:hidden; max-width:100%; }
+  img, svg, table, pre { max-width:100%; }
+  h1, h2, h3, p, li, td { overflow-wrap:break-word; }
+
+  /* wrapping rows that were laid out for desktop widths */
+  .jump-links { gap:0.6rem; }
+  .footer-links { gap:0.8rem; }
+  footer { gap:1.5rem; }
+  .section-inner { padding-left:2rem; padding-right:2rem; }
+}
+
+/* ══════════ CARD CONSISTENCY (MOBILE) ══════════
+   Desktop padding ranges from 1rem to 3rem depending on the component.
+   On a phone that reads as sloppy, so every boxed element lands on the
+   same rhythm. */
+@media(max-width:700px){
+  .service-card, .kit-card, .sub-card, .tier-card, .review-card,
+  .included-box, .commission-form, .leave-review-box, .kit-card,
+  .board-section, .mb-card, .success-box, .login-box, .board-col {
+    padding:1.5rem 1.35rem;
+  }
+  .callout, .highlight, .policy-highlight, .kit-tier-note,
+  .sub-kit-banner, .kit-banner, .next-steps {
+    padding:1.1rem 1.2rem;
+  }
+  .cta-box, .coming-soon-wrap, .waitlist-banner {
+    padding:2rem 1.35rem;
+  }
+  .board-info { padding:1.2rem 1.3rem; }
+
+  /* consistent vertical rhythm between stacked cards */
+  .kits-grid, .subs-grid, .tiers-grid, .services-grid,
+  .reviews-grid, .boards-grid, .coming-soon-features { gap:0.9rem; }
+
+  /* callouts stacked back to back were touching */
+  .callout + .callout, .highlight + .highlight { margin-top:0.8rem; }
+
+  /* headings inside cards were sized for wide columns */
+  .cta-box h3, .coming-soon-title, .waitlist-banner h2 { font-size:1.7rem; line-height:1.2; }
+  .tier-price, .sub-price { font-size:2.4rem; }
+  .tier-name, .sub-name { font-size:1.7rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TABLETS
+   The layout previously jumped from mobile (≤900px) straight to a
+   desktop built for 1400px+. That left iPad landscape cramped and
+   iPad portrait stacked into one column with width to spare.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Landscape iPad & small laptops (901–1200px) ── */
+@media(min-width:901px) and (max-width:1200px){
+  nav { padding:1.25rem 2rem; }
+  .nav-links { gap:1.35rem; }
+  .nav-links a { font-size:0.65rem; letter-spacing:0.13em; }
+  .nav-cta { padding:0.55rem 1.05rem; font-size:0.65rem; }
+  .nav-right { gap:0.6rem; }
+
+  .section-inner { padding:4.5rem 3rem; }
+  .page-header   { padding:9rem 3rem 3.5rem; }
+  .jump-links    { padding:1.5rem 3rem; }
+  .content       { padding:3.5rem 3rem; }
+  footer         { padding:3.5rem 3rem 2.5rem; }
+  .hero          { padding:0 3rem; }
+  .hero-scroll   { left:3rem; }
+
+  .about-grid      { gap:3rem; }
+  .commission-wrap { gap:3rem; }
+  .two-col         { gap:2rem; }
+  .sidebar         { padding:3rem 1.4rem; }
+  .portfolio-grid  { padding:0 3rem 1rem; }
+
+  .section-title { font-size:clamp(2rem,3.6vw,2.9rem); }
+  .page-title    { font-size:clamp(2.4rem,4.6vw,3.6rem); }
+}
+
+/* ── Portrait iPad (701–900px) ── */
+@media(min-width:701px) and (max-width:900px){
+  .section-inner { padding:4.5rem 2.5rem; }
+  .page-header   { padding:8.5rem 2.5rem 3rem; }
+  .jump-links    { padding:1.5rem 2.5rem; }
+  .content       { padding:3.5rem 2.5rem; }
+  footer         { padding:3.5rem 2.5rem 2.5rem; }
+  .hero          { padding:0 2.5rem; }
+  .hero-scroll   { left:2.5rem; }
+
+  /* natural pairs sit side by side instead of stacking */
+  .subs-grid, .tiers-grid { grid-template-columns:1fr 1fr; gap:1.2rem; }
+  .boards-grid            { grid-template-columns:1fr 1fr; }
+  .coming-soon-features   { grid-template-columns:repeat(3,1fr); }
+  .how-grid               { grid-template-columns:repeat(4,1fr); }
+  .reviews-grid           { grid-template-columns:1fr 1fr; }
+  .services-grid          { grid-template-columns:1fr 1fr; }
+  .kits-grid              { grid-template-columns:1fr 1fr; }
+
+  /* there's room for these to sit horizontally again */
+  .hero-actions { flex-direction:row; max-width:none; width:auto; }
+  .about-grid { grid-template-columns:minmax(0,0.8fr) 1fr; gap:2.5rem; }
+  .about-image-wrap { max-width:300px; }
+  .commission-wrap { grid-template-columns:1fr; gap:2.5rem; }
+  .form-row { grid-template-columns:1fr 1fr; }
+  .form-group.full { grid-column:span 2; }
+
+  /* portfolio goes two-up with a full-width hero */
+  .portfolio-grid { padding:0 2.5rem 1rem; gap:1rem; grid-auto-rows:118px; }
+  .portfolio-item          { grid-column:span 6 !important; grid-row:span 2 !important; }
+  .portfolio-item.feature  { grid-column:span 12 !important; grid-row:span 3 !important; }
+  .portfolio-item.tall     { grid-row:span 3 !important; }
+  .portfolio-item.strip    { grid-column:span 12 !important; grid-row:span 1 !important; }
+
+  /* type sized for mobile is slightly large at this width */
+  .section-label, .page-eyebrow { font-size:0.66rem; }
+  .section-sub, .page-sub { font-size:0.92rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">BoviBerry</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#kits">Brand Kits</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+    <li><a href="faq.html" class="active">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a href="index.html#commission" class="nav-cta">Work with me</a>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="orb orb-1"></div>
+  <p class="page-eyebrow">Everything you need to know</p>
+  <h1 class="page-title">FAQ & <em>Policy.</em></h1>
+  <p class="page-sub">Answers to common questions and a clear outline of how working together looks — so there are no surprises on either side.</p>
+</div>
+
+<!-- JUMP LINKS -->
+<div class="jump-links">
+  <a href="#faq" class="jump-link">Frequently asked questions</a>
+  <a href="#commission-policy" class="jump-link">Commission policy</a>
+  <a href="#quotes-policy" class="jump-link">Quotes & scope</a>
+  <a href="#subscription-policy" class="jump-link">Subscriptions</a>
+  <a href="#payment-policy" class="jump-link">Payment & refunds</a>
+  <a href="#revision-policy" class="jump-link">Revisions</a>
+  <a href="#copyright-policy" class="jump-link">Copyright & usage</a>
+  <a href="#turnaround-policy" class="jump-link">Turnaround times</a>
+</div>
+
+<div class="gold-divider"></div>
+
+<div class="page-main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <span class="sidebar-label">FAQ</span>
+      <a href="#faq-process" class="sidebar-link">Commission process</a>
+      <a href="#faq-pricing" class="sidebar-link">Pricing</a>
+      <a href="#faq-design" class="sidebar-link">Design & art</a>
+      <a href="#faq-revisions" class="sidebar-link">Revisions</a>
+    </div>
+    <div class="sidebar-section">
+      <span class="sidebar-label">Policy</span>
+      <a href="#commission-policy" class="sidebar-link">Commission policy</a>
+      <a href="#quotes-policy" class="sidebar-link">Quotes & scope</a>
+      <a href="#subscription-policy" class="sidebar-link">Subscription terms</a>
+      <a href="#payment-policy" class="sidebar-link">Payment & refunds</a>
+      <a href="#revision-policy" class="sidebar-link">Revision policy</a>
+      <a href="#copyright-policy" class="sidebar-link">Copyright & usage</a>
+      <a href="#turnaround-policy" class="sidebar-link">Turnaround times</a>
+    </div>
+    <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--stroke-soft);">
+      <p style="font-size:0.72rem;color:var(--muted);line-height:1.7;margin-bottom:1rem;">Still have questions?</p>
+      <a href="index.html#commission" style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;border-bottom:1px solid var(--stroke);padding-bottom:2px;">Get in touch →</a>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ── FAQ ── -->
+    <div class="content-section" id="faq">
+      <div class="content-section-header">
+        <svg class="content-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <h2 class="content-section-title">Frequently asked <em>questions.</em></h2>
+      </div>
+
+      <!-- COMMISSION PROCESS -->
+      <div class="faq-group" id="faq-process">
+        <p class="faq-group-label">Commission process</p>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How do I commission you?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Fill out the commission form on the <a href="index.html#commission">Commission page</a> with as much detail as possible about your project — the more you share, the better I can bring your vision to life. I'll respond within 48 hours with a custom quote and timeline. Once we agree, a 50% deposit secures your spot and work begins.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What information do I need to provide?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            The more detail the better. Helpful things to include: your overall vision and mood, any reference images or examples you love, color preferences, how you plan to use the piece, your timeline, and your budget. If you're not sure about something, just say so — we can figure it out together.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How long does the process take from start to finish?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Turnaround depends on the complexity of the project. Simple graphic pieces typically take <strong>3–5 business days</strong>. Brand identity packages take <strong>7–14 business days</strong>. Photo manipulation work is usually <strong>2–4 business days</strong>. Rush requests may be available for an additional fee — just mention it in your brief.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Can I see progress before the final delivery?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Yes! For larger projects I'll share work-in-progress previews at key stages so you can give feedback before the final version is complete. For smaller pieces, I typically deliver the finished result with the revision round available if anything needs adjusting.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What if commissions are closed?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            When I'm fully booked, the commission form is replaced with a <strong>waitlist signup</strong>. Join the waitlist with your name, email, and what you're looking for — I'll reach out personally as soon as new spots open up. Waitlist members get first access.
+          </div></div>
+        </div>
+      </div>
+
+      <!-- PRICING -->
+      <div class="faq-group" id="faq-pricing">
+        <p class="faq-group-label">Pricing</p>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How much does a commission cost?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Custom logos range from <strong>$199 for a word mark</strong> up to <strong>$499 for a mascot</strong>, depending on the style. Punch cards start at <strong>$29</strong>. Monthly subscriptions run from <strong>$70</strong> for streaming support up to <strong>$110</strong> for full social media management, with launch pricing currently available. Full breakdown on the <a href="pricing.html">pricing page</a>. Every project still gets a custom quote based on your specific scope — submit a brief and I'll give you an accurate number within 48 hours.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Do you offer payment plans?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Yes — all projects are split into two payments. A <strong>50% deposit</strong> is required upfront to begin work, and the remaining <strong>50% is due upon delivery</strong> before final files are released. For larger projects, a custom payment schedule can be discussed.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What payment methods do you accept?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Payments are processed securely through <strong>Stripe</strong>, which accepts all major credit and debit cards. Subscriptions and fixed-price items can be purchased directly from the <a href="pricing.html">pricing page</a>. For custom-quoted projects, you'll receive a Stripe invoice for the 50% deposit once we've agreed on the scope. Card details are handled entirely by Stripe and are never stored by BoviBerry.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Do you offer discounts for bulk orders?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            For multiple pieces ordered at once — such as a full social media kit or a set of thumbnails — I offer volume discounts. Mention the quantity in your brief and I'll factor it into the quote.
+          </div></div>
+        </div>
+      </div>
+
+      <!-- DESIGN & ART -->
+      <div class="faq-group" id="faq-design">
+        <p class="faq-group-label">Design & art</p>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What programs and tools do you use?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            I work primarily in Adobe Photoshop, Illustrator, and Lightroom for design and photo editing work. Brand kits and YouTube assets may also be built in Canva or Figma depending on your needs. Final files are delivered in the format that works best for your use case.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What file formats will I receive?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Standard delivery includes high-resolution <strong>PNG and/or JPG</strong> files. For brand identity work, you'll also receive <strong>vector SVG or AI files</strong> for scalable use. If you need a specific format just let me know upfront and I'll make sure it's included.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Can you match a specific style or aesthetic?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Absolutely. Share reference images, Pinterest boards, or examples of aesthetics you love and I'll use them as direction for your piece. The more visual references you provide, the closer the result will be to your vision.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Do you do commercial work?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Yes — commercial licensing is available for an additional fee. If you plan to use the work for business, merchandise, advertising, or any commercial purpose, please specify this in your brief so the correct license can be included. Personal use projects are priced differently from commercial ones.
+          </div></div>
+        </div>
+      </div>
+
+      <!-- REVISIONS FAQ -->
+      <div class="faq-group" id="faq-revisions">
+        <p class="faq-group-label">Revisions</p>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How many revisions are included?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            All commissions include <strong>one revision round</strong>. A revision means adjustments to the existing concept — changes to colors, text, layout, or minor compositional tweaks. Additional revision rounds can be purchased if needed.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What counts as a revision vs. a new project?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            A <strong>revision</strong> adjusts something within the agreed scope — tweaking a color palette, repositioning an element, or refining typography. A <strong>new project</strong> is a complete change of direction, concept, or style that differs significantly from the original brief. If you're unsure, just ask — I'll always be upfront about what falls into which category.
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gold-divider" style="margin-bottom:4rem;"></div>
+
+    <!-- ── POLICY ── -->
+    <div class="content-section" id="policy">
+      <div class="content-section-header">
+        <svg class="content-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+        </svg>
+        <h2 class="content-section-title">Commission <em>policy.</em></h2>
+      </div>
+
+      <p class="last-updated">Last updated — May 2025</p>
+
+      <!-- COMMISSION POLICY -->
+      <div class="policy-block" id="commission-policy">
+        <h3>Commission terms</h3>
+        <p>By submitting a commission request and paying the deposit, you agree to these terms. Please read them carefully before proceeding.</p>
+        <ul>
+          <li>All commissions begin with a submitted brief and mutual agreement on scope, price, and timeline.</li>
+          <li>Work does not begin until the 50% deposit has been received.</li>
+          <li>BoviBerry reserves the right to decline any commission request for any reason.</li>
+          <li>Commissions are taken on a first-come, first-served basis. Being added to a waitlist does not guarantee a spot.</li>
+          <li>Any changes to the project scope after work has begun may result in additional charges.</li>
+        </ul>
+        <div class="policy-highlight">
+          <strong>Important:</strong> Submitting a commission request does not constitute a binding agreement. An agreement is only formed once the quote is accepted and the deposit is paid.
+        </div>
+      </div>
+
+      <!-- QUOTES & SCOPE -->
+      <div class="policy-block" id="quotes-policy">
+        <h3>Quotes & scope</h3>
+        <p>Prices listed on the <a href="pricing.html" style="color:var(--gold-dim);text-decoration:none;border-bottom:1px solid var(--stroke);">pricing page</a> are starting points for a standard project of that type, not fixed final totals.</p>
+        <ul>
+          <li>If a request goes beyond the typical scope of the listed piece — additional concepts, unusual complexity, extra deliverables, or requirements that meaningfully expand the work — <strong>the quote may exceed the listed price</strong>.</li>
+          <li>Any amount above the listed price is explained in writing, itemized, and agreed to before work begins.</li>
+          <li>You will never be charged more than the quote you accepted. No surprise invoices, ever.</li>
+          <li>If you request changes in direction or additional deliverables after work has started, the additional work is re-quoted separately and nothing proceeds until you approve it.</li>
+          <li>A quote is valid for <strong>14 days</strong> from the date it's sent. After that it may be re-issued at current availability and rates.</li>
+        </ul>
+        <div class="policy-highlight">
+          <strong>In plain terms:</strong> the listed price is what a typical version of that project costs. If yours is bigger or more involved than typical, the quote reflects that — and you'll always see the number and agree to it before anything starts.
+        </div>
+      </div>
+
+      <!-- SUBSCRIPTIONS -->
+      <div class="policy-block" id="subscription-policy">
+        <h3>Subscription terms</h3>
+        <p>These terms apply to the Botanical Harvest (streaming) and Farmers Market (social media) monthly plans.</p>
+        <ul>
+          <li>Subscriptions bill monthly on the date you start and renew automatically until cancelled.</li>
+          <li>Cancel any time with <strong>14 days notice</strong> before your next billing date. There is no long-term contract and no cancellation fee on subscriptions.</li>
+          <li>The current month is not prorated or refunded once billed — you keep access and deliverables through the end of that cycle.</li>
+          <li>Unused monthly deliverables (flyers, story templates, etc.) do not roll over to the following month.</li>
+          <li>Paid ad spend, logo or brand identity design, video editing, and third-party platform costs are <strong>not</strong> included and are quoted separately.</li>
+          <li>Account access needed for audience engagement is handled through official tools or delegated access wherever possible. Shared passwords are avoided.</li>
+        </ul>
+      </div>
+
+      <!-- PAYMENT & REFUNDS -->
+      <div class="policy-block" id="payment-policy">
+        <h3>Payment & refunds</h3>
+        <p>All prices are in USD. Payment is split into two parts to protect both parties.</p>
+        <ul>
+          <li><strong>50% deposit</strong> is due before work begins. This is non-refundable once work has started.</li>
+          <li><strong>Remaining 50%</strong> is due upon delivery, before final files are released.</li>
+          <li>If a project is cancelled by the client after work has begun, the deposit is non-refundable and <strong>25% of the remaining balance</strong> is due. This covers the time reserved and work already completed.</li>
+          <li>If a project is cancelled by BoviBerry before work begins, a full refund of any payments made will be issued.</li>
+          <li>No refunds are issued once final files have been delivered.</li>
+          <li>Late payment of the final balance may result in a delay in file delivery.</li>
+        </ul>
+        <div class="policy-highlight">
+          <strong>Refund window:</strong> If you are unsatisfied with the final delivery and the revision round has not been used, please reach out within <strong>3 days of delivery</strong> to discuss. Refunds are evaluated on a case-by-case basis and are not guaranteed.
+        </div>
+      </div>
+
+      <!-- REVISION POLICY -->
+      <div class="policy-block" id="revision-policy">
+        <h3>Revision policy</h3>
+        <p>One revision round is included with every commission. Here's exactly what that means:</p>
+        <ul>
+          <li>A revision round covers reasonable adjustments within the original agreed scope — colors, text, layout, and minor compositional changes.</li>
+          <li>Revisions must be requested within <strong>7 days of delivery</strong>. After this window, the project is considered complete.</li>
+          <li>Additional full revision rounds beyond the included one are <strong>$40 each</strong>. Larger or more complex projects may be quoted individually.</li>
+          <li>A complete redesign or major change of direction after delivery constitutes a new project and will be quoted separately.</li>
+          <li>Revision requests should be consolidated into one clear list — not sent piece by piece over multiple messages.</li>
+        </ul>
+      </div>
+
+      <!-- COPYRIGHT -->
+      <div class="policy-block" id="copyright-policy">
+        <h3>Copyright & usage rights</h3>
+        <p>Understanding who owns what after a commission is important. Here's how it works:</p>
+        <ul>
+          <li>BoviBerry retains full copyright and ownership of all original artwork and designs created.</li>
+          <li>Upon full payment, clients receive a <strong>personal use license</strong> — meaning you can use the work for personal, non-commercial purposes.</li>
+          <li>For <strong>commercial use</strong> — including selling merchandise, advertising, business branding, or monetized content — a commercial license must be purchased. This is quoted separately.</li>
+          <li>You may <strong>not</strong> resell, redistribute, or claim authorship of any work created by BoviBerry.</li>
+          <li>BoviBerry reserves the right to display all completed work in the portfolio unless a confidentiality agreement is arranged beforehand.</li>
+          <li>Crediting BoviBerry when sharing work publicly is appreciated but not required for personal use.</li>
+        </ul>
+        <div class="policy-highlight">
+          <strong>NFTs & AI training:</strong> Work created by BoviBerry may not be minted as NFTs or used to train AI models without explicit written permission.
+        </div>
+      </div>
+
+      <!-- TURNAROUND TIMES -->
+      <div class="policy-block" id="turnaround-policy">
+        <h3>Turnaround times</h3>
+        <p>Estimated timelines begin from the date the deposit is received, not the date the commission is submitted.</p>
+        <ul>
+          <li><strong>Graphic design pieces</strong> — 3 to 5 business days</li>
+          <li><strong>Photo manipulation</strong> — 2 to 4 business days</li>
+          <li><strong>YouTube Starter Kit</strong> — 5 to 7 business days</li>
+          <li><strong>Creator Pro Kit</strong> — 7 to 10 business days</li>
+          <li><strong>Brand Identity Kit</strong> — 10 to 14 business days</li>
+          <li><strong>Custom / complex projects</strong> — timeline agreed upon individually</li>
+        </ul>
+        <p>These are estimates, not guarantees. Delays may occur if client feedback or revision requests take longer than expected. Rush delivery may be available for an additional fee — inquire in your brief.</p>
+        <div class="policy-highlight">
+          <strong>Delays caused by the client</strong> — such as late payment, slow feedback, or unclear briefs — will not count against the delivery timeline. The clock pauses until the required information or payment is received.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <h3>Ready to start a <em>project?</em></h3>
+      <p>Now that you know how it all works — let's make something great together.</p>
+      <a href="index.html#commission" class="btn-gold">Submit a commission →</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="gold-divider"></div>
+
+<footer>
+  <div class="footer-brand">
+    <a href="index.html" class="nav-logo">BoviBerry</a>
+    <p>Digital art & design — graphic design, photo manipulation, and brand identity for creators and businesses.</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="faq.html">FAQ & Policy</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+  </ul>
+  <div class="footer-social">
+    <!-- Social icons go back here once she has business accounts:
+         <a href="https://instagram.com/HANDLE" class="social-link" title="Instagram" target="_blank" rel="noopener">IG</a>
+         <a href="https://tiktok.com/@HANDLE" class="social-link" title="TikTok" target="_blank" rel="noopener">TK</a>
+    -->
+    <a href="mailto:Boviberrystudios@gmail.com" class="footer-email">Boviberrystudios@gmail.com</a>
+  </div>
+  <div class="footer-copy">
+    <span>© 2026 BoviBerry. All rights reserved.</span>
+    <span>Made with intention.</span>
+  </div>
+</footer>
+
+<script>
+// ── THEME ──
+const html = document.documentElement;
+const saved = localStorage.getItem('bb-theme') || 'dark';
+if(saved === 'light') html.setAttribute('data-theme','light');
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const isLight = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  localStorage.setItem('bb-theme', isLight ? 'dark' : 'light');
+});
+
+// ── CURSOR ──
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mouseX=0,mouseY=0,ringX=0,ringY=0;
+document.addEventListener('mousemove', e => {
+  mouseX=e.clientX; mouseY=e.clientY;
+  dot.style.left=mouseX+'px'; dot.style.top=mouseY+'px';
+}, {passive:true});
+(function animate(){
+  ringX+=(mouseX-ringX)*0.12; ringY+=(mouseY-ringY)*0.12;
+  ring.style.left=ringX+'px'; ring.style.top=ringY+'px';
+  requestAnimationFrame(animate);
+})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{dot.classList.add('hovering');ring.classList.add('hovering');});
+  el.addEventListener('mouseleave',()=>{dot.classList.remove('hovering');ring.classList.remove('hovering');});
+});
+
+// ── FAQ ACCORDION ──
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  // Open clicked if it wasn't open
+  if(!isOpen) item.classList.add('open');
+}
+
+// ── SMOOTH SCROLL WITH OFFSET ──
+document.querySelectorAll('a[href^="#"], .sidebar-link, .jump-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if(!href || !href.startsWith('#')) return;
+    const target = document.querySelector(href);
+    if(!target) return;
+    e.preventDefault();
+    const navHeight = document.querySelector('nav').offsetHeight;
+    const offset = target.getBoundingClientRect().top + window.scrollY - navHeight - 24;
+    window.scrollTo({ top: offset, behavior: 'smooth' });
+  });
+});
+const sidebarLinks = document.querySelectorAll('.sidebar-link');
+const sections = document.querySelectorAll('[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if(window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  sidebarLinks.forEach(l => {
+    l.style.color = l.getAttribute('href') === '#'+current ? 'var(--gold-light)' : '';
+    l.style.borderLeftColor = l.getAttribute('href') === '#'+current ? 'var(--gold-dim)' : '';
+  });
+}, {passive:true});
+
+// ── MOBILE NAV (clones the desktop links so there's one source of truth) ──
+(function(){
+  const src = document.querySelector('.nav-links');
+  const btn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobileMenu');
+  if(!src || !btn || !panel) return;
+  panel.innerHTML = src.innerHTML;
+  const nav = document.querySelector('nav');
+  const place = () => panel.style.top = nav.offsetHeight + 'px';
+  place(); window.addEventListener('resize', place, {passive:true});
+  const close = () => { panel.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); };
+  btn.addEventListener('click', () => {
+    const open = panel.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  window.addEventListener('resize', () => { if(window.innerWidth > 900) close(); }, {passive:true});
+})();
+
+// ── SCROLL-AWARE NAV ──
+(function(){
+  const nav = document.querySelector('nav');
+  if(!nav) return;
+  const panel = document.getElementById('mobileMenu');
+  let lastY = window.scrollY;
+  let ticking = false;
+
+  function update(){
+    const y = window.scrollY;
+    const menuOpen = panel && panel.classList.contains('open');
+
+    if (y < 60) {
+      nav.classList.remove('nav-hidden','nav-scrolled');
+    } else {
+      nav.classList.add('nav-scrolled');
+      if (!menuOpen) {
+        // small threshold so tiny jitters don't flip it
+        if (y > lastY + 8)      nav.classList.add('nav-hidden');
+        else if (y < lastY - 8) nav.classList.remove('nav-hidden');
+      }
+    }
+    if (panel) panel.style.top = nav.offsetHeight + 'px';
+    lastY = y;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive:true });
+
+  // never leave the bar hidden when the menu is open
+  if (panel) {
+    new MutationObserver(() => {
+      if (panel.classList.contains('open')) nav.classList.remove('nav-hidden');
+      panel.style.top = nav.offsetHeight + 'px';
+    }).observe(panel, { attributes:true, attributeFilter:['class'] });
+  }
+})();
+</script>
+</body>
+</html>
